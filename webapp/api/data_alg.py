@@ -113,7 +113,7 @@ def generate_data_xaxis_gene(series, restrictions):
         series_values[key] = []
 
     for r in v:
-        xvalues.append(r["gene_ensembl"])
+        xvalues.append(r.gene_ensembl)
         for key, value in groups.items():
             v = [r.__getattribute__(k) for k in value]
             mean = np.mean(v)
