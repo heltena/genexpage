@@ -7,6 +7,7 @@ from api.tags import method
 from collections import defaultdict
 import json
 import numpy as np
+from api.data_alg import generate_data
 
 
 class NumpyEncoder(DjangoJSONEncoder):
@@ -39,4 +40,5 @@ def time_series(request):
                   "message": "series not valid"}
         return JsonResponse(result)
 
-    return JsonResponse({"ok": True})
+    result = generate_data(xaxis, series, restrictions)
+    return JsonResponse(result)
