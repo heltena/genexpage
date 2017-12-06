@@ -27,9 +27,12 @@ import socket
 DEBUG = "ChemE-87.chem-eng.northwestern.edu" == socket.gethostname()
 
 if DEBUG:
-	ALLOWED_HOSTS = [ "siurana.chem-eng.northwestern.edu" ]
+    print("*" * 80)
+    print("***  Running on Debug")
+    print("*" * 80)
+    ALLOWED_HOSTS = []
 else:
-	ALLOWED_HOSTS = [ ]
+    ALLOWED_HOSTS = [ "siurana.chem-eng.northwestern.edu" ]
 
 
 # Application definition
