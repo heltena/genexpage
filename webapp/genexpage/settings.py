@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api'
+    'webpack_loader',
+    'api',
+    'common',
+    'ui'
 ]
 
 MIDDLEWARE = [
@@ -121,3 +124,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "assets"),
+)
+
+# WebPack
+
+WEBPACK_LOADER = {
+    "DEFAULT": {
+        "CACHE": not DEBUG,
+        "BUNDLE_DIR_NAME": "bundles/",
+        "STATS_FILE": os.path.join(BASE_DIR, "webpack-stats.json"),
+        "POLL_INTERVAL": 0.1,
+        "TIMEOUT": None,
+        "IGNORE": [".+\.hot-update.js", ".+\.map" ]
+    }
+}
+
+
+# user: default, def1234!
