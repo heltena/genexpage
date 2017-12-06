@@ -2,14 +2,13 @@ import axios from 'axios';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import * as React from 'react';
 
-import { Dashboard } from "./Dashboard";
+import { GeneVisualization } from "./GeneVisualization";
+
 import { LoginForm } from "./LoginForm";
 import { LoggedToolbar, LogoutToolbar } from './GeaToolbars';
-import { Stages } from './Stages';
 
 import AppBar from 'material-ui/AppBar';
-import { Card, CardTitle } from 'material-ui/Card';
-import {Tabs, Tab} from 'material-ui/Tabs';
+import { Tabs, Tab } from 'material-ui/Tabs';
 
 export interface AppProps { }
 export interface AppState {
@@ -77,13 +76,12 @@ export class App extends React.Component<{}, AppState> {
             <div style={{ paddingTop: lineIncrement }} >
                 <LoggedToolbar style={{position: "fixed", top:"0", left:"0", width:"100%"}} username={this.state.username} logout={() => this.logout()} />
                 <Tabs>
-                    <Tab label="Stages">
+                    <Tab label="Gene Visualization">
                     &nbsp;
-                        <Stages />
+                        <GeneVisualization />
                     </Tab>
                     <Tab label="Dashboard">
                     &nbsp;
-                        <Dashboard />
                     </Tab>
                 </Tabs>
             </div>
@@ -98,7 +96,7 @@ export class App extends React.Component<{}, AppState> {
                 "password": password
             }
         ).then(response => {
-            this.setState({username: "heltena"});
+            this.setState({username: username});
             localStorage.setItem("TOKEN", response.data["token"]);
             localStorage.setItem("USERNAME", username);
             this.forceUpdate();

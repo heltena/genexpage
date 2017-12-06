@@ -10,6 +10,11 @@ export interface LoginFormState { username: string; password: string; }
 
 export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
 
+    static style = {
+        card: {
+        }
+    };
+
     constructor(props: LoginFormProps, state: LoginFormState) {
         super(props, state);
         this.state = {
@@ -21,25 +26,29 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
 
     render() {
         return (
-            <Card className="container">
-                <CardTitle title="Login" />
-                <CardText>
-                    <TextField
-                        hintText="Enter your Username"
-                        floatingLabelText="Username"
-                        onChange={(event, newValue) => this.setState({username: newValue})} />
-                    <br/>
-                    <TextField
-                        type="password"
-                        hintText="Enter your Password"
-                        floatingLabelText="Password"
-                        onChange={(event, newValue) => this.setState({password: newValue})} />
-                    <br/>
-                </CardText>
-                <CardActions>
-                    <RaisedButton label="Submit" primary={true} onClick={(event) => this.handleClick()}/>
-                </CardActions>
-            </Card>
+        <div className="row" style={{ width: '100%', textAlign: 'center' }}>
+            <div>
+                <Card style={LoginForm.style.card}>
+                    <CardTitle title="Login" />
+                    <CardText>
+                        <TextField
+                            hintText="Enter your Username"
+                            floatingLabelText="Username"
+                            onChange={(event, newValue) => this.setState({username: newValue})} />
+                        <br/>
+                        <TextField
+                            type="password"
+                            hintText="Enter your Password"
+                            floatingLabelText="Password"
+                            onChange={(event, newValue) => this.setState({password: newValue})} />
+                        <br/>
+                    </CardText>
+                    <CardActions>
+                        <RaisedButton label="Submit" primary={true} onClick={(event) => this.handleClick()}/>
+                    </CardActions>
+                </Card>
+            </div>
+        </div>
         );
     }
 

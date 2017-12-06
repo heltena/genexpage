@@ -1,5 +1,5 @@
 {
-  "name": "hivup",
+  "name": "genexpage",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -26,7 +26,10 @@
     "axios": "^0.17.0",
     "babel-preset-react": "^6.24.1",
     "material-ui": "^0.19.4",
+    "plotly.js": "^1.31.2",
     "react-dom": "^16.0.0",
+    "react-plotly": "^1.0.0",
+    "react-plotlyjs-ts": "^1.1.1",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "source-map-loader": "^0.2.2",
