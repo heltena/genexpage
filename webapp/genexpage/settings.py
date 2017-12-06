@@ -23,9 +23,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'lvuc*4k398i7=a+yy1*_6&_9o8^9yo-*o2!__iaid%6#qycdaq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+import socket
+DEBUG = "ChemE-87.chem-eng.northwestern.edu" == socket.gethostname()
 
-ALLOWED_HOSTS = []
+if DEBUG:
+	ALLOWED_HOSTS = [ "siurana.chem-eng.northwestern.edu" ]
+else:
+	ALLOWED_HOSTS = [ ]
 
 
 # Application definition
@@ -128,6 +132,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "assets"),
 )
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # WebPack
 

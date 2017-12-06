@@ -1,0 +1,7 @@
+__pycache__
+webapp/static/
+webapp/npm-debug.log
+notebooks/.ipynb_checkpoints
+webapp/assets/bundles
+webapp/node_modules
+settings.json
