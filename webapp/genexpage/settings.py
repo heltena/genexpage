@@ -24,7 +24,7 @@ SECRET_KEY = 'lvuc*4k398i7=a+yy1*_6&_9o8^9yo-*o2!__iaid%6#qycdaq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 import socket
-DEBUG = "ChemE-87.chem-eng.northwestern.edu" == socket.gethostname()
+DEBUG = socket.gethostname() in ["ChemE-87.chem-eng.northwestern.edu", "canfranc.local"]
 
 if DEBUG:
     print("*" * 80)
