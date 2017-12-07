@@ -163,6 +163,7 @@ def generate_data_xaxis(xaxis, series, restrictions):
         series_values[r.gene_ensembl] = current_values
 
     return {"ok": True,
+            "xaxis": xaxis,
             "xvalues": xvalues,
             "series": series_values}
 
