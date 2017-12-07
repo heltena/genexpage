@@ -49,11 +49,7 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
     super(props, state);
     this.state = {
       xaxis: "age",
-<<<<<<< HEAD
       series: "tissue",
-=======
-      series: "tissues",
->>>>>>> 7ebf5bdeb66d8ad592cff58c1fb0dcf20f9fd513
       restrictions: [
         ["flu", "eq", 150],
         ["gene", "in", ["ENSMUSG00000000088", "ENSMUSG00000000001"]]
