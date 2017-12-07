@@ -103,6 +103,9 @@ def generate_data_xaxis_gene(series, restrictions):
     for value in groups.values():
         columns.extend(value)
 
+    if where is None:
+        where = "1=1"
+
     query = "SELECT gene_ensembl, {} FROM genedata WHERE {} ORDER BY gene_ensembl ASC".format(", ".join(columns), where)
 
     v = GeneData.objects.raw(query)
@@ -115,9 +118,13 @@ def generate_data_xaxis_gene(series, restrictions):
     for r in v:
         xvalues.append(r.gene_ensembl)
         for key, value in groups.items():
-            v = [r.__getattribute__(k) for k in value]
-            mean = np.mean(v)
-            std = np.std(v)
+            v = [r.__getattribute__(k) for k in value if r.__getattribute__(k) is not None]
+            if len(v) == 0:
+                mean = 0.0
+                std = 0.0
+            else:
+                mean = np.mean(v)
+                std = np.std(v)
             series_values[key].append((mean, std))
 
     return {"ok": True,
@@ -132,6 +139,9 @@ def generate_data_xaxis(xaxis, series, restrictions):
     for value in groups.values():
         columns.extend(value)
 
+    if where is None:
+        where = "1=1"
+
     query = "SELECT gene_ensembl, {} FROM genedata WHERE {}".format(", ".join(columns), where)
     v = GeneData.objects.raw(query)
     
@@ -142,9 +152,13 @@ def generate_data_xaxis(xaxis, series, restrictions):
         current_values = []
         for xvalue in xvalues:
             value = groups[xvalue]
-            v = [r.__getattribute__(k) for k in value]
-            mean = np.mean(v)
-            std = np.std(v)
+            v = [r.__getattribute__(k) for k in value if r.__getattribute__(k) is not None]
+            if len(v) == 0:
+                mean = 0.0
+                std = 0.0
+            else:
+                mean = np.mean(v)
+                std = np.std(v)
             current_values.append((mean, std))
         series_values[r.gene_ensembl] = current_values
 

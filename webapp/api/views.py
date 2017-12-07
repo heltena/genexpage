@@ -30,6 +30,10 @@ def time_series(request):
     series = body.get("series", None)
     restrictions = body.get("restrictions", [])
     
+    print("xaxis: {}".format(xaxis))
+    print("series: {}".format(series))
+    print("restrictions: {}".format(restrictions))
+    
     if xaxis is None:
         result = {"ok": False,
                   "message": "xaxis not valid"}
