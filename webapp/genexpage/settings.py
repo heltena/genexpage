@@ -30,9 +30,8 @@ if DEBUG:
     print("*" * 80)
     print("***  Running on Debug")
     print("*" * 80)
-    ALLOWED_HOSTS = []
-else:
-    ALLOWED_HOSTS = [ "siurana.chem-eng.northwestern.edu" ]
+
+ALLOWED_HOSTS = [ "localhost", "siurana.chem-eng.northwestern.edu" ]
 
 
 # Application definition
