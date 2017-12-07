@@ -22,8 +22,14 @@ def deploy():
             sudo("/var/www/virtualenvs/genexpage/bin/python manage.py migrate")
             sudo("npm run webpack")
             sudo("/var/www/virtualenvs/genexpage/bin/python manage.py collectstatic")
+        with cd("/var/www/genexpage"):        
+            sudo("chown -R heltena:www-data webapp")
         sudo("service apache2 restart")
 
+
+@task
+def tunneling():
+    local("ssh -L7777:localhost:3306 {}".format(env.host))
 
 @task
 def timeseries1():
@@ -36,6 +42,7 @@ def timeseries1():
             ["flu", "eq", 150],
             ["gene", "in", ["ENSMUSG00000000088", "ENSMUSG00000000001"]]]}
     r = requests.post("{}/api/timeseries".format(env.test_url), json=value)
+    print("Status: {}".format(r))
     print("Result: {}".format(r.json()))
     
     
@@ -50,4 +57,5 @@ def timeseries2():
             ["flu", "eq", 150],
             ["gene", "in", ["ENSMUSG00000000088", "ENSMUSG00000000001"]]]}
     r = requests.post("{}/api/timeseries".format(env.test_url), json=value)
+    print("Status: {}".format(r))
     print("Result: {}".format(r.json()))

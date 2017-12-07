@@ -106,7 +106,7 @@ def generate_data_xaxis_gene(series, restrictions):
     if where is None:
         where = "1=1"
 
-    query = "SELECT gene_ensembl, {} FROM genedata WHERE {} ORDER BY gene_ensembl ASC".format(", ".join(columns), where)
+    query = "SELECT gene_ensembl, {} FROM api_genedata WHERE {} ORDER BY gene_ensembl ASC".format(", ".join(columns), where)
 
     v = GeneData.objects.raw(query)
     
@@ -142,7 +142,7 @@ def generate_data_xaxis(xaxis, series, restrictions):
     if where is None:
         where = "1=1"
 
-    query = "SELECT gene_ensembl, {} FROM genedata WHERE {}".format(", ".join(columns), where)
+    query = "SELECT gene_ensembl, {} FROM api_genedata WHERE {}".format(", ".join(columns), where)
     v = GeneData.objects.raw(query)
     
    
