@@ -63,11 +63,8 @@ def get_where(restrictions):
     return where
 
 
-def get_groups(columns, series):
-    if series == "gene":
-        return {}
-
-    elif series == "flu":
+def get_groups_gene(columns, series):
+    if series == "flu":
         groups = defaultdict(list)
         for column in columns:
             groups[int(column.flu)].append(column.name)
@@ -95,9 +92,63 @@ def get_groups(columns, series):
         raise Exception("serie {} not valid".format(series))
 
 
+def get_xvalues_groups(columns, xaxis, series):
+    xvalues = set()
+    for column in columns:
+        if xaxis in ['flu', 'age', 'replicate']:
+            xvalues.add(int(column.__getattribute__(xaxis)))
+        elif xaxis in ["tissue"]:
+            xvalues.add(column.__getattribute__(xaxis))
+    xvalues = sorted(list(xvalues))
+
+    if series == xaxis:
+        raise Exception("xaxis {} cannot be the same as series".format(xaxis))
+    
+    groups = defaultdict(list)
+    for column in columns:
+        if xaxis in ['flu', 'age', 'replicate']:
+            k1 = int(column.__getattribute__(xaxis))
+        elif xaxis in ['tissue']:
+            k1 = column.__getattribute__(xaxis)
+        else:
+            raise Exception("xaxis {} not valid".format(xaxis))
+        
+        if series in ['flu', 'age', 'replicate']:
+            k2 = int(column.__getattribute__(series))
+        elif series in ['tissue']:
+            k2 = column.__getattribute__(series)
+        else:
+            raise Exception("series {} not valid".format(xaxis))
+        
+        groups[(k1, k2)].append(column.name)
+    return xvalues, groups
+
+
+def get_xvalues_serie_gene(columns, xaxis):
+    xvalues = set()
+    for column in columns:
+        if xaxis in ['flu', 'age', 'replicate']:
+            xvalues.add(int(column.__getattribute__(xaxis)))
+        elif xaxis in ["tissue"]:
+            xvalues.add(column.__getattribute__(xaxis))
+    xvalues = sorted(list(xvalues))
+
+    groups = defaultdict(list)
+    for column in columns:
+        if xaxis in ['flu', 'age', 'replicate']:
+            k1 = int(column.__getattribute__(xaxis))
+        elif xaxis in ['tissue']:
+            k1 = column.__getattribute__(xaxis)
+        else:
+            raise Exception("xaxis {} not valid".format(xaxis))
+        
+        groups[k1].append(column.name)
+    return xvalues, groups
+
+
 def generate_data_xaxis_gene(series, restrictions):
     columns = get_column_names(restrictions)
-    groups = get_groups(columns, series)
+    groups = get_groups_gene(columns, series)
     where = get_where(restrictions)
     columns = []
     for value in groups.values():
@@ -128,12 +179,49 @@ def generate_data_xaxis_gene(series, restrictions):
             series_values[key].append((mean, std))
 
     return {"ok": True,
+            "xaxis": "gene",
             "xvalues": xvalues, 
             "series": series_values}
 
+
+def generate_data_series_gene(xaxis, restrictions):
+    columns = get_column_names(restrictions)
+    xvalues, groups = get_xvalues_serie_gene(columns, xaxis)
+    where = get_where(restrictions)
+    columns = []
+    for value in groups.values():
+        columns.extend(value)
+
+    if where is None:
+        where = "1=1"
+
+    query = "SELECT gene_ensembl, {} FROM api_genedata WHERE {} ORDER BY gene_ensembl ASC".format(", ".join(columns), where)
+
+    v = GeneData.objects.raw(query)
+
+    series_values = defaultdict(list)
+    for r in v:
+        serie = r.gene_ensembl
+        for xvalue in xvalues:
+            columns = groups[xvalue]
+            v = [r.__getattribute__(k) for k in columns if r.__getattribute__(k) is not None]
+            if len(v) == 0:
+                mean = 0.0
+                std = 0.0
+            else:
+                mean = np.mean(v)
+                std = np.std(v)
+            series_values[serie].append((mean, std))
+
+    return {"ok": True,
+            "xaxis": xaxis,
+            "xvalues": xvalues,
+            "series": series_values}
+
+
 def generate_data_xaxis(xaxis, series, restrictions):
     columns = get_column_names(restrictions)
-    groups = get_groups(columns, xaxis)
+    xvalues, groups = get_xvalues_groups(columns, xaxis, series)
     where = get_where(restrictions)
     columns = []
     for value in groups.values():
@@ -143,32 +231,43 @@ def generate_data_xaxis(xaxis, series, restrictions):
         where = "1=1"
 
     query = "SELECT gene_ensembl, {} FROM api_genedata WHERE {}".format(", ".join(columns), where)
+    print(query)
+    print(dict(groups))
+
     v = GeneData.objects.raw(query)
-    
-   
-    xvalues = list(sorted(groups.keys()))
-    series_values = {}
+
+    series_data = {serie_key: defaultdict(list) for axis_key, serie_key in groups.keys()}
     for r in v:
-        current_values = []
-        for xvalue in xvalues:
-            value = groups[xvalue]
-            v = [r.__getattribute__(k) for k in value if r.__getattribute__(k) is not None]
-            if len(v) == 0:
+        for xvalue in groups.keys():
+            axis_key, serie_key = xvalue
+            for column_name in groups[xvalue]:
+                series_data[serie_key][axis_key].append(r.__getattribute__(column_name))
+
+    series_values = defaultdict(list)
+
+    for serie_key, axis in series_data.items():
+        axis_data = {}
+        for axis_key, axis_values in axis.items():
+            if len(axis_values) == 0:
                 mean = 0.0
                 std = 0.0
             else:
-                mean = np.mean(v)
-                std = np.std(v)
-            current_values.append((mean, std))
-        series_values[r.gene_ensembl] = current_values
+                mean = np.mean(axis_values)
+                std = np.std(axis_values)
+            axis_data[axis_key] = (mean, std)
+        for xvalue in xvalues:
+            series_values[serie_key].append(axis_data.get(xvalue, (0.0, 0.0)))
 
     return {"ok": True,
             "xaxis": xaxis,
             "xvalues": xvalues,
             "series": series_values}
 
+
 def generate_data(xaxis, series, restrictions):
     if xaxis == "gene":
         return generate_data_xaxis_gene(series, restrictions)
+    elif series == "gene":
+        return generate_data_series_gene(xaxis, restrictions)
     else:
         return generate_data_xaxis(xaxis, series, restrictions)

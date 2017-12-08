@@ -36,7 +36,7 @@ def timeseries1():
     value = {
         "dataset": "mouse_aging", 
         "xaxis": "tissue",
-        "series": "gene",
+        "series": "age",
         "restrictions": [
             ["tissue", "in", ["AM", "Lung"]],
             ["flu", "eq", 150],
@@ -52,6 +52,22 @@ def timeseries2():
         "dataset": "mouse_aging", 
         "xaxis": "gene",
         "series": "age",
+        "restrictions": [
+            ["tissue", "in", ["AM", "Lung"]],
+            ["flu", "eq", 150],
+            ["gene", "in", ["ENSMUSG00000000088", "ENSMUSG00000000001"]]]}
+    r = requests.post("{}/api/timeseries".format(env.test_url), json=value)
+    print("Status: {}".format(r))
+    print("Result: {}".format(r.json()))
+
+
+    
+@task
+def timeseries3():
+    value = {
+        "dataset": "mouse_aging", 
+        "xaxis": "tissue",
+        "series": "gene",
         "restrictions": [
             ["tissue", "in", ["AM", "Lung"]],
             ["flu", "eq", 150],
