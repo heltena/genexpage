@@ -1,8 +1,13 @@
 import axios from 'axios';
 import * as React from "react";
 import PlotlyChart from 'react-plotlyjs-ts';
+
+import Dialog from 'material-ui/Dialog';
+import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
+import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
+import FlatButton from 'material-ui/FlatButton';
 import { lchmod } from 'fs';
 
 
@@ -10,7 +15,12 @@ export interface GeneVisualizationProps { }
 export interface GeneVisualizationState {
   xaxis: string;
   series: string;
-  restrictions: any;
+  figureTypeDialogOpen: boolean;
+  restrictionDialogOpen: boolean;
+  tissueSelection: string[];
+  fluSelection: number[];
+  replicateSelection: number[];
+  ageSelection: number[];
   response: any;
 }
 
@@ -32,6 +42,50 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
     ylabel: 'Gene Expression'
   };
 
+  static dimensionNames = [
+    "age",
+    "flu",
+    "gene",
+    "replicate",
+    "tissue",
+  ];
+
+  static tissueNames = [
+    "AM",
+    "AT2",
+    "Brain",
+    "Cerebellum",
+    "Heart",
+    "Kidney",
+    "Lung",
+    "MonoDC"
+  ];
+
+  static fluNames = [
+    0,
+    10,
+    150,
+  ];
+
+  static replicateNames = [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ];
+
+  static ageNames = [
+    1,
+    4,
+    5,
+    9,
+    12,
+    18,
+    24
+  ];
+
   static colors = [
       '#1f77b4',  // muted blue
       '#ff7f0e',  // safety orange
@@ -50,23 +104,74 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
     this.state = {
       xaxis: "age",
       series: "tissue",
-      restrictions: [
-        ["flu", "eq", 150],
-        ["gene", "in", ["ENSMUSG00000000088", "ENSMUSG00000000001"]]
-      ],
+      figureTypeDialogOpen: false,
+      restrictionDialogOpen: false,
+      tissueSelection: [],
+      fluSelection: [],
+      replicateSelection: [],
+      ageSelection: [],
       response: null
     };
-    this.handleClick = this.handleClick.bind(this);
+    this.handleFigureTypeCancelClick = this.handleFigureTypeCancelClick.bind(this);
+    this.handleFigureTypeOkClick = this.handleFigureTypeOkClick.bind(this);
+    this.handleSelectionCancelClick = this.handleSelectionCancelClick.bind(this);
+    this.handleSelectionOkClick = this.handleSelectionOkClick.bind(this);
   }
 
-  handleClick() {
+  handleFigureTypeCancelClick() {
+    this.setState({
+      figureTypeDialogOpen: false
+    });    
+  }
+
+  handleFigureTypeOkClick() {
+    this.setState({
+      figureTypeDialogOpen: false
+    });    
+    this.updateFigure();
+  }
+  
+  handleSelectionCancelClick() {
+    this.setState({
+      restrictionDialogOpen: false
+    });
+  }
+
+  handleSelectionOkClick() {
+    this.setState({
+      restrictionDialogOpen: false
+    });
+    this.updateFigure();
+  }
+
+  updateFigure() {
+    var restrictions: any[] = [
+      ["gene", "in", ["ENSMUSG00000000088", "ENSMUSG00000000001"]]
+    ];
+
+    if (this.state.tissueSelection && this.state.tissueSelection.length > 0) {
+      restrictions.push(["tissue", "in", this.state.tissueSelection]);
+    }
+
+    if (this.state.fluSelection && this.state.fluSelection.length > 0) {
+      restrictions.push(["flu", "in", this.state.fluSelection]);
+    }
+
+    if (this.state.replicateSelection && this.state.replicateSelection.length > 0) {
+      restrictions.push(["replicate", "in", this.state.replicateSelection]);
+    }
+
+    if (this.state.ageSelection && this.state.ageSelection.length > 0) {
+      restrictions.push(["age", "in", this.state.ageSelection]);
+    }
+
     axios.post(
       "/api/timeseries",
       {
         "dataset": "mouse_aging",
         "xaxis": this.state.xaxis,
         "series": this.state.series,
-        "restrictions": this.state.restrictions
+        "restrictions": restrictions
       }
     ).then(response => {
       console.log("Response ok: ");
@@ -179,24 +284,108 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
         'select2d'],
     };
 
+    const generateMenuItems = function (listNames: any[], listSelection: any[]) {
+      return listNames.map((name) => (
+        <MenuItem
+          key={name}
+          insetChildren={true}
+          checked={listSelection && listSelection.indexOf(name) > -1}
+          value={name}
+          primaryText={String(name)} />
+      ));        
+    }  
+    
+    const figureTypeActions = [
+      <FlatButton 
+        label="Cancel"
+        primary={false}
+        onClick={this.handleFigureTypeCancelClick} />,
+      <FlatButton 
+        label="Select"
+        primary={true}
+        onClick={this.handleFigureTypeOkClick} />
+    ];
+
+    const selectionActions = [
+      <FlatButton 
+        label="Cancel"
+        primary={false}
+        onClick={this.handleSelectionCancelClick} />,
+      <FlatButton 
+        label="Select"
+        primary={true}
+        onClick={this.handleSelectionOkClick} />
+    ];
+
     return (
       <div>
-        <TextField
-          hintText="xaxis"
-          floatingLabelText="x axis"
-          value={this.state.xaxis}
-          onChange={(event, newValue) => this.setState({ xaxis: newValue })} />
-        <TextField
-          hintText="series"
-          floatingLabelText="series"
-          value={this.state.series}
-          onChange={(event, newValue) => this.setState({ series: newValue })} />
-        <TextField
-          hintText="restrictions"
-          floatingLabelText="restrictions"
-          value={this.state.restrictions}
-          onChange={(event, newValue) => this.setState({ restrictions: newValue })} />
-        <RaisedButton label="Submit" primary={true} onClick={(event) => this.handleClick()} />
+        <FlatButton 
+          label="Open Figure Type"
+          primary={true}
+          onClick={() => this.setState({ figureTypeDialogOpen: true })} />
+
+        <FlatButton 
+          label="Open Selection"
+          primary={true}
+          onClick={() => this.setState({ restrictionDialogOpen: true })} />
+
+        <Dialog 
+          open={this.state.figureTypeDialogOpen}
+          title="Figure Type"
+          actions={figureTypeActions}>
+            <SelectField
+              multiple={false}
+              hintText="Select X axis"
+              value={this.state.xaxis}
+              onChange={(event, index, newValue) => this.setState({ xaxis: newValue })}>
+                {generateMenuItems(GeneVisualization.dimensionNames, [this.state.xaxis])}
+            </SelectField>
+
+            <SelectField
+              multiple={false}
+              hintText="Select Series"
+              value={this.state.series}
+              onChange={(event, index, newValue) => this.setState({ series: newValue })}>
+                {generateMenuItems(GeneVisualization.dimensionNames, [this.state.series])}
+            </SelectField>
+        </Dialog>
+
+        <Dialog
+          open={this.state.restrictionDialogOpen}
+          title="Selection"
+          actions={selectionActions}>
+            <SelectField
+              multiple={true}
+              hintText="Select a tissue"
+              value={this.state.tissueSelection}
+              onChange={(event, index, values) => this.setState({ tissueSelection: values })}>
+                {generateMenuItems(GeneVisualization.tissueNames, this.state.tissueSelection)}
+            </SelectField>
+
+            <SelectField
+              multiple={true}
+              hintText="Select a flu"
+              value={this.state.fluSelection}
+              onChange={(event, index, values) => this.setState({ fluSelection: values })}>
+                {generateMenuItems(GeneVisualization.fluNames, this.state.fluSelection)}
+            </SelectField>
+
+            <SelectField
+              multiple={true}
+              hintText="Select a replicate"
+              value={this.state.replicateSelection}
+              onChange={(event, index, values) => this.setState({ replicateSelection: values })}>
+                {generateMenuItems(GeneVisualization.replicateNames, this.state.replicateSelection)}
+            </SelectField>
+
+            <SelectField
+              multiple={true}
+              hintText="Select an age"
+              value={this.state.ageSelection}
+              onChange={(event, index, values) => this.setState({ ageSelection: values })}>
+                {generateMenuItems(GeneVisualization.ageNames, this.state.ageSelection)}
+            </SelectField>
+        </Dialog>
 
         <PlotlyChart data={plots} layout={layout} config={config}
           onClick={({ points, event }) => console.log(points, event)} />

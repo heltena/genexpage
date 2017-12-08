@@ -174,8 +174,8 @@ def generate_data_xaxis_gene(series, restrictions):
                 mean = 0.0
                 std = 0.0
             else:
-                mean = np.mean(v)
-                std = np.std(v)
+                mean = np.nanmean(v)
+                std = np.nanstd(v)
             series_values[key].append((mean, std))
 
     return {"ok": True,
@@ -209,8 +209,8 @@ def generate_data_series_gene(xaxis, restrictions):
                 mean = 0.0
                 std = 0.0
             else:
-                mean = np.mean(v)
-                std = np.std(v)
+                mean = np.nanmean(v)
+                std = np.nanstd(v)
             series_values[serie].append((mean, std))
 
     return {"ok": True,
@@ -241,7 +241,9 @@ def generate_data_xaxis(xaxis, series, restrictions):
         for xvalue in groups.keys():
             axis_key, serie_key = xvalue
             for column_name in groups[xvalue]:
-                series_data[serie_key][axis_key].append(r.__getattribute__(column_name))
+                new_value = r.__getattribute__(column_name)
+                if new_value is not None:
+                    series_data[serie_key][axis_key].append(new_value)
 
     series_values = defaultdict(list)
 
@@ -252,8 +254,8 @@ def generate_data_xaxis(xaxis, series, restrictions):
                 mean = 0.0
                 std = 0.0
             else:
-                mean = np.mean(axis_values)
-                std = np.std(axis_values)
+                mean = np.nanmean(axis_values)
+                std = np.nanstd(axis_values)
             axis_data[axis_key] = (mean, std)
         for xvalue in xvalues:
             series_values[serie_key].append(axis_data.get(xvalue, (0.0, 0.0)))
