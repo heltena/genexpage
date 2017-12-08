@@ -329,6 +329,10 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
           primary={true}
           onClick={() => this.setState({ restrictionDialogOpen: true })} />
 
+        <FlatButton 
+          label="Gene Selection"
+          primary={true} />
+
         <Dialog 
           open={this.state.figureTypeDialogOpen}
           title="Figure Type"
