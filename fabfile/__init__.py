@@ -19,7 +19,7 @@ def deploy():
             run("git pull origin master")
             sudo("/var/www/virtualenvs/genexpage/bin/pip install -r requirements.txt")
         with cd("/var/www/genexpage/webapp"):
-            sudo("/var/www/virtualenvs/genexpage/bin/python manage.py migrate")
+            sudo("/var/www/virtualenvs/genexpage/bin/python manage.py migrate --fake")
             sudo("npm run webpack")
             sudo("/var/www/virtualenvs/genexpage/bin/python manage.py collectstatic")
         with cd("/var/www/genexpage"):        
@@ -30,6 +30,16 @@ def deploy():
 @task
 def tunneling():
     local("ssh -L7777:localhost:3306 {}".format(env.host))
+
+
+@task 
+def lists():
+    for name in ['age', 'experimentalbatch', 'pfu', 'tissue', 'all']:
+        print("List {}".format(name))
+        r = requests.get("{}/api/{}/list".format(env.test_url, name))
+        print("  Status: {}".format(r))
+        print("  Result: {}".format(r.json()))
+
 
 @task
 def timeseries1():

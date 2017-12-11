@@ -10,20 +10,6 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import { lchmod } from 'fs';
 
-
-export interface GeneVisualizationProps { }
-export interface GeneVisualizationState {
-  xaxis: string;
-  series: string;
-  figureTypeDialogOpen: boolean;
-  restrictionDialogOpen: boolean;
-  tissueSelection: string[];
-  fluSelection: number[];
-  replicateSelection: number[];
-  ageSelection: number[];
-  response: any;
-}
-
 export interface GeneVisualizationConf {
   title: string;
   errorLineMode: string;
@@ -32,60 +18,47 @@ export interface GeneVisualizationConf {
   ylabel: string;
 }
 
-export class GeneVisualization extends React.Component<GeneVisualizationProps, GeneVisualizationState> {
+export interface GeneVisualizationProps { }
+export interface GeneVisualizationState {
+  conf: GeneVisualizationConf;
+  xaxis: string;
+  series: string;
+  figureTypeDialogOpen: boolean;
+  restrictionDialogOpen: boolean;
+  ageSelection: string[];
+  experimentalBatchSelection: string[];
+  pfuSelection: string[];
+  tissueSelection: string[];
+  response: any;
+}
 
-  static conf: GeneVisualizationConf = {
-    title: 'Example',
-    errorLineMode: null,
-    errorBars: true,    
-    lineMode: 'scatter',
-    ylabel: 'Gene Expression'
-  };
+export class GeneVisualization extends React.Component<GeneVisualizationProps, GeneVisualizationState> {
 
   static dimensionNames = [
     "age",
-    "flu",
+    "experimental_batch",
     "gene",
-    "replicate",
+    "pfu",
     "tissue",
   ];
 
-  static tissueNames = [
-    "AM",
-    "AT2",
-    "Brain",
-    "Cerebellum",
-    "Heart",
-    "Kidney",
-    "Lung",
-    "MonoDC"
+  static errorLineModeValues = [
+    "lines",
+    "markers",
+    "lines+markers"
   ];
 
-  static fluNames = [
-    0,
-    10,
-    150,
+  static lineModeValues = [
+    "lines",
+    "markers",
+    "lines+markers"
   ];
 
-  static replicateNames = [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6
-  ];
-
-  static ageNames = [
-    1,
-    4,
-    5,
-    9,
-    12,
-    18,
-    24
-  ];
-
+  static ageNames: string[] = [ ];
+  static experimentalBatchNames: string[] = [ ];
+  static pfuNames: string[] = [ ];
+  static tissueNames: string[] = [];
+  
   static colors = [
       '#1f77b4',  // muted blue
       '#ff7f0e',  // safety orange
@@ -102,20 +75,45 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
   constructor(props: GeneVisualizationProps, state: GeneVisualizationState) {
     super(props, state);
     this.state = {
+      conf: {
+        title: 'Example',
+        errorLineMode: "lines",
+        errorBars: false,    
+        lineMode: 'lines+markers',
+        ylabel: 'Gene Expression'    
+      },
       xaxis: "age",
       series: "tissue",
       figureTypeDialogOpen: false,
       restrictionDialogOpen: false,
-      tissueSelection: [],
-      fluSelection: [],
-      replicateSelection: [],
       ageSelection: [],
+      experimentalBatchSelection: [],
+      pfuSelection: [],
+      tissueSelection: [],
       response: null
     };
     this.handleFigureTypeCancelClick = this.handleFigureTypeCancelClick.bind(this);
     this.handleFigureTypeOkClick = this.handleFigureTypeOkClick.bind(this);
     this.handleSelectionCancelClick = this.handleSelectionCancelClick.bind(this);
     this.handleSelectionOkClick = this.handleSelectionOkClick.bind(this);
+
+    axios.get(
+      "/api/all/list"
+    ).then(response => {
+      console.log("Response ok: ");
+      console.log(response.data);
+      GeneVisualization.ageNames = response.data["age"];
+      GeneVisualization.experimentalBatchNames = response.data["experimental_batch"];
+      GeneVisualization.pfuNames = response.data["pfu"];
+      GeneVisualization.tissueNames = response.data["tissue"];
+    }).catch(error => {
+      console.log("Error: ");
+      console.log(error);
+      GeneVisualization.ageNames = [];
+      GeneVisualization.experimentalBatchNames = [];
+      GeneVisualization.pfuNames = [];
+      GeneVisualization.tissueNames = [];
+    });
   }
 
   handleFigureTypeCancelClick() {
@@ -149,20 +147,20 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
       ["gene", "in", ["ENSMUSG00000000088", "ENSMUSG00000000001"]]
     ];
 
-    if (this.state.tissueSelection && this.state.tissueSelection.length > 0) {
-      restrictions.push(["tissue", "in", this.state.tissueSelection]);
-    }
-
-    if (this.state.fluSelection && this.state.fluSelection.length > 0) {
-      restrictions.push(["flu", "in", this.state.fluSelection]);
-    }
-
-    if (this.state.replicateSelection && this.state.replicateSelection.length > 0) {
-      restrictions.push(["replicate", "in", this.state.replicateSelection]);
-    }
-
     if (this.state.ageSelection && this.state.ageSelection.length > 0) {
       restrictions.push(["age", "in", this.state.ageSelection]);
+    }
+
+    if (this.state.experimentalBatchSelection && this.state.experimentalBatchSelection.length > 0) {
+      restrictions.push(["experimental_batch", "in", this.state.experimentalBatchSelection]);
+    }
+
+    if (this.state.pfuSelection && this.state.pfuSelection.length > 0) {
+      restrictions.push(["pfu", "in", this.state.pfuSelection]);
+    }
+
+    if (this.state.tissueSelection && this.state.tissueSelection.length > 0) {
+      restrictions.push(["tissue", "in", this.state.tissueSelection]);
     }
 
     axios.post(
@@ -215,9 +213,9 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
           ymax.push(mean + std);
         }
 
-        if (GeneVisualization.conf.errorLineMode != null) {
+        if (this.state.conf.errorLineMode != null) {
           plots.push({
-            mode: GeneVisualization.conf.errorLineMode,
+            mode: this.state.conf.errorLineMode,
             line: {shape: 'spline', color: color, width: 0},
             showlegend: false,
             x: xvalues,
@@ -226,7 +224,7 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
             fill: null
           });
           plots.push({
-            mode: GeneVisualization.conf.errorLineMode,
+            mode: this.state.conf.errorLineMode,
             line: {shape: 'spline', color: color, width: 0},
             showlegend: false,
             x: xvalues,
@@ -237,9 +235,9 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
           });
         }
 
-        if (GeneVisualization.conf.errorBars) {
+        if (this.state.conf.errorBars) {
           plots.push({
-            mode: GeneVisualization.conf.lineMode,
+            mode: this.state.conf.lineMode,
             line: {shape: 'spline', color: color},
             name: name,
             x: xvalues,
@@ -248,7 +246,7 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
           });          
         } else {
           plots.push({
-            mode: GeneVisualization.conf.lineMode,
+            mode: this.state.conf.lineMode,
             line: {shape: 'spline', color: color},
             name: name,
             x: xvalues,
@@ -262,12 +260,12 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
 
     const xaxis = (this.state.response != null) ? this.state.response["xaxis"] : "";
     let layout = {
-      title: GeneVisualization.conf.title,
+      title: this.state.conf.title,
       xaxis: {
         title: xaxis
       },
       yaxis: {
-        title: GeneVisualization.conf.ylabel
+        title: this.state.conf.ylabel
       }
     };
 
@@ -360,34 +358,34 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
           actions={selectionActions}>
             <SelectField
               multiple={true}
-              hintText="Select a tissue"
-              value={this.state.tissueSelection}
-              onChange={(event, index, values) => this.setState({ tissueSelection: values })}>
-                {generateMenuItems(GeneVisualization.tissueNames, this.state.tissueSelection)}
+              hintText="Select an age"
+              value={this.state.ageSelection}
+              onChange={(event, index, values) => this.setState({ ageSelection: values })}>
+                {generateMenuItems(GeneVisualization.ageNames, this.state.ageSelection)}
+            </SelectField>
+
+            <SelectField
+              multiple={true}
+              hintText="Select an experimental batch"
+              value={this.state.experimentalBatchSelection}
+              onChange={(event, index, values) => this.setState({ experimentalBatchSelection: values })}>
+                {generateMenuItems(GeneVisualization.experimentalBatchNames, this.state.experimentalBatchSelection)}
             </SelectField>
 
             <SelectField
               multiple={true}
               hintText="Select a flu"
-              value={this.state.fluSelection}
-              onChange={(event, index, values) => this.setState({ fluSelection: values })}>
-                {generateMenuItems(GeneVisualization.fluNames, this.state.fluSelection)}
+              value={this.state.pfuSelection}
+              onChange={(event, index, values) => this.setState({ pfuSelection: values })}>
+                {generateMenuItems(GeneVisualization.pfuNames, this.state.pfuSelection)}
             </SelectField>
-
+            
             <SelectField
               multiple={true}
-              hintText="Select a replicate"
-              value={this.state.replicateSelection}
-              onChange={(event, index, values) => this.setState({ replicateSelection: values })}>
-                {generateMenuItems(GeneVisualization.replicateNames, this.state.replicateSelection)}
-            </SelectField>
-
-            <SelectField
-              multiple={true}
-              hintText="Select an age"
-              value={this.state.ageSelection}
-              onChange={(event, index, values) => this.setState({ ageSelection: values })}>
-                {generateMenuItems(GeneVisualization.ageNames, this.state.ageSelection)}
+              hintText="Select a tissue"
+              value={this.state.tissueSelection}
+              onChange={(event, index, values) => this.setState({ tissueSelection: values })}>
+                {generateMenuItems(GeneVisualization.tissueNames, this.state.tissueSelection)}
             </SelectField>
         </Dialog>
 

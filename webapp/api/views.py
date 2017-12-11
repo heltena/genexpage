@@ -8,6 +8,7 @@ from collections import defaultdict
 import json
 import numpy as np
 from api.data_alg import generate_data
+from api.models import Age, Pfu, ExperimentalBatch, Tissue
 
 
 class NumpyEncoder(DjangoJSONEncoder):
@@ -23,16 +24,59 @@ class NumpyEncoder(DjangoJSONEncoder):
 
 
 @csrf_exempt
+@method(allowed=['GET'])
+def age_list(request):
+    ages = Age.objects.all().order_by("name")
+    result = [t.name for t in ages]
+    return JsonResponse(result, safe=False)
+
+@csrf_exempt
+@method(allowed=['GET'])
+def all_list(request):
+    ages = Age.objects.all().order_by("name")
+    pfus = Pfu.objects.all().order_by("name")
+    experimentalbatches = ExperimentalBatch.objects.all().order_by("name")
+    tissues = Tissue.objects.all().order_by("name")
+    result = {
+        "age": [t.name for t in ages],
+        "pfu": [t.name for t in pfus],
+        "experimental_batch": [t.name for t in experimentalbatches],
+        "tissue": [t.name for t in tissues]
+    }
+    return JsonResponse(result)
+
+
+@csrf_exempt
+@method(allowed=['GET'])
+def pfu_list(request):
+    pfus = Pfu.objects.all().order_by("name")
+    result = [t.name for t in pfus]
+    return JsonResponse(result, safe=False)
+
+
+@csrf_exempt
+@method(allowed=['GET'])
+def experimentalbatch_list(request):
+    experimentalbatches = ExperimentalBatch.objects.all().order_by("name")
+    result = [t.name for t in experimentalbatches]
+    return JsonResponse(result, safe=False)
+
+
+@csrf_exempt
+@method(allowed=['GET'])
+def tissue_list(request):
+    tissues = Tissue.objects.all().order_by("name")
+    result = [t.name for t in tissues]
+    return JsonResponse(result, safe=False)
+
+
+@csrf_exempt
 @method(allowed=['POST'])
 def time_series(request):
     body = json.loads(request.body.decode("utf-8"))
     xaxis = body.get("xaxis", None)
     series = body.get("series", None)
     restrictions = body.get("restrictions", [])
-    
-    print("xaxis: {}".format(xaxis))
-    print("series: {}".format(series))
-    print("restrictions: {}".format(restrictions))
     
     if xaxis is None:
         result = {"ok": False,

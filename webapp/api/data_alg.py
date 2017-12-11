@@ -1,52 +1,52 @@
-from api.models import ColumnSpec, GeneData
+from api.models import Meta, Counts
 from django.db import connection
 from collections import defaultdict
 import numpy as np
 
 
 def get_column_names(restrictions):
-    column_spec_query = ColumnSpec.objects
+    meta_query = Meta.objects
     for restriction in restrictions:
         dimension, op, value = restriction
         if dimension == "gene":
             continue
     
-        elif dimension == "flu":
+        elif dimension == "pfu":
             if op == "eq":
-                column_spec_query = column_spec_query.filter(flu=value)
+                meta_query = meta_query.filter(pfu=value)
             elif op == "in":
-                column_spec_query = column_spec_query.filter(flu__in=value)
+                meta_query = meta_query.filter(pfu__in=value)
             else:
                 raise Exception("op {} not valid at dimension {}".format(op, dimension))
 
         elif dimension == "age":
             if op == "eq":
-                column_spec_query = column_spec_query.filter(age=value)
+                meta_query = meta_query.filter(age=value)
             elif op == "in":
-                column_spec_query = column_spec_query.filter(age__in=value)
+                meta_query = meta_query.filter(age__in=value)
             else:
                 raise Exception("op {} not valid at dimension {}".format(op, dimension))
 
         elif dimension == "tissue":
             if op == "eq":
-                column_spec_query = column_spec_query.filter(tissue=value)
+                meta_query = meta_query.filter(tissue=value)
             elif op == "in":
-                column_spec_query = column_spec_query.filter(tissue__in=value)
+                meta_query = meta_query.filter(tissue__in=value)
             else:
                 raise Exception("op {} not valid at dimension {}".format(op, dimension))
 
-        elif dimension == "replicate":
+        elif dimension == "experimental_batch":
             if op == "eq":
-                column_spec_query = column_spec_query.filter(replicate=value)
+                meta_query = meta_query.filter(experimental_batch=value)
             elif op == "in":
-                column_spec_query = column_spec_query.filter(replicate__in=value)
+                meta_query = meta_query.filter(experimental_batch__in=value)
             else:
                 raise Exception("op {} not valid at dimension {}".format(op, dimension))
 
         else:
             raise Exception("dimension {} not valid".format(dimension))
 
-    return column_spec_query.all()
+    return meta_query.all()
 
 
 def get_where(restrictions):
@@ -64,10 +64,10 @@ def get_where(restrictions):
 
 
 def get_groups_gene(columns, series):
-    if series == "flu":
+    if series == "pfu":
         groups = defaultdict(list)
         for column in columns:
-            groups[int(column.flu)].append(column.name)
+            groups[int(column.pfu)].append(column.name)
         return groups
 
     elif series == "age":
@@ -82,10 +82,10 @@ def get_groups_gene(columns, series):
             groups[column.tissue].append(column.name)
         return groups
 
-    elif series == "replicate":
+    elif series == "experimental_batch":
         groups = defaultdict(list)
         for column in columns:
-            groups[int(column.replicate)].append(column.name)
+            groups[int(column.experimental_batch)].append(column.name)
         return groups
 
     else:
@@ -95,7 +95,7 @@ def get_groups_gene(columns, series):
 def get_xvalues_groups(columns, xaxis, series):
     xvalues = set()
     for column in columns:
-        if xaxis in ['flu', 'age', 'replicate']:
+        if xaxis in ['pfu', 'age', 'experimental_batch']:
             xvalues.add(int(column.__getattribute__(xaxis)))
         elif xaxis in ["tissue"]:
             xvalues.add(column.__getattribute__(xaxis))
@@ -106,14 +106,14 @@ def get_xvalues_groups(columns, xaxis, series):
     
     groups = defaultdict(list)
     for column in columns:
-        if xaxis in ['flu', 'age', 'replicate']:
+        if xaxis in ['pfu', 'age', 'experimental_batch']:
             k1 = int(column.__getattribute__(xaxis))
         elif xaxis in ['tissue']:
             k1 = column.__getattribute__(xaxis)
         else:
             raise Exception("xaxis {} not valid".format(xaxis))
         
-        if series in ['flu', 'age', 'replicate']:
+        if series in ['pfu', 'age', 'experimental_batch']:
             k2 = int(column.__getattribute__(series))
         elif series in ['tissue']:
             k2 = column.__getattribute__(series)
@@ -127,7 +127,7 @@ def get_xvalues_groups(columns, xaxis, series):
 def get_xvalues_serie_gene(columns, xaxis):
     xvalues = set()
     for column in columns:
-        if xaxis in ['flu', 'age', 'replicate']:
+        if xaxis in ['pfu', 'age', 'experimental_batch']:
             xvalues.add(int(column.__getattribute__(xaxis)))
         elif xaxis in ["tissue"]:
             xvalues.add(column.__getattribute__(xaxis))
@@ -135,7 +135,7 @@ def get_xvalues_serie_gene(columns, xaxis):
 
     groups = defaultdict(list)
     for column in columns:
-        if xaxis in ['flu', 'age', 'replicate']:
+        if xaxis in ['pfu', 'age', 'experimental_batch']:
             k1 = int(column.__getattribute__(xaxis))
         elif xaxis in ['tissue']:
             k1 = column.__getattribute__(xaxis)
@@ -157,9 +157,9 @@ def generate_data_xaxis_gene(series, restrictions):
     if where is None:
         where = "1=1"
 
-    query = "SELECT gene_ensembl, {} FROM api_genedata WHERE {} ORDER BY gene_ensembl ASC".format(", ".join(columns), where)
+    query = "SELECT gene_ensembl, {} FROM api_counts WHERE {} ORDER BY gene_ensembl ASC".format(", ".join(columns), where)
 
-    v = GeneData.objects.raw(query)
+    v = Counts.objects.raw(query)
     
     xvalues = []
     series_values = {}
@@ -195,9 +195,9 @@ def generate_data_series_gene(xaxis, restrictions):
     if where is None:
         where = "1=1"
 
-    query = "SELECT gene_ensembl, {} FROM api_genedata WHERE {} ORDER BY gene_ensembl ASC".format(", ".join(columns), where)
+    query = "SELECT gene_ensembl, {} FROM api_counts WHERE {} ORDER BY gene_ensembl ASC".format(", ".join(columns), where)
 
-    v = GeneData.objects.raw(query)
+    v = Counts.objects.raw(query)
 
     series_values = defaultdict(list)
     for r in v:
@@ -230,11 +230,9 @@ def generate_data_xaxis(xaxis, series, restrictions):
     if where is None:
         where = "1=1"
 
-    query = "SELECT gene_ensembl, {} FROM api_genedata WHERE {}".format(", ".join(columns), where)
-    print(query)
-    print(dict(groups))
+    query = "SELECT gene_ensembl, {} FROM api_counts WHERE {}".format(", ".join(columns), where)
 
-    v = GeneData.objects.raw(query)
+    v = Counts.objects.raw(query)
 
     series_data = {serie_key: defaultdict(list) for axis_key, serie_key in groups.keys()}
     for r in v:
