@@ -8,10 +8,11 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
+import Toggle from 'material-ui/Toggle';
 import FlatButton from 'material-ui/FlatButton';
 import { lchmod } from 'fs';
 
-export interface GeneViewConf {
+export interface GeneViewConfigureData {
     title: string;
     errorLineMode: string;
     errorBars: boolean;
@@ -29,8 +30,8 @@ export interface GeneViewConfigureState {
 }
 
 export interface GeneViewConfigureProps {
-    confGetState: () => GeneViewConf;
-    confChanged: (conf: GeneViewConf) => void;    
+    configureGetData: () => GeneViewConfigureData;
+    configureChanged: (conf: GeneViewConfigureData) => void;    
 }
 
 export class GeneViewConfigure extends React.Component<GeneViewConfigureProps, GeneViewConfigureState> {
@@ -63,15 +64,14 @@ export class GeneViewConfigure extends React.Component<GeneViewConfigureProps, G
   }
 
   handleOpenDialogClick() {
-      const conf = this.props.confGetState();
-      console.log(conf);
+      const data = this.props.configureGetData();
       this.setState({
         dialogOpen: true,
-        title: conf.title,
-        errorLineMode: conf.errorLineMode,
-        errorBars: conf.errorBars,
-        lineMode: conf.lineMode,
-        ylabel: conf.ylabel
+        title: data.title,
+        errorLineMode: data.errorLineMode,
+        errorBars: data.errorBars,
+        lineMode: data.lineMode,
+        ylabel: data.ylabel
       });
   }
 
@@ -85,14 +85,14 @@ export class GeneViewConfigure extends React.Component<GeneViewConfigureProps, G
     this.setState({
       dialogOpen: false
     });
-    const conf: GeneViewConf = {
+    const data: GeneViewConfigureData = {
         title: this.state.title,
         errorLineMode: this.state.errorLineMode,
         errorBars: this.state.errorBars,
         lineMode: this.state.lineMode,
         ylabel: this.state.ylabel   
     }
-    this.props.confChanged(conf);
+    this.props.configureChanged(data);
   }
   
   render() {   
@@ -148,10 +148,10 @@ export class GeneViewConfigure extends React.Component<GeneViewConfigureProps, G
                     {errorLineModeMenuItems}
             </SelectField>
 
-            <Checkbox
+            <Toggle
                 label="Error bars"
-                checked={this.state.errorBars}
-                onCheck={(event, newValue) => this.setState({ errorBars: newValue })} />
+                toggled={this.state.errorBars}
+                onToggle={(event, newValue) => this.setState({ errorBars: newValue })} />
 
             <SelectField
                 floatingLabelText="Line mode"

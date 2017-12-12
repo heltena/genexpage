@@ -10,38 +10,23 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import { lchmod } from 'fs';
 
-import { GeneViewConf, GeneViewConfigure } from './GeneViewConfigure';
+import { GeneViewConfigureData, GeneViewConfigure } from './GeneViewConfigure';
+import { GeneViewFigureTypeData, GeneViewFigureType } from './GeneViewFigureType';
+import { GeneViewGeneSelectionData, GeneViewGeneSelection } from './GeneViewGeneSelection';
+import { GeneViewRestrictionsData, GeneViewRestrictions } from './GeneViewRestrictions';
 
 
 export interface GeneVisualizationProps { }
 export interface GeneVisualizationState {
-  conf: GeneViewConf;
-  xaxis: string;
-  series: string;
-  figureTypeDialogOpen: boolean;
-  restrictionDialogOpen: boolean;
-  ageSelection: string[];
-  experimentalBatchSelection: string[];
-  pfuSelection: string[];
-  tissueSelection: string[];
+  configure: GeneViewConfigureData;
+  figureType: GeneViewFigureTypeData;
+  geneSelection: GeneViewGeneSelectionData;
+  restrictions: GeneViewRestrictionsData;
   response: any;
 }
 
 export class GeneVisualization extends React.Component<GeneVisualizationProps, GeneVisualizationState> {
 
-  static dimensionNames = [
-    "age",
-    "experimental_batch",
-    "gene",
-    "pfu",
-    "tissue",
-  ];
-
-  static ageNames: string[] = [ ];
-  static experimentalBatchNames: string[] = [ ];
-  static pfuNames: string[] = [ ];
-  static tissueNames: string[] = [];
-  
   static colors = [
       '#1f77b4',  // muted blue
       '#ff7f0e',  // safety orange
@@ -58,100 +43,60 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
   constructor(props: GeneVisualizationProps, state: GeneVisualizationState) {
     super(props, state);
     this.state = {
-      conf: {
+      configure: {
         title: 'Example',
         errorLineMode: "lines",
         errorBars: false,    
         lineMode: 'lines+markers',
         ylabel: 'Gene Expression'    
       },
-      xaxis: "age",
-      series: "tissue",
-      figureTypeDialogOpen: false,
-      restrictionDialogOpen: false,
-      ageSelection: [],
-      experimentalBatchSelection: [],
-      pfuSelection: [],
-      tissueSelection: [],
+      figureType: {
+        xaxis: "age",
+        series: "tissue"
+      },
+      geneSelection: {
+        searchText: ""
+      },
+      restrictions: {
+        age: [],
+        experimentalBatch: [],
+        pfu: [],
+        tissue: []
+      },
       response: null
     };
-    this.handleFigureTypeCancelClick = this.handleFigureTypeCancelClick.bind(this);
-    this.handleFigureTypeOkClick = this.handleFigureTypeOkClick.bind(this);
-    this.handleSelectionCancelClick = this.handleSelectionCancelClick.bind(this);
-    this.handleSelectionOkClick = this.handleSelectionOkClick.bind(this);
-
-    axios.get(
-      "/api/all/list"
-    ).then(response => {
-      console.log("Response ok: ");
-      console.log(response.data);
-      GeneVisualization.ageNames = response.data["age"];
-      GeneVisualization.experimentalBatchNames = response.data["experimental_batch"];
-      GeneVisualization.pfuNames = response.data["pfu"];
-      GeneVisualization.tissueNames = response.data["tissue"];
-    }).catch(error => {
-      console.log("Error: ");
-      console.log(error);
-      GeneVisualization.ageNames = [];
-      GeneVisualization.experimentalBatchNames = [];
-      GeneVisualization.pfuNames = [];
-      GeneVisualization.tissueNames = [];
-    });
-  }
-
-  handleFigureTypeCancelClick() {
-    this.setState({
-      figureTypeDialogOpen: false
-    });    
-  }
-
-  handleFigureTypeOkClick() {
-    this.setState({
-      figureTypeDialogOpen: false
-    });    
-    this.updateFigure();
-  }
-  
-  handleSelectionCancelClick() {
-    this.setState({
-      restrictionDialogOpen: false
-    });
-  }
-
-  handleSelectionOkClick() {
-    this.setState({
-      restrictionDialogOpen: false
-    });
-    this.updateFigure();
   }
 
   updateFigure() {
+    console.log("UPDATE FIGURE: ");
+    console.log(this.state.figureType);
+
     var restrictions: any[] = [
       ["gene", "in", ["ENSMUSG00000000088", "ENSMUSG00000000001"]]
     ];
 
-    if (this.state.ageSelection && this.state.ageSelection.length > 0) {
-      restrictions.push(["age", "in", this.state.ageSelection]);
+    if (this.state.restrictions.age && this.state.restrictions.age.length > 0) {
+      restrictions.push(["age", "in", this.state.restrictions.age]);
     }
 
-    if (this.state.experimentalBatchSelection && this.state.experimentalBatchSelection.length > 0) {
-      restrictions.push(["experimental_batch", "in", this.state.experimentalBatchSelection]);
+    if (this.state.restrictions.experimentalBatch && this.state.restrictions.experimentalBatch.length > 0) {
+      restrictions.push(["experimental_batch", "in", this.state.restrictions.experimentalBatch]);
     }
 
-    if (this.state.pfuSelection && this.state.pfuSelection.length > 0) {
-      restrictions.push(["pfu", "in", this.state.pfuSelection]);
+    if (this.state.restrictions.pfu && this.state.restrictions.pfu.length > 0) {
+      restrictions.push(["pfu", "in", this.state.restrictions.pfu]);
     }
 
-    if (this.state.tissueSelection && this.state.tissueSelection.length > 0) {
-      restrictions.push(["tissue", "in", this.state.tissueSelection]);
+    if (this.state.restrictions.tissue && this.state.restrictions.tissue.length > 0) {
+      restrictions.push(["tissue", "in", this.state.restrictions.tissue]);
     }
 
     axios.post(
       "/api/timeseries",
       {
         "dataset": "mouse_aging",
-        "xaxis": this.state.xaxis,
-        "series": this.state.series,
+        "xaxis": this.state.figureType.xaxis,
+        "series": this.state.figureType.series,
         "restrictions": restrictions
       }
     ).then(response => {
@@ -169,12 +114,36 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
     });
   }
 
-  confGetState(): GeneViewConf {
-    return this.state.conf;
+  configureGetData(): GeneViewConfigureData {
+    return this.state.configure;
   }
 
-  confChanged(conf: GeneViewConf) {
-    this.setState({ conf: conf });
+  configureChanged(configure: GeneViewConfigureData) {
+    this.setState({ configure: configure }, this.updateFigure);
+  }
+
+  figureTypeGetData(): GeneViewFigureTypeData {
+    return this.state.figureType;
+  }
+
+  figureTypeChanged(figureType: GeneViewFigureTypeData) {
+    this.setState({ figureType: figureType }, this.updateFigure);
+  }
+
+  geneSelectionGetData(): GeneViewGeneSelectionData {
+    return this.state.geneSelection;
+  }
+
+  geneSelectionChanged(geneSelection: GeneViewGeneSelectionData) {
+    this.setState({ geneSelection: geneSelection }, this.updateFigure);
+  }
+
+  restrictionsGetData(): GeneViewRestrictionsData {
+    return this.state.restrictions;
+  }
+
+  restrictionsChanged(restrictions: GeneViewRestrictionsData) {
+    this.setState({ restrictions: restrictions }, this.updateFigure);
   }
 
   render() {
@@ -204,9 +173,9 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
           ymax.push(mean + std);
         }
 
-        if (this.state.conf.errorLineMode != null) {
+        if (this.state.configure.errorLineMode != null) {
           plots.push({
-            mode: this.state.conf.errorLineMode,
+            mode: this.state.configure.errorLineMode,
             line: {shape: 'spline', color: color, width: 0},
             showlegend: false,
             x: xvalues,
@@ -215,7 +184,7 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
             fill: null
           });
           plots.push({
-            mode: this.state.conf.errorLineMode,
+            mode: this.state.configure.errorLineMode,
             line: {shape: 'spline', color: color, width: 0},
             showlegend: false,
             x: xvalues,
@@ -226,9 +195,9 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
           });
         }
 
-        if (this.state.conf.errorBars) {
+        if (this.state.configure.errorBars) {
           plots.push({
-            mode: this.state.conf.lineMode,
+            mode: this.state.configure.lineMode,
             line: {shape: 'spline', color: color},
             name: name,
             x: xvalues,
@@ -237,7 +206,7 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
           });          
         } else {
           plots.push({
-            mode: this.state.conf.lineMode,
+            mode: this.state.configure.lineMode,
             line: {shape: 'spline', color: color},
             name: name,
             x: xvalues,
@@ -251,12 +220,12 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
 
     const xaxis = (this.state.response != null) ? this.state.response["xaxis"] : "";
     let layout = {
-      title: this.state.conf.title,
+      title: this.state.configure.title,
       xaxis: {
         title: xaxis
       },
       yaxis: {
-        title: this.state.conf.ylabel
+        title: this.state.configure.ylabel
       }
     };
 
@@ -273,113 +242,12 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
         'select2d'],
     };
 
-    const generateMenuItems = function (listNames: any[], listSelection: any[]) {
-      return listNames.map((name) => (
-        <MenuItem
-          key={name}
-          insetChildren={true}
-          checked={listSelection && listSelection.indexOf(name) > -1}
-          value={name}
-          primaryText={String(name)} />
-      ));        
-    }  
-    
-    const figureTypeActions = [
-      <FlatButton 
-        label="Cancel"
-        primary={false}
-        onClick={this.handleFigureTypeCancelClick} />,
-      <FlatButton 
-        label="Select"
-        primary={true}
-        onClick={this.handleFigureTypeOkClick} />
-    ];
-
-    const selectionActions = [
-      <FlatButton 
-        label="Cancel"
-        primary={false}
-        onClick={this.handleSelectionCancelClick} />,
-      <FlatButton 
-        label="Select"
-        primary={true}
-        onClick={this.handleSelectionOkClick} />
-    ];
-
     return (
       <div>
-        <GeneViewConfigure confGetState={this.confGetState.bind(this)} confChanged={this.confChanged.bind(this)} />
-        <FlatButton 
-          label="Open Figure Type"
-          primary={true}
-          onClick={() => this.setState({ figureTypeDialogOpen: true })} />
-
-        <FlatButton 
-          label="Open Selection"
-          primary={true}
-          onClick={() => this.setState({ restrictionDialogOpen: true })} />
-
-        <FlatButton 
-          label="Gene Selection"
-          primary={true} />
-
-        <Dialog 
-          open={this.state.figureTypeDialogOpen}
-          title="Figure Type"
-          actions={figureTypeActions}>
-            <SelectField
-              multiple={false}
-              hintText="Select X axis"
-              value={this.state.xaxis}
-              onChange={(event, index, newValue) => this.setState({ xaxis: newValue })}>
-                {generateMenuItems(GeneVisualization.dimensionNames, [this.state.xaxis])}
-            </SelectField>
-
-            <SelectField
-              multiple={false}
-              hintText="Select Series"
-              value={this.state.series}
-              onChange={(event, index, newValue) => this.setState({ series: newValue })}>
-                {generateMenuItems(GeneVisualization.dimensionNames, [this.state.series])}
-            </SelectField>
-        </Dialog>
-
-        <Dialog
-          open={this.state.restrictionDialogOpen}
-          title="Selection"
-          actions={selectionActions}>
-            <SelectField
-              multiple={true}
-              hintText="Select an age"
-              value={this.state.ageSelection}
-              onChange={(event, index, values) => this.setState({ ageSelection: values })}>
-                {generateMenuItems(GeneVisualization.ageNames, this.state.ageSelection)}
-            </SelectField>
-
-            <SelectField
-              multiple={true}
-              hintText="Select an experimental batch"
-              value={this.state.experimentalBatchSelection}
-              onChange={(event, index, values) => this.setState({ experimentalBatchSelection: values })}>
-                {generateMenuItems(GeneVisualization.experimentalBatchNames, this.state.experimentalBatchSelection)}
-            </SelectField>
-
-            <SelectField
-              multiple={true}
-              hintText="Select a flu"
-              value={this.state.pfuSelection}
-              onChange={(event, index, values) => this.setState({ pfuSelection: values })}>
-                {generateMenuItems(GeneVisualization.pfuNames, this.state.pfuSelection)}
-            </SelectField>
-            
-            <SelectField
-              multiple={true}
-              hintText="Select a tissue"
-              value={this.state.tissueSelection}
-              onChange={(event, index, values) => this.setState({ tissueSelection: values })}>
-                {generateMenuItems(GeneVisualization.tissueNames, this.state.tissueSelection)}
-            </SelectField>
-        </Dialog>
+        <GeneViewConfigure configureGetData={this.configureGetData.bind(this)} configureChanged={this.configureChanged.bind(this)} />
+        <GeneViewFigureType figureTypeGetData={this.figureTypeGetData.bind(this)} figureTypeChanged={this.figureTypeChanged.bind(this)} />
+        <GeneViewRestrictions restrictionsGetData={this.restrictionsGetData.bind(this)} restrictionsChanged={this.restrictionsChanged.bind(this)} />
+        <GeneViewGeneSelection geneSelectionGetData={this.geneSelectionGetData.bind(this)} geneSelectionChanged={this.geneSelectionChanged.bind(this)} />
 
         <PlotlyChart data={plots} layout={layout} config={config}
           onClick={({ points, event }) => console.log(points, event)} />
