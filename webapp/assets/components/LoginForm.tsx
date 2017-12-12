@@ -22,6 +22,10 @@ export class LoginForm extends React.Component<LoginFormProps, LoginFormState> {
             password: "",
         };
         this.handleClick = this.handleClick.bind(this);
+
+        this.props = {
+            login: this.props.login.bind(this)
+        };
     }
 
     render() {

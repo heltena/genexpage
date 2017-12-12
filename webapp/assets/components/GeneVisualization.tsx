@@ -10,17 +10,12 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import { lchmod } from 'fs';
 
-export interface GeneVisualizationConf {
-  title: string;
-  errorLineMode: string;
-  errorBars: boolean;
-  lineMode: string;
-  ylabel: string;
-}
+import { GeneViewConf, GeneViewConfigure } from './GeneViewConfigure';
+
 
 export interface GeneVisualizationProps { }
 export interface GeneVisualizationState {
-  conf: GeneVisualizationConf;
+  conf: GeneViewConf;
   xaxis: string;
   series: string;
   figureTypeDialogOpen: boolean;
@@ -40,18 +35,6 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
     "gene",
     "pfu",
     "tissue",
-  ];
-
-  static errorLineModeValues = [
-    "lines",
-    "markers",
-    "lines+markers"
-  ];
-
-  static lineModeValues = [
-    "lines",
-    "markers",
-    "lines+markers"
   ];
 
   static ageNames: string[] = [ ];
@@ -186,6 +169,14 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
     });
   }
 
+  confGetState(): GeneViewConf {
+    return this.state.conf;
+  }
+
+  confChanged(conf: GeneViewConf) {
+    this.setState({ conf: conf });
+  }
+
   render() {
     var data: any[] = [];
     var plots: any[] = [];
@@ -317,6 +308,7 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
 
     return (
       <div>
+        <GeneViewConfigure confGetState={this.confGetState.bind(this)} confChanged={this.confChanged.bind(this)} />
         <FlatButton 
           label="Open Figure Type"
           primary={true}
