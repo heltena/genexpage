@@ -32,6 +32,13 @@ def tunneling():
     local("ssh -L7777:localhost:3306 {}".format(env.host))
 
 
+@task
+def gene_search(searchText):
+    r = requests.get("{}/api/gene/search/{}".format(env.test_url, searchText))
+    print("Status: {}".format(r))
+    print("Result: {}".format(r.json()))
+
+
 @task 
 def lists():
     for name in ['age', 'experimentalbatch', 'pfu', 'tissue', 'all']:

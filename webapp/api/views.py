@@ -2,13 +2,14 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.core.serializers.json import DjangoJSONEncoder
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
 
 from api.tags import method
 from collections import defaultdict
 import json
 import numpy as np
 from api.data_alg import generate_data
-from api.models import Age, Pfu, ExperimentalBatch, Tissue
+from api.models import Age, Pfu, ExperimentalBatch, Tissue, Genes
 
 
 class NumpyEncoder(DjangoJSONEncoder):
@@ -25,10 +26,31 @@ class NumpyEncoder(DjangoJSONEncoder):
 
 @csrf_exempt
 @method(allowed=['GET'])
+def gene_search(request, text):
+    genes = Genes.objects.filter(
+        Q(gene_ensembl__icontains=text) | 
+        Q(Chr__icontains=text) |
+        Q(symbol_ncbi__icontains=text))[0:11]
+
+    values = []
+    for value in genes[0:10]:
+        values.append([value.gene_ensembl, value.Chr, value.symbol_ncbi])
+
+    result = {
+        "searchText": text,
+        "hasMore": len(genes) == 11,
+        "values": values
+    }
+    return JsonResponse(result)
+
+
+@csrf_exempt
+@method(allowed=['GET'])
 def age_list(request):
     ages = Age.objects.all().order_by("name")
     result = [t.name for t in ages]
     return JsonResponse(result, safe=False)
+
 
 @csrf_exempt
 @method(allowed=['GET'])
