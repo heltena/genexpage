@@ -14,6 +14,7 @@ import { lchmod } from 'fs';
 
 export interface GeneViewConfigureData {
     title: string;
+    geneFamilyName: string;
     errorLineMode: string;
     errorBars: boolean;
     lineMode: string;
@@ -23,6 +24,7 @@ export interface GeneViewConfigureData {
 export interface GeneViewConfigureState {
     dialogOpen: boolean;
     title: string;
+    geneFamilyName: string;
     errorLineMode: string;
     errorBars: boolean;
     lineMode: string;
@@ -35,6 +37,12 @@ export interface GeneViewConfigureProps {
 }
 
 export class GeneViewConfigure extends React.Component<GeneViewConfigureProps, GeneViewConfigureState> {
+
+    static geneFamilyNameValues = [
+        "ENS",
+        "Chr",
+        "NCBI"
+    ];
 
     static errorLineModeValues = [
         "lines",
@@ -53,6 +61,7 @@ export class GeneViewConfigure extends React.Component<GeneViewConfigureProps, G
     this.state = {
         dialogOpen: false,
         title: 'Example',
+        geneFamilyName: "NCBI",        
         errorLineMode: "lines",
         errorBars: false,    
         lineMode: 'lines+markers',
@@ -68,6 +77,7 @@ export class GeneViewConfigure extends React.Component<GeneViewConfigureProps, G
       this.setState({
         dialogOpen: true,
         title: data.title,
+        geneFamilyName: data.geneFamilyName,
         errorLineMode: data.errorLineMode,
         errorBars: data.errorBars,
         lineMode: data.lineMode,
@@ -87,6 +97,7 @@ export class GeneViewConfigure extends React.Component<GeneViewConfigureProps, G
     });
     const data: GeneViewConfigureData = {
         title: this.state.title,
+        geneFamilyName: this.state.geneFamilyName,
         errorLineMode: this.state.errorLineMode,
         errorBars: this.state.errorBars,
         lineMode: this.state.lineMode,
@@ -107,6 +118,14 @@ export class GeneViewConfigure extends React.Component<GeneViewConfigureProps, G
         onClick={this.handleOkClick} />
     ];
 
+    const geneFamilyNameMenuItems = GeneViewConfigure.geneFamilyNameValues.map((name) => (
+        <MenuItem
+            key={name}
+            insetChildren={true}
+            value={name}
+            primaryText={name} />
+    ));
+    
     const errorLineModeMenuItems = GeneViewConfigure.errorLineModeValues.map((name) => (
         <MenuItem
             key={name}
@@ -140,6 +159,13 @@ export class GeneViewConfigure extends React.Component<GeneViewConfigureProps, G
                 floatingLabelText="Title"
                 value={this.state.title}
                 onChange={(event, newValue) => this.setState({title: newValue})} />
+
+            <SelectField 
+                floatingLabelText="Gene family name"
+                value={this.state.geneFamilyName}
+                onChange={(event, index, newValue) => this.setState({ geneFamilyName: newValue })}>
+                    {geneFamilyNameMenuItems}
+            </SelectField>
 
             <SelectField
                 floatingLabelText="Error line mode"

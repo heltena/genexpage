@@ -30,7 +30,7 @@ def gene_search(request, text):
     genes = Genes.objects.filter(
         Q(gene_ensembl__icontains=text) | 
         Q(Chr__icontains=text) |
-        Q(symbol_ncbi__icontains=text))[0:11]
+        Q(symbol_ncbi__icontains=text)).order_by("gene_ensembl")[0:11]
 
     values = []
     for value in genes[0:10]:
@@ -99,7 +99,8 @@ def time_series(request):
     xaxis = body.get("xaxis", None)
     series = body.get("series", None)
     restrictions = body.get("restrictions", [])
-    
+    geneFamilyName = body.get("geneFamilyName", "NCBI")
+
     if xaxis is None:
         result = {"ok": False,
                   "message": "xaxis not valid"}
@@ -110,5 +111,5 @@ def time_series(request):
                   "message": "series not valid"}
         return JsonResponse(result)
 
-    result = generate_data(xaxis, series, restrictions)
+    result = generate_data(xaxis, series, restrictions, geneFamilyName)
     return JsonResponse(result)

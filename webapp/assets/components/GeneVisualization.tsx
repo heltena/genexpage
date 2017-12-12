@@ -45,6 +45,7 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
     this.state = {
       configure: {
         title: 'Example',
+        geneFamilyName: "NCBI",
         errorLineMode: "lines",
         errorBars: false,    
         lineMode: 'lines+markers',
@@ -55,7 +56,8 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
         series: "tissue"
       },
       geneSelection: {
-        searchText: ""
+        searchText: "",
+        selectedGenes: []
       },
       restrictions: {
         age: [],
@@ -71,9 +73,13 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
     console.log("UPDATE FIGURE: ");
     console.log(this.state.figureType);
 
-    var restrictions: any[] = [
-      ["gene", "in", ["ENSMUSG00000000088", "ENSMUSG00000000001"]]
-    ];
+    var restrictions: any[] = [];
+
+    if (this.state.geneSelection.selectedGenes && this.state.geneSelection.selectedGenes.length > 0) {
+      restrictions.push(["gene", "in", this.state.geneSelection.selectedGenes]);
+    } else {
+      restrictions.push(["gene", "in", ["ENSMUSG00000000001"]]);
+    }
 
     if (this.state.restrictions.age && this.state.restrictions.age.length > 0) {
       restrictions.push(["age", "in", this.state.restrictions.age]);
@@ -97,7 +103,8 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
         "dataset": "mouse_aging",
         "xaxis": this.state.figureType.xaxis,
         "series": this.state.figureType.series,
-        "restrictions": restrictions
+        "restrictions": restrictions,
+        "geneFamilyName": this.state.configure.geneFamilyName
       }
     ).then(response => {
       console.log("Response ok: ");

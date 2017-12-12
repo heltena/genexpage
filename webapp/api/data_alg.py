@@ -1,4 +1,4 @@
-from api.models import Meta, Counts
+from api.models import Meta, Counts, Genes
 from django.db import connection
 from collections import defaultdict
 import numpy as np
@@ -146,7 +146,25 @@ def get_xvalues_serie_gene(columns, xaxis):
     return xvalues, groups
 
 
-def generate_data_xaxis_gene(series, restrictions):
+def convert_gene_family_name(ens, family):
+    if family == "ENS":
+        return ens
+    try:
+        values = Genes.objects.filter(gene_ensembl=ens)
+        if len(values) == 0:
+            return ens
+        value = values[0]
+        if family == "Chr":
+            return value.Chr
+        elif family == "NCBI":
+            return value.symbol_ncbi
+        else:
+            return ens
+    except:
+        return ens
+
+
+def generate_data_xaxis_gene(series, restrictions, geneFamilyName):
     columns = get_column_names(restrictions)
     groups = get_groups_gene(columns, series)
     where = get_where(restrictions)
@@ -178,13 +196,14 @@ def generate_data_xaxis_gene(series, restrictions):
                 std = np.nanstd(v)
             series_values[key].append((mean, std))
 
+    xvalues = [convert_gene_family_name(x, geneFamilyName) for x in xvalues]
     return {"ok": True,
             "xaxis": "gene",
             "xvalues": xvalues, 
             "series": series_values}
 
 
-def generate_data_series_gene(xaxis, restrictions):
+def generate_data_series_gene(xaxis, restrictions, geneFamilyName):
     columns = get_column_names(restrictions)
     xvalues, groups = get_xvalues_serie_gene(columns, xaxis)
     where = get_where(restrictions)
@@ -213,10 +232,20 @@ def generate_data_series_gene(xaxis, restrictions):
                 std = np.nanstd(v)
             series_values[serie].append((mean, std))
 
+    new_series_values = {}
+    for k, v in series_values.items():
+        new_k = convert_gene_family_name(k, geneFamilyName)
+        proposed_new_k = new_k
+        count = 1
+        while proposed_new_k in new_series_values:
+            proposed_new_k = "{}_{}".format(new_k, count)
+            count += 1
+        new_series_values[proposed_new_k] = v
+
     return {"ok": True,
             "xaxis": xaxis,
             "xvalues": xvalues,
-            "series": series_values}
+            "series": new_series_values}
 
 
 def generate_data_xaxis(xaxis, series, restrictions):
@@ -264,10 +293,10 @@ def generate_data_xaxis(xaxis, series, restrictions):
             "series": series_values}
 
 
-def generate_data(xaxis, series, restrictions):
+def generate_data(xaxis, series, restrictions, geneFamilyName):
     if xaxis == "gene":
-        return generate_data_xaxis_gene(series, restrictions)
+        return generate_data_xaxis_gene(series, restrictions, geneFamilyName)
     elif series == "gene":
-        return generate_data_series_gene(xaxis, restrictions)
+        return generate_data_series_gene(xaxis, restrictions, geneFamilyName)
     else:
         return generate_data_xaxis(xaxis, series, restrictions)

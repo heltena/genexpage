@@ -56,8 +56,9 @@ def timeseries1():
         "series": "age",
         "restrictions": [
             ["tissue", "in", ["AM", "Lung"]],
-            ["flu", "eq", 150],
-            ["gene", "in", ["ENSMUSG00000000088", "ENSMUSG00000000001"]]]}
+            ["pfu", "eq", 150],
+            ["gene", "in", ["ENSMUSG00000000088", "ENSMUSG00000000001"]]],
+        "geneFamilyName": "NCBI"}
     r = requests.post("{}/api/timeseries".format(env.test_url), json=value)
     print("Status: {}".format(r))
     print("Result: {}".format(r.json()))
@@ -71,8 +72,9 @@ def timeseries2():
         "series": "age",
         "restrictions": [
             ["tissue", "in", ["AM", "Lung"]],
-            ["flu", "eq", 150],
-            ["gene", "in", ["ENSMUSG00000000088", "ENSMUSG00000000001"]]]}
+            ["pfu", "eq", 150],
+            ["gene", "in", ["ENSMUSG00000000088", "ENSMUSG00000000001"]]],
+        "geneFamilyName": "NCBI"}
     r = requests.post("{}/api/timeseries".format(env.test_url), json=value)
     print("Status: {}".format(r))
     print("Result: {}".format(r.json()))
