@@ -146,17 +146,17 @@ def get_xvalues_serie_gene(columns, xaxis):
     return xvalues, groups
 
 
-def convert_gene_family_name(ens, family):
-    if family == "ENS":
+def convert_gene_identifier_name(ens, identifier):
+    if identifier == "ENSEMBL_GENE_ID":
         return ens
     try:
         values = Genes.objects.filter(gene_ensembl=ens)
         if len(values) == 0:
             return ens
         value = values[0]
-        if family == "Chr":
-            return value.Chr
-        elif family == "NCBI":
+        if identifier == "ENTREZ_GENE_ID":
+            return value.gene_ncbi
+        elif identifier == "GENE_SYMBOL":
             return value.symbol_ncbi
         else:
             return ens
@@ -164,7 +164,7 @@ def convert_gene_family_name(ens, family):
         return ens
 
 
-def generate_data_xaxis_gene(series, restrictions, geneFamilyName):
+def generate_data_xaxis_gene(series, restrictions, geneIdentifier):
     columns = get_column_names(restrictions)
     groups = get_groups_gene(columns, series)
     where = get_where(restrictions)
@@ -196,14 +196,14 @@ def generate_data_xaxis_gene(series, restrictions, geneFamilyName):
                 std = np.nanstd(v)
             series_values[key].append((mean, std))
 
-    xvalues = [convert_gene_family_name(x, geneFamilyName) for x in xvalues]
+    xvalues = [convert_gene_identifier_name(x, geneIdentifier) for x in xvalues]
     return {"ok": True,
             "xaxis": "gene",
             "xvalues": xvalues, 
             "series": series_values}
 
 
-def generate_data_series_gene(xaxis, restrictions, geneFamilyName):
+def generate_data_series_gene(xaxis, restrictions, geneIdentifier):
     columns = get_column_names(restrictions)
     xvalues, groups = get_xvalues_serie_gene(columns, xaxis)
     where = get_where(restrictions)
@@ -234,7 +234,7 @@ def generate_data_series_gene(xaxis, restrictions, geneFamilyName):
 
     new_series_values = {}
     for k, v in series_values.items():
-        new_k = convert_gene_family_name(k, geneFamilyName)
+        new_k = convert_gene_identifier_name(k, geneIdentifier)
         proposed_new_k = new_k
         count = 1
         while proposed_new_k in new_series_values:
@@ -293,10 +293,10 @@ def generate_data_xaxis(xaxis, series, restrictions):
             "series": series_values}
 
 
-def generate_data(xaxis, series, restrictions, geneFamilyName):
+def generate_data(xaxis, series, restrictions, geneIdentifier):
     if xaxis == "gene":
-        return generate_data_xaxis_gene(series, restrictions, geneFamilyName)
+        return generate_data_xaxis_gene(series, restrictions, geneIdentifier)
     elif series == "gene":
-        return generate_data_series_gene(xaxis, restrictions, geneFamilyName)
+        return generate_data_series_gene(xaxis, restrictions, geneIdentifier)
     else:
         return generate_data_xaxis(xaxis, series, restrictions)

@@ -99,7 +99,7 @@ def time_series(request):
     xaxis = body.get("xaxis", None)
     series = body.get("series", None)
     restrictions = body.get("restrictions", [])
-    geneFamilyName = body.get("geneFamilyName", "NCBI")
+    geneIdentifier = body.get("geneIdentifier", "GENE_SYMBOL")
 
     if xaxis is None:
         result = {"ok": False,
@@ -111,5 +111,5 @@ def time_series(request):
                   "message": "series not valid"}
         return JsonResponse(result)
 
-    result = generate_data(xaxis, series, restrictions, geneFamilyName)
+    result = generate_data(xaxis, series, restrictions, geneIdentifier)
     return JsonResponse(result)

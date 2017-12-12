@@ -45,7 +45,7 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
     this.state = {
       configure: {
         title: 'Example',
-        geneFamilyName: "NCBI",
+        geneIdentifier: "GENE_SYMBOL",
         errorLineMode: "lines",
         errorBars: false,    
         lineMode: 'lines+markers',
@@ -104,7 +104,7 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
         "xaxis": this.state.figureType.xaxis,
         "series": this.state.figureType.series,
         "restrictions": restrictions,
-        "geneFamilyName": this.state.configure.geneFamilyName
+        "geneIdentifier": this.state.configure.geneIdentifier
       }
     ).then(response => {
       console.log("Response ok: ");

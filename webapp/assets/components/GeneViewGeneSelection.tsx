@@ -165,9 +165,9 @@ export class GeneViewGeneSelection extends React.Component<GeneViewGeneSelection
                   displaySelectAll={false}
                   enableSelectAll={false}>
                 <TableRow>
-                  <TableHeaderColumn>ENS</TableHeaderColumn>
-                  <TableHeaderColumn>Chr</TableHeaderColumn>
-                  <TableHeaderColumn>NCBI</TableHeaderColumn>
+                  <TableHeaderColumn>ENSEMBL_GENE_ID</TableHeaderColumn>
+                  <TableHeaderColumn>ENTREZ_GENE_ID</TableHeaderColumn>
+                  <TableHeaderColumn>GENE_SYMBOL</TableHeaderColumn>
                 </TableRow>
               </TableHeader>
               <TableBody
