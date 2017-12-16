@@ -2,6 +2,7 @@ import axios from 'axios';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import * as React from 'react';
 
+import { GeneVisualizationDebug } from "./GeneVisualizationDebug";
 import { GeneVisualization } from "./GeneVisualization";
 
 import { LoginForm } from "./LoginForm";
@@ -76,12 +77,13 @@ export class App extends React.Component<{}, AppState> {
             <div style={{ paddingTop: lineIncrement }} >
                 <LoggedToolbar style={{position: "fixed", top:"0", left:"0", width:"100%"}} username={this.state.username} logout={() => this.logout()} />
                 <Tabs>
-                    <Tab label="Gene Visualization">
+                    <Tab label="Gene Visualization (DEBUG)">
+                    &nbsp;
+                        <GeneVisualizationDebug />
+                    </Tab>
+                    <Tab label="Gene Visualization (RELEASE)">
                     &nbsp;
                         <GeneVisualization />
-                    </Tab>
-                    <Tab label="Dashboard">
-                    &nbsp;
                     </Tab>
                 </Tabs>
             </div>
