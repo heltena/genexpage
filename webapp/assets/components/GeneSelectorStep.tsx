@@ -14,6 +14,7 @@ export interface GeneSelectorStepData {
 
 export interface GeneSelectorStepProps {
     actions: any;
+    errorActions: any;
     getData(): GeneSelectorStepData;
     changed(data: GeneSelectorStepData): void;
 }
@@ -38,6 +39,7 @@ export class GeneSelectorStep extends React.Component<GeneSelectorStepProps, Gen
         };
 
         this.handleSearch = this.handleSearch.bind(this);
+        this.handleClearAll = this.handleClearAll.bind(this);
         this.handleRowSelection = this.handleRowSelection.bind(this);
 
         this.handleSearch(null);
@@ -70,6 +72,13 @@ export class GeneSelectorStep extends React.Component<GeneSelectorStepProps, Gen
                 slideValues: [],
                 slideSelectedGenes: []
             }, this.callback);
+        });
+    }
+
+    handleClearAll(event: any) {
+        this.setState({
+            selectedGenes: [],
+            slideSelectedGenes: [],
         });
     }
 
@@ -130,6 +139,7 @@ export class GeneSelectorStep extends React.Component<GeneSelectorStepProps, Gen
             buttons: {
             }
         }
+        const actions = this.state.selectedGenes.length == 0 ? this.props.errorActions : this.props.actions;
         return (
             <div style={styles.div}>
                 <Card>
@@ -145,6 +155,12 @@ export class GeneSelectorStep extends React.Component<GeneSelectorStepProps, Gen
                             label="Search"
                             primary={true}
                             onClick={this.handleSearch} />
+
+                        <FlatButton 
+                            label="Clear all"
+                            primary={true}
+                            disabled={this.state.selectedGenes.length == 0}
+                            onClick={this.handleClearAll} />
 
                         <Table
                             onRowSelection={this.handleRowSelection}
@@ -166,7 +182,7 @@ export class GeneSelectorStep extends React.Component<GeneSelectorStepProps, Gen
                         </Table>
                     </CardText>
                     <CardActions>
-                        {this.props.actions}
+                        {actions}
                     </CardActions>
                 </Card>
             </div>

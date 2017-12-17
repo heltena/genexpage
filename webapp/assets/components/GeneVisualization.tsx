@@ -275,6 +275,7 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
                     <GeneSelectorStep
                         getData={this.geneSelectorStepGetData.bind(this)}
                         changed={this.geneSelectorStepChanged.bind(this)}
+                        errorActions={errorActions}
                         actions={actions} />
                 break;
             case StepperType.Restrictions:
