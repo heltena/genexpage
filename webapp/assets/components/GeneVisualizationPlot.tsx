@@ -17,8 +17,8 @@ export interface GeneVisualizationPlotData {
     valid: boolean;
     plotType: string;
     title: string;
-    xaxisLabel: string;
-    yaxisLabel: string;
+    xAxisLabel: string;
+    yAxisLabel: string;
     xvalues: any[];
     series: any[];
 }
@@ -143,10 +143,12 @@ export class GeneVisualizationPlot extends React.Component<GeneVisualizationPlot
         let layout = {
             title: plotData.title,
             xaxis: {
-                title: plotData.xaxisLabel
+                title: plotData.xAxisLabel,
+                rangemode: "normal"
             },
             yaxis: {
-                title: plotData.yaxisLabel
+                title: plotData.yAxisLabel,
+                rangemode: "tozero"
             }
         };
 

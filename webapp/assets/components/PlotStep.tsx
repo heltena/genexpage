@@ -42,6 +42,7 @@ export interface PlotStepState {
     geneIdentifier: string;
     
     plot?: GeneVisualizationPlotData;
+    error: boolean
 }
 
 export class PlotStep extends React.Component<PlotStepProps, PlotStepState> {
@@ -60,7 +61,8 @@ export class PlotStep extends React.Component<PlotStepProps, PlotStepState> {
             xAxisLabel: data.xAxisLabel,
             yAxisLabel: data.yAxisLabel,
             geneIdentifier: data.geneIdentifier,
-            plot: null
+            plot: null,
+            error: false
         };
         this.updateFigure();
     }
@@ -97,7 +99,10 @@ export class PlotStep extends React.Component<PlotStepProps, PlotStepState> {
                 "xaxis": this.state.xaxis,
                 "series": this.state.series,
                 "restrictions": restrictions,
-                "geneIdentifier": this.state.geneIdentifier
+                "geneIdentifier": this.state.geneIdentifier,
+                "title": this.state.title,
+                "xAxisLabel": this.state.xAxisLabel,
+                "yAxisLabel": this.state.yAxisLabel
             }
         ).then(response => {
             console.log("Response ok: ");
@@ -106,21 +111,23 @@ export class PlotStep extends React.Component<PlotStepProps, PlotStepState> {
             const newPlot: GeneVisualizationPlotData = {
                 valid: true,
                 plotType: "lines",
-                title: this.state.title,
-                xaxisLabel: this.state.xAxisLabel,
-                yaxisLabel: this.state.yAxisLabel,
+                title: response.data["title"],
+                xAxisLabel: response.data["xAxisLabel"],
+                yAxisLabel: response.data["yAxisLabel"],
                 xvalues: response.data["xvalues"],
                 series: response.data["series"]
             };
 
             this.setState({
-                plot: newPlot
+                plot: newPlot,
+                error: false
             });
         }).catch(error => {
             console.log("Error: ");
             console.log(error);
             this.setState({
-                plot: null
+                plot: null,
+                error: true
             });
         });
     }
@@ -136,11 +143,14 @@ export class PlotStep extends React.Component<PlotStepProps, PlotStepState> {
             }
         };
 
-        const plot: any = this.state.plot == null ? 
-            <div>&nbsp</div> 
-        : 
-            <GeneVisualizationPlot plotGetData={this.plotGetData.bind(this)} />
-        ;
+        var plot: any;
+        if (this.state.error) {
+            plot = <div>There is an error on the selection.</div>
+        } else if (this.state.plot == null) {
+            plot = <div>Loading...</div>
+        } else {
+            plot = <GeneVisualizationPlot plotGetData={this.plotGetData.bind(this)} />
+        }
 
         return (
             <div style={style.div}>

@@ -293,10 +293,59 @@ def generate_data_xaxis(xaxis, series, restrictions):
             "series": series_values}
 
 
-def generate_data(xaxis, series, restrictions, geneIdentifier):
+def generate_data(xaxis, series, restrictions, geneIdentifier, title, xAxisLabel, yAxisLabel):
+    result = None
     if xaxis == "gene":
-        return generate_data_xaxis_gene(series, restrictions, geneIdentifier)
+        result = generate_data_xaxis_gene(series, restrictions, geneIdentifier)
     elif series == "gene":
-        return generate_data_series_gene(xaxis, restrictions, geneIdentifier)
+        result = generate_data_series_gene(xaxis, restrictions, geneIdentifier)
+        gene_names = result["series"].keys()
     else:
-        return generate_data_xaxis(xaxis, series, restrictions)
+        result = generate_data_xaxis(xaxis, series, restrictions)
+
+    gene_names = []
+    pfu_names = []
+    tissue_names = []
+    for restriction in restrictions:
+        dimension, op, value = restriction
+        if dimension == "gene":
+            if op == "eq":
+                gene_names = [value]
+            elif op == "in":
+                gene_names = value
+        elif dimension == "pfu":
+            if op == "eq":
+                pfu_names = [value]
+            elif op == "in":
+                pfu_names = value
+        elif dimension == "tissue":
+            if op == "eq":
+                tissue_names = [value]
+            elif op == "in":
+                tissue_names = value
+
+    gene_names = [convert_gene_identifier_name(ens, geneIdentifier) for ens in gene_names]
+    
+    if xaxis == "gene":
+        gene_names = result["xvalues"]
+    elif series == "gene":
+        gene_names = result["series"].keys()
+
+    if xaxis == "pfu":
+        pfu_names = result["xvalues"]
+    elif series == "pfu":
+        pfu_names = result["series"].keys()
+    
+    if xaxis == "tissue":
+        tissue_names = result["xvalues"]
+    elif series == "tissue":
+        tissue_names = result["series"].keys()
+
+    gene_names = ", ".join([str(s) for s in gene_names])
+    pfu_names = ", ".join([str(s) for s in pfu_names])
+    tissue_names = ", ".join([str(s) for s in tissue_names])
+
+    result["title"] = title.format(gene_names=gene_names, pfu_names=pfu_names, tissue_names=tissue_names)
+    result["xAxisLabel"] = xAxisLabel.format(gene_names=gene_names, pfu_names=pfu_names, tissue_names=tissue_names)
+    result["yAxisLabel"] = yAxisLabel.format(gene_names=gene_names, pfu_names=pfu_names, tissue_names=tissue_names)
+    return result

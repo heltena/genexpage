@@ -108,6 +108,9 @@ export class AppearanceStep extends React.Component<AppearanceStepProps, Appeara
                 <Card>
                     <CardTitle title="Appearance" />
                     <CardText>
+                        <p>
+                            You can use the tags: {'{gene_names}, {pfu_names}, {tissue_names}'} to substitute their values.
+                        </p>
                         <TextField style={style.field}
                             floatingLabelText="Title"
                             value={this.state.title}
