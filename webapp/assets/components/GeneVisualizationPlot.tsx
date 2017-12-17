@@ -56,7 +56,7 @@ export class GeneVisualizationPlot extends React.Component<GeneVisualizationPlot
         const plotData = this.props.plotGetData();
 
         if (! plotData.valid) {
-            return <div />;
+            return <div />
         }
 
         var errorBars: boolean;
