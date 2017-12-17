@@ -16,6 +16,9 @@ export interface PlotStepData {
     pfu: string[];
     tissue: string[];
 
+    title: string;
+    xAxisLabel: string;
+    yAxisLabel: string;
     geneIdentifier: string;
 }
 
@@ -33,6 +36,9 @@ export interface PlotStepState {
     pfu: string[];
     tissue: string[];
 
+    title: string;
+    xAxisLabel: string;
+    yAxisLabel: string;
     geneIdentifier: string;
     
     plot?: GeneVisualizationPlotData;
@@ -50,6 +56,9 @@ export class PlotStep extends React.Component<PlotStepProps, PlotStepState> {
             age: data.age,
             pfu: data.pfu,
             tissue: data.tissue,
+            title: data.title,
+            xAxisLabel: data.xAxisLabel,
+            yAxisLabel: data.yAxisLabel,
             geneIdentifier: data.geneIdentifier,
             plot: null
         };
@@ -97,9 +106,9 @@ export class PlotStep extends React.Component<PlotStepProps, PlotStepState> {
             const newPlot: GeneVisualizationPlotData = {
                 valid: true,
                 plotType: "lines",
-                title: "Example",
-                xaxisLabel: "xaxis",
-                yaxisLabel: "yaxis",
+                title: this.state.title,
+                xaxisLabel: this.state.xAxisLabel,
+                yaxisLabel: this.state.yAxisLabel,
                 xvalues: response.data["xvalues"],
                 series: response.data["series"]
             };

@@ -35,7 +35,10 @@ export interface GeneVisualizationData {
     pfu: string[];
     tissue: string[];
 
-    geneIdentifier: string,        
+    title: string;
+    xAxisLabel: string;
+    yAxisLabel: string;
+    geneIdentifier: string;      
 }
 
 export interface GeneVisualizationProps {
@@ -63,6 +66,9 @@ export interface GeneVisualizationState {
     pfu: string[];
     tissue: string[];
 
+    title: string;
+    xAxisLabel: string;
+    yAxisLabel: string;
     geneIdentifier: string;
 }
 
@@ -83,6 +89,9 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
             pfu: [],
             tissue: [],
 
+            title: "<title>",
+            xAxisLabel: "<x-axis>",
+            yAxisLabel: "<y-axis>",
             geneIdentifier: "GENE_SYMBOL",
         };
 
@@ -139,6 +148,9 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
 
     appearanceStepGetData(): AppearanceStepData {
         const data: AppearanceStepData = {
+            title: this.state.title,
+            xAxisLabel: this.state.xAxisLabel,
+            yAxisLabel: this.state.yAxisLabel,
             geneIdentifier: this.state.geneIdentifier
         };
         return data;
@@ -146,6 +158,9 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
 
     appearanceStepChanged(data: AppearanceStepData) {
         this.setState({
+            title: data.title,
+            xAxisLabel: data.xAxisLabel,
+            yAxisLabel: data.yAxisLabel,
             geneIdentifier: data.geneIdentifier
         });
     }
@@ -158,6 +173,9 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
             age: this.state.age,
             pfu: this.state.pfu,
             tissue: this.state.tissue,
+            title: this.state.title,
+            xAxisLabel: this.state.xAxisLabel,
+            yAxisLabel: this.state.yAxisLabel,
             geneIdentifier: this.state.geneIdentifier
         };
         return data;
@@ -205,17 +223,6 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
             case StepperType.Plot:
                 break;
         }
-    }
-    
-    generateMenuItems(listNames: any[], listSelection: any[]) {
-        return listNames.map((name) => (
-          <MenuItem
-            key={name}
-            insetChildren={true}
-            checked={listSelection && listSelection.indexOf(name) > -1}
-            value={name}
-            primaryText={String(name)} />
-        ));        
     }
 
     render() {
