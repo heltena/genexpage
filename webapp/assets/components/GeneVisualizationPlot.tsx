@@ -59,20 +59,16 @@ export class GeneVisualizationPlot extends React.Component<GeneVisualizationPlot
             return <div />
         }
 
-        var errorBars: boolean;
-        var lineMode: string;
-        var errorLineMode: string;
-
         if (plotData.plotType == "bars") {
-            errorBars = true;
-            lineMode = "markers";
-            errorLineMode = "markers";
+            return this.renderBars(plotData);
         } else if (plotData.plotType == "lines") {
-            errorBars = false;
-            lineMode = "lines+markers";
-            errorLineMode = "lines+markers";
+            return this.renderLines(plotData);
+        } else {
+            return <div>Error</div>
         }
+    }
 
+    renderBars(plotData: GeneVisualizationPlotData) {
         var data: any[] = [];
         var plots: any[] = [];
 
@@ -95,46 +91,106 @@ export class GeneVisualizationPlot extends React.Component<GeneVisualizationPlot
                 ymax.push(mean + std);
             }
 
-            if (errorLineMode != null) {
-                plots.push({
-                    mode: errorLineMode,
-                    line: { shape: 'spline', color: color, width: 0 },
-                    showlegend: false,
-                    x: plotData.xvalues,
-                    y: ymin,
-                    hoverinfo: "none",
-                    fill: null
-                });
-                plots.push({
-                    mode: errorLineMode,
-                    line: { shape: 'spline', color: color, width: 0 },
-                    showlegend: false,
-                    x: plotData.xvalues,
-                    y: ymax,
-                    hoverinfo: "none",
-                    fill: 'tonexty',
-                    opacity: 0.5
-                });
+            plots.push({
+                type: "bar",
+                bar: { color: color },
+                name: name,
+                x: plotData.xvalues,
+                y: ymean,
+                error_y: {
+                    type: "data",
+                    array: ystd,
+                    visible: true
+                }
+            });
+
+            index += 1;
+        }
+
+
+        let layout = {
+            title: plotData.title,
+            xaxis: {
+                title: plotData.xAxisLabel,
+                rangemode: "normal"
+            },
+            yaxis: {
+                title: plotData.yAxisLabel,
+                rangemode: "tozero"
+            }
+        };
+
+        let config = {
+            displayModeBar: true,
+            displaylogo: false,
+            showTips: false,
+            modeBarButtonsToRemove: [
+                'sendDataToCloud',
+                'autoScale2d',
+                'hoverClosestCartesian',
+                'hoverCompareCartesian',
+                'lasso2d',
+                'select2d'],
+        };
+
+        return (
+            <PlotlyChart 
+                data={plots} 
+                layout={layout} 
+                config={config} />
+        );
+    }
+
+    renderLines(plotData: GeneVisualizationPlotData) {
+        var data: any[] = [];
+        var plots: any[] = [];
+
+        var index = 0;
+        for (let name in plotData.series) {
+            const values = plotData.series[name];
+            var ymean: number[] = [];
+            var ystd: number[] = [];
+            var ymin: number[] = [];
+            var ymax: number[] = [];
+
+            var color = GeneVisualizationPlot.colors[index % GeneVisualizationPlot.colors.length];
+
+            for (let value of values) {
+                let mean = value[0];
+                let std = value[1];
+                ymean.push(mean);
+                ystd.push(std);
+                ymin.push(mean - std);
+                ymax.push(mean + std);
             }
 
-            if (errorBars) {
-                plots.push({
-                    mode: lineMode,
-                    line: { shape: 'spline', color: color },
-                    name: name,
-                    x: plotData.xvalues,
-                    y: ymean,
-                    error_y: { type: 'data', array: ystd, visible: true }
-                });
-            } else {
-                plots.push({
-                    mode: lineMode,
-                    line: { shape: 'spline', color: color },
-                    name: name,
-                    x: plotData.xvalues,
-                    y: ymean,
-                });
-            }
+            plots.push({
+                mode: "lines+markers",
+                line: { shape: 'spline', color: color, width: 0 },
+                showlegend: false,
+                x: plotData.xvalues,
+                y: ymin,
+                hoverinfo: "none",
+                fill: null
+            });
+            plots.push({
+                mode: "lines+markers",
+                line: { shape: 'spline', color: color, width: 0 },
+                showlegend: false,
+                x: plotData.xvalues,
+                y: ymax,
+                hoverinfo: "none",
+                fill: 'tonexty',
+                opacity: 0.5
+            });
+
+            plots.push({
+                mode: "lines+markers",
+                line: { shape: 'spline', color: color },
+                name: name,
+                x: plotData.xvalues,
+                y: ymean,
+            });
 
             index += 1;
         }

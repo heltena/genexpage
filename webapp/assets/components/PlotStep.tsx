@@ -110,7 +110,7 @@ export class PlotStep extends React.Component<PlotStepProps, PlotStepState> {
 
             const newPlot: GeneVisualizationPlotData = {
                 valid: true,
-                plotType: "lines",
+                plotType: response.data["plotType"],
                 title: response.data["title"],
                 xAxisLabel: response.data["xAxisLabel"],
                 yAxisLabel: response.data["yAxisLabel"],

@@ -345,6 +345,7 @@ def generate_data(xaxis, series, restrictions, geneIdentifier, title, xAxisLabel
     pfu_names = ", ".join([str(s) for s in pfu_names])
     tissue_names = ", ".join([str(s) for s in tissue_names])
 
+    result["plotType"] = "lines" if xaxis == "age" else "bars"
     result["title"] = title.format(gene_names=gene_names, pfu_names=pfu_names, tissue_names=tissue_names)
     result["xAxisLabel"] = xAxisLabel.format(gene_names=gene_names, pfu_names=pfu_names, tissue_names=tissue_names)
     result["yAxisLabel"] = yAxisLabel.format(gene_names=gene_names, pfu_names=pfu_names, tissue_names=tissue_names)
