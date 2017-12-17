@@ -11,6 +11,7 @@ export interface FigureTypeStepData {
 
 export interface FigureTypeStepProps {
     actions: any;
+    errorActions: any;
     getData(): FigureTypeStepData;
     changed(data: FigureTypeStepData): void;    
 }
@@ -18,6 +19,7 @@ export interface FigureTypeStepProps {
 export interface FigureTypeStepState {
     xaxis: string;
     series: string;
+    error: boolean;
 }
 
 export class FigureTypeStep extends React.Component<FigureTypeStepProps, FigureTypeStepState> {
@@ -28,6 +30,7 @@ export class FigureTypeStep extends React.Component<FigureTypeStepProps, FigureT
         this.state = {
             xaxis: data.xaxis,
             series: data.series,
+            error: data.xaxis == data.series
         };
         this.handleXAxisChange = this.handleXAxisChange.bind(this);
         this.handleSeriesChange = this.handleSeriesChange.bind(this);
@@ -43,13 +46,15 @@ export class FigureTypeStep extends React.Component<FigureTypeStepProps, FigureT
 
     handleXAxisChange(value: string) {
         this.setState({
-            xaxis: value
+            xaxis: value,
+            error: this.state.series == value
         }, this.callback);
     }
 
     handleSeriesChange(value: string) {
         this.setState({
-            series: value
+            series: value,
+            error: this.state.xaxis == value
         }, this.callback);
     }
 
@@ -87,6 +92,7 @@ export class FigureTypeStep extends React.Component<FigureTypeStepProps, FigureT
             }
         }
 
+        const actions = this.state.error ? this.props.errorActions : this.props.actions;
         return (
             <div style={styles.div}>
                 <Card>
@@ -165,7 +171,7 @@ export class FigureTypeStep extends React.Component<FigureTypeStepProps, FigureT
                         </div>
                     </CardText>
                     <CardActions>
-                        {this.props.actions}
+                        {actions}
                     </CardActions>
                 </Card>
             </div>

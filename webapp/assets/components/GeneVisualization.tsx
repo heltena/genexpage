@@ -226,6 +226,17 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
     }
 
     render() {
+        var errorActions = [
+            <FlatButton
+                label="Back"
+                disabled={this.state.stepIndex == StepperType.Welcome}
+                onClick={this.handlePrev} />,
+            <FlatButton
+                label="Next"
+                disabled={true}
+                onClick={this.handleNext} />
+        ];
+
         var actions = [
             <FlatButton
                 label="Back"
@@ -249,6 +260,7 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
                     <FigureTypeStep 
                         getData={this.figureTypeStepGetData.bind(this)} 
                         changed={this.figureTypeStepChanged.bind(this)}
+                        errorActions={errorActions}
                         actions={actions} />
                 break;
             case StepperType.GeneSelector:
