@@ -77,13 +77,13 @@ export class App extends React.Component<{}, AppState> {
             <div style={{ paddingTop: lineIncrement }} >
                 <LoggedToolbar style={{position: "fixed", top:"0", left:"0", width:"100%"}} username={this.state.username} logout={() => this.logout()} />
                 <Tabs>
-                    <Tab label="Gene Visualization (DEBUG)">
-                    &nbsp;
-                        <GeneVisualizationDebug />
-                    </Tab>
                     <Tab label="Gene Visualization (RELEASE)">
                     &nbsp;
                         <GeneVisualization />
+                    </Tab>
+                    <Tab label="Gene Visualization (DEBUG)">
+                    &nbsp;
+                        <GeneVisualizationDebug />
                     </Tab>
                 </Tabs>
             </div>
