@@ -10,7 +10,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
-import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
+import { Step, Stepper, StepButton, StepLabel } from 'material-ui/Stepper';
 import Toggle from 'material-ui/Toggle';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import TextField from 'material-ui/TextField';
@@ -284,22 +284,22 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
             <div>
                 <Stepper activeStep={this.state.stepIndex}>
                     <Step>
-                        <StepLabel>Welcome</StepLabel>
+                        <StepButton onClick={() => this.setState({stepIndex: StepperType.Welcome})}>Welcome</StepButton>
                     </Step>
                     <Step>
-                        <StepLabel>Figure Type</StepLabel>
+                        <StepButton onClick={() => this.setState({stepIndex: StepperType.FigureType})}>Figure Type</StepButton>
                     </Step>
                     <Step>
-                        <StepLabel>Gene Selection</StepLabel>
+                        <StepButton onClick={() => this.setState({stepIndex: StepperType.GeneSelector})}>Gene Selection</StepButton>
                     </Step>
                     <Step>
-                        <StepLabel>Restrictions</StepLabel>
+                        <StepButton onClick={() => this.setState({stepIndex: StepperType.Restrictions})}>Restrictions</StepButton>
                     </Step>
                     <Step>
-                        <StepLabel>Appearance</StepLabel>
+                        <StepButton onClick={() => this.setState({stepIndex: StepperType.Appearance})}>Appearance</StepButton>
                     </Step>
                     <Step>
-                        <StepLabel>Plot</StepLabel>
+                        <StepButton onClick={() => this.setState({stepIndex: StepperType.Plot})}>Plot</StepButton>
                     </Step>
                 </Stepper>
                 {stepContent}

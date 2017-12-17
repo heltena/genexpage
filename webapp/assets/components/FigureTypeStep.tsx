@@ -90,7 +90,7 @@ export class FigureTypeStep extends React.Component<FigureTypeStepProps, FigureT
         return (
             <div style={styles.div}>
                 <Card>
-                    <CardTitle title="Gene Selection" />
+                    <CardTitle title="Figure Type" />
                     <CardText>
                         <div style={styles.div2}>
                             <Paper style={styles.pageRestriction} zDepth={0}>
