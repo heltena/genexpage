@@ -7,6 +7,7 @@ import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import { GeneVisualizationPlotData, GeneVisualizationPlot } from './GeneVisualizationPlot';
+import { TitleStep } from './BaseStep';
 
 export interface PlotStepData {
     xaxis: string;
@@ -155,13 +156,12 @@ export class PlotStep extends React.Component<PlotStepProps, PlotStepState> {
         return (
             <div style={style.div}>
                 <Card>
-                    <CardTitle title="Plot" />
+                    <TitleStep
+                        title="Plot" 
+                        actions={this.props.actions} />
                     <CardText>
                         {plot}
                     </CardText>
-                    <CardActions>
-                        {this.props.actions}
-                    </CardActions>
                 </Card>
             </div>
         );

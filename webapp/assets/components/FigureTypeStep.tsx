@@ -3,6 +3,7 @@ import * as React from "react";
 import { Card, CardActions, CardText, CardTitle } from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
+import { TitleStep } from './BaseStep';
 
 export interface FigureTypeStepData {
     xaxis: string;
@@ -64,8 +65,14 @@ export class FigureTypeStep extends React.Component<FigureTypeStepProps, FigureT
                 width: '100%',
                 textAlign: 'center'
             },
-            div2: {
+            divFlex: {
                 display: 'flex'
+            },
+            title: {
+                flex: 8
+            },
+            titleActions: {
+                flex: 2
             },
             pageRestriction: {
                 flex: 3,
@@ -96,9 +103,11 @@ export class FigureTypeStep extends React.Component<FigureTypeStepProps, FigureT
         return (
             <div style={styles.div}>
                 <Card>
-                    <CardTitle title="Figure Type" />
+                    <TitleStep
+                        title="Figure Type"
+                        actions={actions} />
                     <CardText>
-                        <div style={styles.div2}>
+                        <div style={styles.divFlex}>
                             <Paper style={styles.pageRestriction} zDepth={0}>
                                 All the values are the gene expression mean and std.
                             </Paper>
@@ -130,7 +139,7 @@ export class FigureTypeStep extends React.Component<FigureTypeStepProps, FigureT
                                     />
                             </Paper>
                         </div>
-                        <div style={styles.div2}>
+                        <div style={styles.divFlex}>
                             <Paper style={styles.pageXAxisButton} zDepth={0}>
                                 <RaisedButton
                                         secondary={this.state.xaxis == "age"}
@@ -170,9 +179,6 @@ export class FigureTypeStep extends React.Component<FigureTypeStepProps, FigureT
                             </Paper>
                         </div>
                     </CardText>
-                    <CardActions>
-                        {actions}
-                    </CardActions>
                 </Card>
             </div>
         );

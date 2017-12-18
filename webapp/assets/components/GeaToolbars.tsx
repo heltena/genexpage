@@ -23,7 +23,7 @@ export class LogoutToolbar extends React.Component<LogoutToolbarProps, LogoutToo
 
     render() {
         return (
-            <Toolbar style={this.props.style}>
+            <Toolbar className="gea-header" style={this.props.style}>
                 <ToolbarTitle text="GenExpAge" />
             </Toolbar>
         );
@@ -45,7 +45,7 @@ export class LoggedToolbar extends React.Component<LoggedToolbarProps, LoggedToo
 
     render() {
         return (
-            <Toolbar style={this.props.style}>
+            <Toolbar className="gea-header" style={this.props.style}>
                 <ToolbarTitle text="GenExpAge" />
                 <ToolbarGroup>
                     <ToolbarTitle text={"Signed as " + this.props.username} />

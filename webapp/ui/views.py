@@ -7,3 +7,6 @@ from django.forms import formset_factory
 
 def index(request):
     return render(request, 'index.html')
+
+def debug(request):
+    return render(request, 'debug.html')

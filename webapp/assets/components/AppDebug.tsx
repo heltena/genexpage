@@ -2,7 +2,7 @@ import axios from 'axios';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import * as React from 'react';
 
-import { GeneVisualization } from "./GeneVisualization";
+import { GeneVisualizationDebug } from "./GeneVisualizationDebug";
 
 import { LoginForm } from "./LoginForm";
 import { LoggedToolbar, LogoutToolbar } from './GeaToolbars';
@@ -16,7 +16,7 @@ export interface AppState {
     token: string;
 }
 
-export class App extends React.Component<{}, AppState> {
+export class AppDebug extends React.Component<{}, AppState> {
 
     constructor(props: {}, state: AppState) {
         super(props, state);
@@ -61,34 +61,21 @@ export class App extends React.Component<{}, AppState> {
     }
 
     render() {
-        const styles = {
-            toolbar: {
-                "background-image": "url('/static/bcn-background.png')",
-                position: "fixed", 
-                top: 0, 
-                left: 0,
-                width:"100%",
-                height: "171px"
-            },
-            main: {
-                paddingTop: "171px"
-            }
-        }
         const lineIncrement = getMuiTheme().spacing.desktopKeylineIncrement;
         const token = localStorage.getItem("TOKEN");
         if (token === null) {
             return (
-                <div style={styles.main} >
-                    <LogoutToolbar style={styles.toolbar} />
+                <div style={{ paddingTop: lineIncrement }} >
+                    <LogoutToolbar style={{position: "fixed", top:"0", left:"0", width:"100%"}} />
                     <LoginForm login={(username, password) => this.login(username, password)} />
                 </div>
             );
         }
 
         return (
-            <div style={styles.main} >
-                <LoggedToolbar style={styles.toolbar} username={this.state.username} logout={() => this.logout()} />
-                <GeneVisualization />
+            <div style={{ paddingTop: lineIncrement }} >
+                <LoggedToolbar style={{position: "fixed", top:"0", left:"0", width:"100%"}} username={this.state.username} logout={() => this.logout()} />
+                <GeneVisualizationDebug />
             </div>
         );
     }

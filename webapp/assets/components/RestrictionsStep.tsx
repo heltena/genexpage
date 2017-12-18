@@ -6,6 +6,7 @@ import { Card, CardActions, CardText, CardTitle } from 'material-ui/Card';
 import MenuItem from 'material-ui/MenuItem';
 import SelectField from 'material-ui/SelectField';
 import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
+import { TitleStep } from './BaseStep';
 
 export interface RestrictionsStepData {
     age: string[];
@@ -109,7 +110,9 @@ export class RestrictionsStep extends React.Component<RestrictionsStepProps, Res
         return (
             <div style={style.div}>
                 <Card>
-                    <CardTitle title="Restrictions" />
+                    <TitleStep
+                        title="Restrictions" 
+                        actions={this.props.actions} />
                     <CardText>
                         <SelectField
                             multiple={true}
@@ -143,9 +146,6 @@ export class RestrictionsStep extends React.Component<RestrictionsStepProps, Res
                                 {this.generateMenuItems(this.tissueNames, this.state.tissue)}
                         </SelectField>
                     </CardText>
-                    <CardActions>
-                        {this.props.actions}
-                    </CardActions>
                 </Card>
             </div>
         );

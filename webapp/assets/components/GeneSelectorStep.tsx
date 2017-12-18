@@ -6,6 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import TextField from 'material-ui/TextField';
+import { TitleStep } from './BaseStep';
 
 export interface GeneSelectorStepData {
     searchText: string;
@@ -143,7 +144,9 @@ export class GeneSelectorStep extends React.Component<GeneSelectorStepProps, Gen
         return (
             <div style={styles.div}>
                 <Card>
-                    <CardTitle title="Gene Selection" />
+                    <TitleStep 
+                        title="Gene Selection" 
+                        actions={actions} />
                     <CardText>
                         <TextField
                             hintText="Search text"
@@ -181,9 +184,6 @@ export class GeneSelectorStep extends React.Component<GeneSelectorStepProps, Gen
                         </TableBody>
                         </Table>
                     </CardText>
-                    <CardActions>
-                        {actions}
-                    </CardActions>
                 </Card>
             </div>
         );

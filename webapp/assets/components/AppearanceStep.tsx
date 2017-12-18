@@ -6,6 +6,7 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
+import { TitleStep } from './BaseStep';
 
 export interface AppearanceStepData {
     title: string;
@@ -106,7 +107,9 @@ export class AppearanceStep extends React.Component<AppearanceStepProps, Appeara
         return (
             <div style={style.div}>
                 <Card>
-                    <CardTitle title="Appearance" />
+                    <TitleStep
+                        title="Appearance" 
+                        actions={this.props.actions} />
                     <CardText>
                         <p>
                             You can use the tags: {'{gene_names}, {pfu_names}, {tissue_names}'} to substitute their values.
@@ -133,9 +136,6 @@ export class AppearanceStep extends React.Component<AppearanceStepProps, Appeara
                                 {geneIdentifierMenuItems}
                         </SelectField>
                     </CardText>
-                    <CardActions>
-                        {this.props.actions}
-                    </CardActions>
                 </Card>
             </div>
         );

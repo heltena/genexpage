@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Card, CardActions, CardText, CardTitle } from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
-
+import { TitleStep } from './BaseStep';
 
 export interface WelcomeStepProps {
     actions: any;
@@ -32,15 +32,14 @@ export class WelcomeStep extends React.Component<WelcomeStepProps, WelcomeStepSt
         return (
             <div style={styles.div}>
                 <Card>
-                    <CardTitle title="Welcome" />
+                    <TitleStep
+                        title="Welcome" 
+                        actions={this.props.actions} />
                     <CardText>
                         <Paper style={styles.paper} zDepth={0}>
                             Welcome, blah, blah, blah.
                         </Paper>
                     </CardText>
-                    <CardActions>
-                        {this.props.actions}
-                    </CardActions>
                 </Card>
             </div>
         );
