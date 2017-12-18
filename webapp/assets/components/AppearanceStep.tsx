@@ -31,9 +31,9 @@ export interface AppearanceStepState {
 export class AppearanceStep extends React.Component<AppearanceStepProps, AppearanceStepState> {
 
     static geneIdentifierValues = [
+        "GENE_SYMBOL",
         "ENTREZ_GENE_ID",
         "ENSEMBL_GENE_ID",
-        "GENE_SYMBOL"
     ];
 
     constructor(props: AppearanceStepProps, state: AppearanceStepState) {

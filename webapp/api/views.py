@@ -30,11 +30,11 @@ def gene_search(request, text):
     genes = Genes.objects.filter(
         Q(gene_ensembl__icontains=text) | 
         Q(Chr__icontains=text) |
-        Q(symbol_ncbi__icontains=text)).order_by("gene_ensembl")[0:11]
+        Q(symbol_ncbi__icontains=text)).order_by("symbol_ncbi")[0:11]
 
     values = []
     for value in genes[0:10]:
-        values.append([value.gene_ensembl, value.Chr, value.symbol_ncbi])
+        values.append([value.symbol_ncbi, value.gene_ncbi, value.gene_ensembl])
 
     result = {
         "searchText": text,

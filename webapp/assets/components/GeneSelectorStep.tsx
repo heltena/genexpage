@@ -60,7 +60,7 @@ export class GeneSelectorStep extends React.Component<GeneSelectorStepProps, Gen
         ).then(response => {
             console.log(response.data);
             const values = (response.data["values"] as any[]).map((row) => row as string[]);
-            const slideSelectedGenes = values.map(row => row[0]).filter((row) => this.state.selectedGenes.indexOf(row) !== -1);
+            const slideSelectedGenes = values.map(row => row[2]).filter((row) => this.state.selectedGenes.indexOf(row) !== -1);
 
             this.setState({
                 slideValues: values,
@@ -84,7 +84,7 @@ export class GeneSelectorStep extends React.Component<GeneSelectorStepProps, Gen
     }
 
     handleRowSelection(selectedRows: number[]) {
-        const newSlideSelectedGenes = selectedRows.map((index) => this.state.slideValues[index][0]);
+        const newSlideSelectedGenes = selectedRows.map((index) => this.state.slideValues[index][2]);
         const toAdd = newSlideSelectedGenes.filter(item => this.state.slideSelectedGenes.indexOf(item) == -1);
         const toRemove = this.state.slideSelectedGenes.filter(item => newSlideSelectedGenes.indexOf(item) == -1);
 
@@ -101,7 +101,7 @@ export class GeneSelectorStep extends React.Component<GeneSelectorStepProps, Gen
         var rows: any[] = [];
         if (this.state.slideValues) {
          rows = this.state.slideValues.map((row) => (
-            <TableRow selected={this.state.slideSelectedGenes.indexOf(row[0]) !== -1}>
+            <TableRow selected={this.state.slideSelectedGenes.indexOf(row[2]) !== -1}>
               <TableRowColumn>{row[0]}</TableRowColumn>
               <TableRowColumn>{row[1]}</TableRowColumn>
               <TableRowColumn>{row[2]}</TableRowColumn>
@@ -173,9 +173,9 @@ export class GeneSelectorStep extends React.Component<GeneSelectorStepProps, Gen
                             displaySelectAll={false}
                             enableSelectAll={false}>
                             <TableRow>
-                            <TableHeaderColumn>ENSEMBL_GENE_ID</TableHeaderColumn>
-                            <TableHeaderColumn>ENTREZ_GENE_ID</TableHeaderColumn>
                             <TableHeaderColumn>GENE_SYMBOL</TableHeaderColumn>
+                            <TableHeaderColumn>ENTREZ_GENE_ID</TableHeaderColumn>
+                            <TableHeaderColumn>ENSEMBL_GENE_ID</TableHeaderColumn>
                             </TableRow>
                         </TableHeader>
                         <TableBody
