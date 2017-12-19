@@ -12,7 +12,7 @@ import { TitleStep } from './BaseStep';
 export interface PlotStepData {
     xaxis: string;
     series: string;
-    selectedGenes: string[];
+    selectedGenes: string[][];
     age: string[];
     pfu: string[];
     tissue: string[];
@@ -31,7 +31,7 @@ export interface PlotStepProps {
 export interface PlotStepState {
     xaxis: string;
     series: string;
-    selectedGenes: string[];
+    selectedGenes: string[][];
 
     age: string[];
     pfu: string[];
@@ -76,7 +76,7 @@ export class PlotStep extends React.Component<PlotStepProps, PlotStepState> {
         var restrictions: any[] = [];
 
         if (this.state.selectedGenes && this.state.selectedGenes.length > 0) {
-            restrictions.push(["gene", "in", this.state.selectedGenes]);
+            restrictions.push(["gene", "in", this.state.selectedGenes.map(row => row[2])]);
         } else {
             restrictions.push(["gene", "in", ["ENSMUSG00000000001"]]);
         }

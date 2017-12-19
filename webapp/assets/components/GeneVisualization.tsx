@@ -29,7 +29,8 @@ export interface GeneVisualizationData {
     series: string;
 
     searchText: string;
-    selectedGenes: string[];
+    showSelectedGenes: boolean;
+    selectedGenes: string[][];
 
     age: string[];
     pfu: string[];
@@ -60,7 +61,8 @@ export interface GeneVisualizationState {
     series: string;
 
     searchText: string;
-    selectedGenes: string[];
+    showSelectedGenes: boolean;
+    selectedGenes: string[][];
 
     age: string[];
     pfu: string[];
@@ -83,6 +85,7 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
             series: "gene",
 
             searchText: "",
+            showSelectedGenes: false,
             selectedGenes: [],
 
             age: [],
@@ -117,7 +120,8 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
     geneSelectorStepGetData(): GeneSelectorStepData {
         const data: GeneSelectorStepData = {
             searchText: this.state.searchText,
-            selectedGenes: this.state.selectedGenes
+            showSelectedGenes: this.state.showSelectedGenes,
+            selectedGenes: this.state.selectedGenes,
         };
         return data;
     }
@@ -125,6 +129,7 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
     geneSelectorStepChanged(data: GeneSelectorStepData) {
         this.setState({
             searchText: data.searchText,
+            showSelectedGenes: data.showSelectedGenes,
             selectedGenes: data.selectedGenes
         });
     }

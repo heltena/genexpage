@@ -7,6 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 export interface TitleStepProps { 
     actions: any;
     title: string;
+    subtitle?: string;
 }
 export interface TitleStepState { }
 
@@ -32,7 +33,7 @@ export class TitleStep extends React.Component<TitleStepProps, TitleStepState> {
         return (
             <div style={styles.divFlex}>
                 <div style={styles.titleActions} />
-                <CardTitle title={this.props.title} style={styles.title} />
+                <CardTitle title={this.props.title} subtitle={this.props.subtitle} style={styles.title} />
                 <CardActions style={styles.titleActions}>
                     {this.props.actions}
                 </CardActions>
