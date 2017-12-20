@@ -99,7 +99,7 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
             },
 
             title: "",
-            xAxisLabel: "Age",
+            xAxisLabel: "Age (months)",
             yAxisLabel: "Counts",
             geneIdentifier: "GENE_SYMBOL",
         };
