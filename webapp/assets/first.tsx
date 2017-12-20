@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import { AppDebug } from "./debug/AppDebug";
+import { AppFirst } from "./first/AppFirst";
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -9,7 +9,7 @@ ReactDOM.render(
 	<div>
 		<MuiThemeProvider>
 			<div>
-				<AppDebug />
+				<AppFirst />
 			</div>
 		</MuiThemeProvider>
 	</div>,

@@ -6,6 +6,7 @@ module.exports = {
     context: __dirname,
     entry: {
         index: path.resolve(__dirname, "assets", "index.tsx"),
+        first: path.resolve(__dirname, "assets", "first.tsx"),
         debug: path.resolve(__dirname, "assets", "debug.tsx")
     },
     output: {

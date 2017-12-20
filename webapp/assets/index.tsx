@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import { App } from "./components/App";
+import { AppSimple } from "./simple/AppSimple";
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -9,7 +9,7 @@ ReactDOM.render(
 	<div>
 		<MuiThemeProvider>
 			<div>
-				<App />
+				<AppSimple />
 			</div>
 		</MuiThemeProvider>
 	</div>,

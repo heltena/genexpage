@@ -2,23 +2,23 @@ import axios from 'axios';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import * as React from 'react';
 
-import { GeneVisualizationDebug } from "./GeneVisualizationDebug";
+import { GeneVisualization } from "./GeneVisualization";
 
-import { LoginForm } from "./LoginForm";
-import { LoggedToolbar, LogoutToolbar } from './GeaToolbars';
+import { LoginForm } from "../common/LoginForm";
+import { LoggedToolbar, LogoutToolbar } from '../common/GeaToolbars';
 
 import AppBar from 'material-ui/AppBar';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
-export interface AppProps { }
-export interface AppState {
+export interface AppFirstProps { }
+export interface AppFirstState {
     username: string;
     token: string;
 }
 
-export class AppDebug extends React.Component<{}, AppState> {
+export class AppFirst extends React.Component<AppFirstProps, AppFirstState> {
 
-    constructor(props: {}, state: AppState) {
+    constructor(props: AppFirstProps, state: AppFirstState) {
         super(props, state);
         this.state = {
             username: "",
@@ -61,21 +61,34 @@ export class AppDebug extends React.Component<{}, AppState> {
     }
 
     render() {
+        const styles = {
+            toolbar: {
+                "background-image": "url('/static/bcn-background.png')",
+                position: "fixed", 
+                top: 0, 
+                left: 0,
+                width:"100%",
+                height: "171px"
+            },
+            main: {
+                paddingTop: "171px"
+            }
+        }
         const lineIncrement = getMuiTheme().spacing.desktopKeylineIncrement;
         const token = localStorage.getItem("TOKEN");
         if (token === null) {
             return (
-                <div style={{ paddingTop: lineIncrement }} >
-                    <LogoutToolbar style={{position: "fixed", top:"0", left:"0", width:"100%"}} />
+                <div style={styles.main} >
+                    <LogoutToolbar style={styles.toolbar} />
                     <LoginForm login={(username, password) => this.login(username, password)} />
                 </div>
             );
         }
 
         return (
-            <div style={{ paddingTop: lineIncrement }} >
-                <LoggedToolbar style={{position: "fixed", top:"0", left:"0", width:"100%"}} username={this.state.username} logout={() => this.logout()} />
-                <GeneVisualizationDebug />
+            <div style={styles.main} >
+                <LoggedToolbar style={styles.toolbar} username={this.state.username} logout={() => this.logout()} />
+                <GeneVisualization />
             </div>
         );
     }
