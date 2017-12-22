@@ -72,18 +72,22 @@ export class PlotStep extends React.Component<PlotStepProps, PlotStepState> {
     updateFigure() {
         var restrictions: any[] = [];
 
+        var post_xAxisLabel = this.state.xAxisLabel + "";
         if (this.state.selectedGenes && this.state.selectedGenes.length > 0) {
             restrictions.push(["gene", "in", this.state.selectedGenes.map(row => row[2])]);
+            post_xAxisLabel += ", gene: {gene_names}"
         } else {
-            restrictions.push(["gene", "in", ["ENSMUSG00000000001"]]);
+            restrictions.push(["gene", "in", []]);
         }
 
         if (this.state.pfu && this.state.pfu.length > 0) {
             restrictions.push(["pfu", "in", this.state.pfu]);
+            post_xAxisLabel += ", pfu: {pfu_names}"
         }
 
         if (this.state.tissue && this.state.tissue.length > 0) {
             restrictions.push(["tissue", "in", this.state.tissue]);
+            post_xAxisLabel += ", tissue: {tissue_names}"
         }
 
         axios.post(
@@ -95,7 +99,7 @@ export class PlotStep extends React.Component<PlotStepProps, PlotStepState> {
                 "restrictions": restrictions,
                 "geneIdentifier": this.state.geneIdentifier,
                 "title": this.state.title,
-                "xAxisLabel": this.state.xAxisLabel,
+                "xAxisLabel": post_xAxisLabel,
                 "yAxisLabel": this.state.yAxisLabel
             }
         ).then(response => {
