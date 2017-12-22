@@ -58,6 +58,7 @@ export class ConfigurationStep extends React.Component<ConfigurationStepProps, C
     geneSelectorHeaderDeselectAll() {
         var geneSelectorHeader: GeneSelectorHeaderData = {
             searchText: this.state.geneSelectorHeader.searchText,
+            geneIdentifier: this.state.geneSelectorHeader.geneIdentifier,
             showSelectedGenes: false,
             hasSelectedGenes: false
         };
@@ -76,6 +77,7 @@ export class ConfigurationStep extends React.Component<ConfigurationStepProps, C
     geneSelectorHeaderShowSelectedGenesChanged(newValue: boolean) {
         var geneSelectorHeader: GeneSelectorHeaderData = {
             searchText: this.state.geneSelectorHeader.searchText,
+            geneIdentifier: this.state.geneSelectorHeader.geneIdentifier,
             showSelectedGenes: newValue,
             hasSelectedGenes: this.state.geneSelectorHeader.hasSelectedGenes
         };
@@ -136,11 +138,24 @@ export class ConfigurationStep extends React.Component<ConfigurationStepProps, C
     
     }
 
+    geneSelectorHeaderGeneIdentifierChanged(geneIdentifier: string) {
+        var geneSelectorHeader: GeneSelectorHeaderData = {
+            searchText: this.state.geneSelectorHeader.searchText,
+            geneIdentifier: geneIdentifier,
+            showSelectedGenes: this.state.geneSelectorHeader.showSelectedGenes,
+            hasSelectedGenes: this.state.geneSelectorHeader.hasSelectedGenes
+        };
+        this.setState({
+            geneSelectorHeader: geneSelectorHeader
+        }, this.callback);
+    }
+
     geneSelectorRowSelected(selectedRows: number[]) {
         if (this.state.geneSelectorHeader.showSelectedGenes) {
             var values = this.state.geneSelector.selectedGenes.filter((row, index) => selectedRows.indexOf(index) != -1);
             var geneSelectorHeader: GeneSelectorHeaderData = {
                 searchText: this.state.geneSelectorHeader.searchText,
+                geneIdentifier: this.state.geneSelectorHeader.geneIdentifier,
                 showSelectedGenes: this.state.geneSelectorHeader.showSelectedGenes,
                 hasSelectedGenes: values.length > 0  
             };
@@ -167,6 +182,7 @@ export class ConfigurationStep extends React.Component<ConfigurationStepProps, C
 
             var geneSelectorHeader: GeneSelectorHeaderData = {
                 searchText: this.state.geneSelectorHeader.searchText,
+                geneIdentifier: this.state.geneSelectorHeader.geneIdentifier,
                 showSelectedGenes: this.state.geneSelectorHeader.showSelectedGenes,
                 hasSelectedGenes: selectedGenes.length > 0  
             };
@@ -237,6 +253,7 @@ export class ConfigurationStep extends React.Component<ConfigurationStepProps, C
                                 style={styles.geneSelectorHeader}
                                 data={this.state.geneSelectorHeader}
                                 search={this.geneSelectorHeaderSearch.bind(this)}
+                                geneIdentifierChanged={this.geneSelectorHeaderGeneIdentifierChanged.bind(this)}
                                 deselectAll={this.geneSelectorHeaderDeselectAll.bind(this)} 
                                 showSelectedGenesChanged={this.geneSelectorHeaderShowSelectedGenesChanged.bind(this)} />
                             <div style={styles.pfuSelector}></div>

@@ -2,13 +2,16 @@ import axios from 'axios';
 import * as React from "react";
 
 import FlatButton from 'material-ui/FlatButton';
+import MenuItem from 'material-ui/MenuItem';
 import Paper from 'material-ui/Paper';
+import SelectField from 'material-ui/SelectField';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 
 export interface GeneSelectorHeaderData {
     searchText: string;
+    geneIdentifier: string;
     showSelectedGenes: boolean;    
     hasSelectedGenes: boolean;
 }
@@ -17,23 +20,33 @@ export interface GeneSelectorHeaderProps {
     style: any;
     data: GeneSelectorHeaderData;
     search(searchText: string): void;
+    geneIdentifierChanged(newValue: string): void;
     deselectAll(): void;
     showSelectedGenesChanged(newValue: boolean): void;
 }
 
 export interface GeneSelectorHeaderState {
     searchText: string;
+    geneIdentifier: string;
 }
 
 export class GeneSelectorHeader extends React.Component<GeneSelectorHeaderProps, GeneSelectorHeaderState> {
+
+    static geneIdentifierValues = [
+        "GENE_SYMBOL",
+        "ENTREZ_GENE_ID",
+        "ENSEMBL_GENE_ID",
+    ];
 
     constructor(props: GeneSelectorHeaderProps, state: GeneSelectorHeaderState) {
         super(props, state);
         const data = this.props.data;
         this.state = {
             searchText: data.searchText,
+            geneIdentifier: data.geneIdentifier
         };
         this.handleSearch = this.handleSearch.bind(this);
+        this.handleGeneIdentifierChanged = this.handleGeneIdentifierChanged.bind(this);
         this.handleDeselectAll = this.handleDeselectAll.bind(this);
         this.handleShowSelectedGenes = this.handleShowSelectedGenes.bind(this);
     }
@@ -43,6 +56,12 @@ export class GeneSelectorHeader extends React.Component<GeneSelectorHeaderProps,
             return
         }
         this.props.search(this.state.searchText);
+    }
+
+    handleGeneIdentifierChanged(newValue: string) {
+        this.setState({
+            geneIdentifier: newValue
+        }, () => this.props.geneIdentifierChanged(newValue) );
     }
 
     handleDeselectAll(event: any) {
@@ -82,9 +101,20 @@ export class GeneSelectorHeader extends React.Component<GeneSelectorHeaderProps,
                 padding: 0,
                 textAlign: 'center'
             },
+            field: {
+                textAlign: 'left'
+            },
             buttons: {
             },
         }
+
+        const geneIdentifierMenuItems = GeneSelectorHeader.geneIdentifierValues.map((name) => (
+            <MenuItem
+                key={name}
+                insetChildren={true}
+                value={name}
+                primaryText={name} />
+        ));
 
         return (
             <div style={this.props.style}>
@@ -111,6 +141,13 @@ export class GeneSelectorHeader extends React.Component<GeneSelectorHeaderProps,
                     primary={true}
                     disabled={!this.props.data.hasSelectedGenes}
                     onClick={this.handleDeselectAll} />
+                <br />
+                <SelectField style={styles.field}
+                    floatingLabelText="Gene Identifier"
+                    value={this.state.geneIdentifier}
+                    onChange={(event, index, newValue) => this.handleGeneIdentifierChanged(newValue)}>
+                        {geneIdentifierMenuItems}
+                </SelectField>
             </div>
         );
     }

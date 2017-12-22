@@ -31,7 +31,6 @@ export class GeneSelector extends React.Component<GeneSelectorProps, GeneSelecto
     }
     
     render() {
-        console.log("GeneSelector render!");
         var rows: any[] = [];
         if (this.props.data.slideValues) {
             if (this.props.data.showSelectedGenes) {

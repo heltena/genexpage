@@ -64,7 +64,6 @@ export interface GeneVisualizationState {
     title: string;
     xAxisLabel: string;
     yAxisLabel: string;
-    geneIdentifier: string;
 }
 
 export class GeneVisualization extends React.Component<GeneVisualizationProps, GeneVisualizationState> {
@@ -79,6 +78,7 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
 
             geneSelectorHeader: {
                 searchText: "",
+                geneIdentifier: "GENE_SYMBOL",
                 showSelectedGenes: false,
                 hasSelectedGenes: false
             },
@@ -100,8 +100,7 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
 
             title: "",
             xAxisLabel: "Age (months)",
-            yAxisLabel: "Counts",
-            geneIdentifier: "GENE_SYMBOL",
+            yAxisLabel: "Counts"
         };
 
         this.handlePrev = this.handlePrev.bind(this);
@@ -137,7 +136,7 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
             title: this.state.title,
             xAxisLabel: this.state.xAxisLabel,
             yAxisLabel: this.state.yAxisLabel,
-            geneIdentifier: this.state.geneIdentifier
+            geneIdentifier: this.state.geneSelectorHeader.geneIdentifier
         };
         return data;
     }
