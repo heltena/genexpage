@@ -8,7 +8,7 @@ from api.tags import method
 from collections import defaultdict
 import json
 import numpy as np
-from api.data_alg import generate_data
+from api.data_alg import generate_time_series, generate_age_counts
 from api.models import Age, Pfu, ExperimentalBatch, Tissue, Genes
 
 
@@ -113,5 +113,21 @@ def time_series(request):
                   "message": "series not valid"}
         return JsonResponse(result)
 
-    result = generate_data(xaxis, series, restrictions, geneIdentifier, title, xAxisLabel, yAxisLabel)
+    result = generate_time_series(xaxis, series, restrictions, geneIdentifier, title, xAxisLabel, yAxisLabel)
     return JsonResponse(result)
+
+
+@csrf_exempt
+@method(allowed=['POST'])
+def age_counts(request):
+    body = json.loads(request.body.decode("utf-8"))
+    restrictions = body.get("restrictions", [])
+    geneIdentifier = body.get("geneIdentifier", "GENE_SYMBOL")
+    title = body.get("title", "")
+    xAxisLabel = body.get("xAxisLabel", "")
+    yAxisLabel = body.get("yAxisLabel", "") 
+
+    print("CALL: ", body)
+    result = generate_age_counts(restrictions, geneIdentifier, title, xAxisLabel, yAxisLabel)
+    return JsonResponse(result)
+    

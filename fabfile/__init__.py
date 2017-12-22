@@ -85,12 +85,42 @@ def timeseries2():
 def timeseries3():
     value = {
         "dataset": "mouse_aging", 
-        "xaxis": "tissue",
+        "xaxis": "age",
         "series": "gene",
         "restrictions": [
             ["tissue", "in", ["AM", "Lung"]],
-            ["flu", "eq", 150],
+            ["pfu", "eq", 150],
             ["gene", "in", ["ENSMUSG00000000088", "ENSMUSG00000000001"]]]}
     r = requests.post("{}/api/timeseries".format(env.test_url), json=value)
+    print("Status: {}".format(r))
+    print("Result: {}".format(r.json()))
+
+@task
+def agecounts1():
+    value = {
+        "dataset": "mouse_aging", 
+        "restrictions": [
+            ["tissue", "in", ["AM", "Lung"]],
+            ["pfu", "eq", 150],
+            ["gene", "in", ["ENSMUSG00000000088", "ENSMUSG00000000001"]]]}    
+    r = requests.post("{}/api/agecounts".format(env.test_url), json=value)
+    print("Status: {}".format(r))
+    print("Result: {}".format(r.json()))
+
+@task
+def agecounts2():
+    value = {
+        'xAxisLabel': 'Age (months)', 
+        'dataset': 'mouse_aging', 
+        'xaxis': 'age', 
+        'series': 'gene', 
+        'yAxisLabel': 'Counts', 
+        'geneIdentifier': 'GENE_SYMBOL', 
+        'restrictions': [
+            ['gene', 'in', ['ENSMUSG00000014361']],
+            ['tissue', 'in', ['Lung', 'AM']]
+            ], 
+        'title': ''}
+    r = requests.post("{}/api/agecounts".format(env.test_url), json=value)
     print("Status: {}".format(r))
     print("Result: {}".format(r.json()))

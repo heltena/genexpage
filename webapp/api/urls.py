@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^tissue/list', api.views.tissue_list, name="api_tissue_list"),
 
     url(r'^timeseries', api.views.time_series, name="api_time_series"),
+    url(r'^agecounts', api.views.age_counts, name="api_age_counts")
 ]

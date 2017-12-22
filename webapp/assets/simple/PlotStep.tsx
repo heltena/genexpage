@@ -87,7 +87,7 @@ export class PlotStep extends React.Component<PlotStepProps, PlotStepState> {
         }
 
         axios.post(
-            "/api/timeseries",
+            "/api/agecounts",
             {
                 "dataset": "mouse_aging",
                 "xaxis": this.state.xaxis,

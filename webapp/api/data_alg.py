@@ -124,6 +124,19 @@ def get_xvalues_groups(columns, xaxis, series):
     return xvalues, groups
 
 
+def get_xvalues_groups_all(columns):
+    xvalues = set()
+    for column in columns:
+        xvalues.add(int(column.age))
+    xvalues = sorted(list(xvalues))
+
+    groups = defaultdict(list)
+    for column in columns:
+        key = (int(column.age), column.tissue, column.pfu)
+        groups[key].append(column.name)
+    return xvalues, groups
+
+
 def get_xvalues_serie_gene(columns, xaxis):
     xvalues = set()
     for column in columns:
@@ -293,7 +306,7 @@ def generate_data_xaxis(xaxis, series, restrictions):
             "series": series_values}
 
 
-def generate_data(xaxis, series, restrictions, geneIdentifier, title, xAxisLabel, yAxisLabel):
+def generate_time_series(xaxis, series, restrictions, geneIdentifier, title, xAxisLabel, yAxisLabel):
     result = None
     if xaxis == "gene":
         result = generate_data_xaxis_gene(series, restrictions, geneIdentifier)
@@ -349,4 +362,80 @@ def generate_data(xaxis, series, restrictions, geneIdentifier, title, xAxisLabel
     result["title"] = title.format(gene_names=gene_names, pfu_names=pfu_names, tissue_names=tissue_names)
     result["xAxisLabel"] = xAxisLabel.format(gene_names=gene_names, pfu_names=pfu_names, tissue_names=tissue_names)
     result["yAxisLabel"] = yAxisLabel.format(gene_names=gene_names, pfu_names=pfu_names, tissue_names=tissue_names)
+    return result
+
+def generate_age_counts(restrictions, geneIdentifier, title, xAxisLabel, yAxisLabel):
+    columns = get_column_names(restrictions)
+    xvalues, groups = get_xvalues_groups_all(columns)
+    where = get_where(restrictions)
+    columns = []
+    for value in groups.values():
+        columns.extend(value)
+
+    if where is None:
+        where = "1=1"
+
+    query = "SELECT gene_ensembl, {} FROM api_counts WHERE {}".format(", ".join(columns), where)
+    v = Counts.objects.raw(query)
+
+    series_data = defaultdict(dict)
+    for r in v:
+        for current in groups.keys():
+            age_key, tissue_key, pfu_key = current
+            gene_name = convert_gene_identifier_name(r.gene_ensembl, geneIdentifier)
+            serie_key = (r.gene_ensembl, gene_name, tissue_key, pfu_key)
+            series_data[serie_key][age_key] = []
+            for column_name in groups[current]:
+                new_value = r.__getattribute__(column_name)
+                if new_value is not None:
+                    series_data[serie_key][age_key].append(new_value)
+
+    genes = set()
+    gene_names = set()
+    tissue_names = set()
+    pfu_names = set()
+    for gene, gene_name, tissue, pfu in series_data.keys():
+        genes.add(gene)
+        gene_names.add(gene_name)
+        tissue_names.add(tissue)
+        pfu_names.add(pfu)
+    
+    key_format = []
+    if len(genes) > 1:
+        key_format.append("{gene_name}")
+    if len(tissue_names) > 1:
+        key_format.append("{tissue}")
+    if len(pfu_names) > 1:
+        key_format.append("{pfu}")
+    if len(key_format) > 0:
+        key_format = " - ".join(key_format)
+    else:
+        key_format = "{gene} - {tissue} - {pfu}"
+    
+    series = defaultdict(list)
+    for serie_key, age_items in series_data.items():
+        gene, gene_name, tissue, pfu = serie_key
+        key = key_format.format(gene=gene, gene_name=gene_name, tissue=tissue, pfu=pfu)
+        for xvalue in xvalues:
+            values = age_items.get(xvalue, None)
+            if values is not None and len(values) > 0:
+                mean = np.mean(values)
+                std = np.std(values)
+                series[key].append((mean, std))
+            else:
+                series[key].append((0.0, 0.0))
+
+    gene_names = ", ".join([str(s) for s in sorted(list(gene_names))])
+    pfu_names = ", ".join([str(s) for s in sorted(list(pfu_names))])
+    tissue_names = ", ".join([str(s) for s in sorted(list(tissue_names))])
+
+    result = {
+        "xaxis": "age",
+        "plotType": "lines",
+        "title": title.format(gene_names=gene_names, pfu_names=pfu_names, tissue_names=tissue_names),
+        "xAxisLabel": xAxisLabel.format(gene_names=gene_names, pfu_names=pfu_names, tissue_names=tissue_names),
+        "yAxisLabel": yAxisLabel.format(gene_names=gene_names, pfu_names=pfu_names, tissue_names=tissue_names),
+        "xvalues": xvalues,
+        "series": series 
+    }
     return result
