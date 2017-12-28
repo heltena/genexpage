@@ -26,7 +26,7 @@ export class TitleStep extends React.Component<TitleStepProps, TitleStepState> {
                 flex: 8
             },
             titleActions: {
-                flex: 2
+                flex: 3
             },
         }
 

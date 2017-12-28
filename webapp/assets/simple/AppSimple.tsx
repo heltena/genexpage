@@ -63,7 +63,7 @@ export class AppSimple extends React.Component<AppSimpleProps, AppSimpleState> {
     render() {
         const styles = {
             toolbar: {
-                "background-image": "url('/static/bcn-background.png')",
+                "background-image": "url('/static/chicago.png')",
                 position: "fixed", 
                 top: 0, 
                 left: 0,
@@ -72,8 +72,18 @@ export class AppSimple extends React.Component<AppSimpleProps, AppSimpleState> {
             },
             main: {
                 paddingTop: "171px"
+            },
+            img: {
+                top: 0,
+                left: 0,
+                "background-image": "url('/static/chicago.png')",
+                "background-color": "#acd8f7",
+                "background-repeat": "no-repeat",
+                width: "100%",
+                height: "171px"
             }
         }
+
         const lineIncrement = getMuiTheme().spacing.desktopKeylineIncrement;
         const token = localStorage.getItem("TOKEN");
         if (token === null) {
@@ -86,8 +96,10 @@ export class AppSimple extends React.Component<AppSimpleProps, AppSimpleState> {
         }
 
         return (
-            <div style={styles.main} >
-                <LoggedToolbar style={styles.toolbar} username={this.state.username} logout={() => this.logout()} />
+            <div>
+                <div style={styles.img} />
+                {/* <img style={styles.img} src="/static/chicago.png" /> */}
+                {/* <LoggedToolbar style={styles.toolbar} username={this.state.username} logout={() => this.logout()} /> */}
                 <GeneVisualization />
             </div>
         );
