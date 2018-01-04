@@ -8,6 +8,7 @@ import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 
 export interface GeneSelectorData {
+    geneIdentifier: string;
     slideValues: string[][];
     slideSelectedGenes: string[][];
     selectedGenes: string[][];
@@ -24,6 +25,12 @@ export interface GeneSelectorState {
 }
 
 export class GeneSelector extends React.Component<GeneSelectorProps, GeneSelectorState> {
+
+    geneIdentifierValues = [
+        "GENE_SYMBOL",
+        "ENTREZ_GENE_ID",
+        "ENSEMBL_GENE_ID",
+    ];
 
     constructor(props: GeneSelectorProps, state: GeneSelectorState) {
         super(props, state);
@@ -75,7 +82,10 @@ export class GeneSelector extends React.Component<GeneSelectorProps, GeneSelecto
 
         var selection: any;
         if (this.props.data.selectedGenes && this.props.data.selectedGenes.length > 0) {
-            const selectedGenes = this.props.data.selectedGenes.map(row => (row[0])).sort().join(", ");
+            var index = this.geneIdentifierValues.indexOf(this.props.data.geneIdentifier);
+            if (index == -1)
+                index = 0;
+            const selectedGenes = this.props.data.selectedGenes.map(row => (row[index])).sort().join(", ");
             selection = <p><b>Current selection: </b>{selectedGenes}.</p>
         } else {
             selection = <p><b>No genes selected.</b></p>

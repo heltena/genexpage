@@ -37,8 +37,10 @@ export class WelcomePage extends React.Component<WelcomePageProps, WelcomePageSt
             },
             text: {
                 flex: 3,
-                "padding-left": 40,
-                textAlign: "left"
+                paddingLeft: 40,
+                //"padding-left": 40,
+                textAlign: "left",
+                paddingBottom: 120
             },
             logos: {
             },

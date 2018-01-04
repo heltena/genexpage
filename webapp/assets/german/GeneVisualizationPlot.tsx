@@ -145,8 +145,16 @@ export class GeneVisualizationPlot extends React.Component<GeneVisualizationPlot
         var data: any[] = [];
         var plots: any[] = [];
 
+        var keys: any[] = [];
+        for (let key in plotData.series) {
+            const value = plotData.series[key];
+            keys.push(key);
+        }
+        keys.sort();
+        keys.reverse();
+
         var index = 0;
-        for (let name in plotData.series) {
+        for (let name of keys) {
             const values = plotData.series[name];
             var ymean: number[] = [];
             var ystd: number[] = [];
@@ -165,7 +173,8 @@ export class GeneVisualizationPlot extends React.Component<GeneVisualizationPlot
             }
 
             plots.push({
-                mode: "lines+markers",
+                legendgroup: name,
+                mode: "lines",
                 line: { shape: 'spline', color: color, width: 0 },
                 showlegend: false,
                 x: plotData.xvalues,
@@ -174,7 +183,8 @@ export class GeneVisualizationPlot extends React.Component<GeneVisualizationPlot
                 fill: null
             });
             plots.push({
-                mode: "lines+markers",
+                legendgroup: name,
+                mode: "lines",
                 line: { shape: 'spline', color: color, width: 0 },
                 showlegend: false,
                 x: plotData.xvalues,
@@ -185,6 +195,7 @@ export class GeneVisualizationPlot extends React.Component<GeneVisualizationPlot
             });
 
             plots.push({
+                legendgroup: name,
                 mode: "lines+markers",
                 line: { shape: 'spline', color: color },
                 name: name,
@@ -225,8 +236,12 @@ export class GeneVisualizationPlot extends React.Component<GeneVisualizationPlot
             <PlotlyChart 
                 data={plots} 
                 layout={layout} 
-                config={config} />
+                config={config} onClick={this.legendClick.bind(this)} />
         );
+    }
+
+    legendClick() {
+        console.log("CLICK!");
     }
 
 }
