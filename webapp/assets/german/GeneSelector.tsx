@@ -8,7 +8,6 @@ import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 
 export interface GeneSelectorData {
-    showSelectedGenes: boolean;
     slideValues: string[][];
     slideSelectedGenes: string[][];
     selectedGenes: string[][];
@@ -33,23 +32,13 @@ export class GeneSelector extends React.Component<GeneSelectorProps, GeneSelecto
     render() {
         var rows: any[] = [];
         if (this.props.data.slideValues) {
-            if (this.props.data.showSelectedGenes) {
-                rows = this.props.data.selectedGenes.map((row) => (
-                    <TableRow selected={this.props.data.selectedGenes.map(x => x[2]).indexOf(row[2]) !== -1}>
-                        <TableRowColumn>{row[0]}</TableRowColumn>
-                        <TableRowColumn>{row[1]}</TableRowColumn>
-                        <TableRowColumn>{row[2]}</TableRowColumn>
-                    </TableRow>
-                ));
-            } else {
-                rows = this.props.data.slideValues.map((row) => (
-                    <TableRow selected={this.props.data.slideSelectedGenes.map(x => x[2]).indexOf(row[2]) !== -1}>
-                        <TableRowColumn>{row[0]}</TableRowColumn>
-                        <TableRowColumn>{row[1]}</TableRowColumn>
-                        <TableRowColumn>{row[2]}</TableRowColumn>
-                    </TableRow>
-                ));
-            }
+            rows = this.props.data.slideValues.map((row) => (
+                <TableRow selected={this.props.data.slideSelectedGenes.map(x => x[2]).indexOf(row[2]) !== -1}>
+                    <TableRowColumn>{row[0]}</TableRowColumn>
+                    <TableRowColumn>{row[1]}</TableRowColumn>
+                    <TableRowColumn>{row[2]}</TableRowColumn>
+                </TableRow>
+            ));
         }
 
         const styles = {
@@ -84,8 +73,16 @@ export class GeneSelector extends React.Component<GeneSelectorProps, GeneSelecto
             },
         }
 
+        var selection: any;
+        if (this.props.data.selectedGenes && this.props.data.selectedGenes.length > 0) {
+            const selectedGenes = this.props.data.selectedGenes.map(row => (row[0])).sort().join(", ");
+            selection = <p><b>Current selection: </b>{selectedGenes}.</p>
+        } else {
+            selection = <p><b>No genes selected.</b></p>
+        }
         return (
             <div style={this.props.style}>
+                {selection}
                 <Table
                     fixedFooter={true}
                     fixedHeader={true}

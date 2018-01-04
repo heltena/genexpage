@@ -58,12 +58,10 @@ export class Plot extends React.Component<PlotProps, PlotState> {
 
             geneSelectorHeader: {
                 searchText: "",
-                showSelectedGenes: false,
                 hasSelectedGenes: false
             },
 
             geneSelector: {
-                showSelectedGenes: false,
                 slideValues: [],
                 slideSelectedGenes: [],
                 selectedGenes: []
@@ -155,14 +153,12 @@ export class Plot extends React.Component<PlotProps, PlotState> {
         });
     }
 
-    geneSelectorHeaderDeselectAll() {
+    geneSelectorHeaderClearSelection() {
         var geneSelectorHeader: GeneSelectorHeaderData = {
             searchText: this.state.geneSelectorHeader.searchText,
-            showSelectedGenes: false,
             hasSelectedGenes: false
         };
         var geneSelector: GeneSelectorData = {
-            showSelectedGenes: false,
             slideValues: this.state.geneSelector.slideValues,
             slideSelectedGenes: [],
             selectedGenes: [],
@@ -176,11 +172,9 @@ export class Plot extends React.Component<PlotProps, PlotState> {
     geneSelectorHeaderShowSelectedGenesChanged(newValue: boolean) {
         var geneSelectorHeader: GeneSelectorHeaderData = {
             searchText: this.state.geneSelectorHeader.searchText,
-            showSelectedGenes: newValue,
             hasSelectedGenes: this.state.geneSelectorHeader.hasSelectedGenes
         };
         var geneSelector: GeneSelectorData = {
-            showSelectedGenes: newValue,
             slideValues: this.state.geneSelector.slideValues,
             slideSelectedGenes: this.state.geneSelector.slideSelectedGenes,
             selectedGenes: this.state.geneSelector.selectedGenes
@@ -210,7 +204,6 @@ export class Plot extends React.Component<PlotProps, PlotState> {
             const slideSelectedGenes = values.filter(row => this.state.geneSelector.selectedGenes.map(x => x[2]).indexOf(row[2]) !== -1);
 
             var geneSelector: GeneSelectorData = {
-                showSelectedGenes: this.state.geneSelectorHeader.showSelectedGenes,
                 slideValues: values,
                 slideSelectedGenes: slideSelectedGenes,
                 selectedGenes: this.state.geneSelector.selectedGenes
@@ -223,7 +216,6 @@ export class Plot extends React.Component<PlotProps, PlotState> {
             console.log("Error: ");
             console.log(error);
             var geneSelector: GeneSelectorData = {
-                showSelectedGenes: this.state.geneSelectorHeader.showSelectedGenes,
                 slideValues: [],
                 slideSelectedGenes: [],
                 selectedGenes: this.state.geneSelector.selectedGenes
@@ -237,51 +229,30 @@ export class Plot extends React.Component<PlotProps, PlotState> {
     }
 
     geneSelectorRowSelected(selectedRows: number[]) {
-        if (this.state.geneSelectorHeader.showSelectedGenes) {
-            var values = this.state.geneSelector.selectedGenes.filter((row, index) => selectedRows.indexOf(index) != -1);
-            var geneSelectorHeader: GeneSelectorHeaderData = {
-                searchText: this.state.geneSelectorHeader.searchText,
-                showSelectedGenes: this.state.geneSelectorHeader.showSelectedGenes,
-                hasSelectedGenes: values.length > 0  
-            };
-            var geneSelector: GeneSelectorData = {
-                showSelectedGenes: this.state.geneSelectorHeader.showSelectedGenes,
-                slideValues: this.state.geneSelector.slideValues,
-                slideSelectedGenes: this.state.geneSelector.slideSelectedGenes,
-                selectedGenes: values
-            }
-            this.setState({
-                geneSelectorHeader: geneSelectorHeader,
-                geneSelector: geneSelector
-            });
-        } else {
-            const newSlideSelectedGenes = selectedRows.map((index) => this.state.geneSelector.slideValues[index]);
-            const toAdd = newSlideSelectedGenes.filter(row => this.state.geneSelector.slideSelectedGenes.map(x => x[2]).indexOf(row[2]) == -1);
-            const toRemove = this.state.geneSelector.slideSelectedGenes.filter(row => newSlideSelectedGenes.map(x => x[2]).indexOf(row[2]) == -1);
+        const newSlideSelectedGenes = selectedRows.map((index) => this.state.geneSelector.slideValues[index]);
+        const toAdd = newSlideSelectedGenes.filter(row => this.state.geneSelector.slideSelectedGenes.map(x => x[2]).indexOf(row[2]) == -1);
+        const toRemove = this.state.geneSelector.slideSelectedGenes.filter(row => newSlideSelectedGenes.map(x => x[2]).indexOf(row[2]) == -1);
 
-            const selectedGenes = this.state.geneSelector.selectedGenes.filter(row => toRemove.map(x => x[2]).indexOf(row[2]) == -1);
-            selectedGenes.push(...toAdd);
+        const selectedGenes = this.state.geneSelector.selectedGenes.filter(row => toRemove.map(x => x[2]).indexOf(row[2]) == -1);
+        selectedGenes.push(...toAdd);
 
-            const selectedValues = this.state.geneSelector.selectedGenes.filter(row => toRemove.map(x => x[2]).indexOf(row[2]) == -1);
-            selectedValues.push(...toAdd);
+        const selectedValues = this.state.geneSelector.selectedGenes.filter(row => toRemove.map(x => x[2]).indexOf(row[2]) == -1);
+        selectedValues.push(...toAdd);
 
-            var geneSelectorHeader: GeneSelectorHeaderData = {
-                searchText: this.state.geneSelectorHeader.searchText,
-                showSelectedGenes: this.state.geneSelectorHeader.showSelectedGenes,
-                hasSelectedGenes: selectedGenes.length > 0  
-            };
+        var geneSelectorHeader: GeneSelectorHeaderData = {
+            searchText: this.state.geneSelectorHeader.searchText,
+            hasSelectedGenes: selectedGenes.length > 0  
+        };
 
-            var geneSelector: GeneSelectorData = {
-                showSelectedGenes: this.state.geneSelectorHeader.showSelectedGenes,
-                slideValues: this.state.geneSelector.slideValues,
-                slideSelectedGenes: newSlideSelectedGenes,
-                selectedGenes: selectedGenes
-            }
-            this.setState({
-                geneSelectorHeader: geneSelectorHeader,
-                geneSelector: geneSelector
-            });
+        var geneSelector: GeneSelectorData = {
+            slideValues: this.state.geneSelector.slideValues,
+            slideSelectedGenes: newSlideSelectedGenes,
+            selectedGenes: selectedGenes
         }
+        this.setState({
+            geneSelectorHeader: geneSelectorHeader,
+            geneSelector: geneSelector
+        });
     }
 
     handleSelect() {
@@ -467,8 +438,7 @@ export class Plot extends React.Component<PlotProps, PlotState> {
                                     style={style.geneSelectorHeader}
                                     data={this.state.geneSelectorHeader}
                                     search={this.geneSelectorHeaderSearch.bind(this)}
-                                    deselectAll={this.geneSelectorHeaderDeselectAll.bind(this)} 
-                                    showSelectedGenesChanged={this.geneSelectorHeaderShowSelectedGenesChanged.bind(this)} />
+                                    clearSelection={this.geneSelectorHeaderClearSelection.bind(this)} />
                                 <GeneSelector
                                     style={style.geneSelector}
                                     data={this.state.geneSelector}

@@ -11,7 +11,6 @@ import Toggle from 'material-ui/Toggle';
 
 export interface GeneSelectorHeaderData {
     searchText: string;
-    showSelectedGenes: boolean;    
     hasSelectedGenes: boolean;
 }
 
@@ -19,8 +18,7 @@ export interface GeneSelectorHeaderProps {
     style: any;
     data: GeneSelectorHeaderData;
     search(searchText: string): void;
-    deselectAll(): void;
-    showSelectedGenesChanged(newValue: boolean): void;
+    clearSelection(): void;
 }
 
 export interface GeneSelectorHeaderState {
@@ -37,8 +35,7 @@ export class GeneSelectorHeader extends React.Component<GeneSelectorHeaderProps,
             searchText: data.searchText,
         };
         this.handleSearch = this.handleSearch.bind(this);
-        this.handleDeselectAll = this.handleDeselectAll.bind(this);
-        this.handleShowSelectedGenes = this.handleShowSelectedGenes.bind(this);
+        this.handleClearSelection = this.handleClearSelection.bind(this);
     }
 
     handleSearch(event: any) {
@@ -48,12 +45,8 @@ export class GeneSelectorHeader extends React.Component<GeneSelectorHeaderProps,
         this.props.search(this.state.searchText);
     }
 
-    handleDeselectAll(event: any) {
-        this.props.deselectAll();
-    }
-
-    handleShowSelectedGenes(event: any, newValue: boolean) {
-        this.props.showSelectedGenesChanged(newValue);
+    handleClearSelection(event: any) {
+        this.props.clearSelection();
     }
 
     render() {
@@ -98,25 +91,17 @@ export class GeneSelectorHeader extends React.Component<GeneSelectorHeaderProps,
                     hintText="Search text"
                     floatingLabelText="Search text"
                     value={this.state.searchText}
-                    disabled={this.props.data.showSelectedGenes}
                     onChange={(event, newValue) => this.setState({ searchText: newValue}) } />
-                <FlatButton 
+                <FlatButton
                     label="Search"
                     primary={true}
-                    disabled={this.state.searchText.trim().length == 0 || this.props.data.showSelectedGenes}
+                    disabled={this.state.searchText.trim().length == 0}
                     onClick={this.handleSearch} />
-                <br />
-                <Toggle
-                    style={{maxWidth: "250px", display: "inline-block"}}
-                    labelPosition="right"
-                    label="Show selected genes"
-                    toggled={this.props.data.showSelectedGenes}
-                    onToggle={this.handleShowSelectedGenes} />
                 <FlatButton 
-                    label="Deselect all"
+                    label="Clear selection"
                     primary={true}
                     disabled={!this.props.data.hasSelectedGenes}
-                    onClick={this.handleDeselectAll} />
+                    onClick={this.handleClearSelection} />
             </div>
         );
     }
