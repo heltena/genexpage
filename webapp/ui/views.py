@@ -11,5 +11,8 @@ def debug(request):
 def first(request):
     return render(request, 'first.html')
 
+def simple(request):
+    return render(request, 'simple.html')
+
 def index(request):
     return render(request, 'index.html')

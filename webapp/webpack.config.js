@@ -7,7 +7,8 @@ module.exports = {
     entry: {
         index: path.resolve(__dirname, "assets", "index.tsx"),
         first: path.resolve(__dirname, "assets", "first.tsx"),
-        debug: path.resolve(__dirname, "assets", "debug.tsx")
+        debug: path.resolve(__dirname, "assets", "debug.tsx"),
+        simple: path.resolve(__dirname, "assets", "simple.tsx")
     },
     output: {
         filename: "bundle-[name]-[hash].js",

@@ -1,0 +1,24 @@
+{% load static %}
+{% load render_bundle from webpack_loader %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>GEA Index</title>
+    <script>
+      div#react-app {
+        padding: 0px;
+        margin: 300px;
+      }
+    </script>
+  </head>
+  
+  <body>
+		<!-- Dependencies -->
+		<script src="{% static 'react.development.js' %}"></script>
+		<script src="{% static 'react-dom.development.js' %}"></script>
+
+    <div id="react-app"></div>
+    {% render_bundle 'simple' %}
+  </body>
+</html>

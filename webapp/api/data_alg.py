@@ -59,7 +59,10 @@ def get_where(restrictions):
             if op == "eq":
                 where = "gene_ensembl={}".format(value)
             elif op == "in":
-                where = "gene_ensembl IN ({})".format(", ".join(["'{}'".format(v) for v in value]))
+                if len(value) > 0:
+                    where = "gene_ensembl IN ({})".format(", ".join(["'{}'".format(v) for v in value]))
+                else:
+                    where = "1=0"
     return where
 
 
@@ -375,7 +378,14 @@ def generate_age_counts(restrictions, geneIdentifier, title, xAxisLabel, yAxisLa
     if where is None:
         where = "1=1"
 
-    query = "SELECT gene_ensembl, {} FROM api_counts WHERE {}".format(", ".join(columns), where)
+    if len(columns) == 0:
+        fields = "gene_ensembl"
+    else:
+        fields = "gene_ensembl, {}".format(", ".join(columns))
+    query = "SELECT {} FROM api_counts WHERE {}".format(fields, where)
+    print("*" * 80)
+    print(query)
+    print("*" * 80)
     v = Counts.objects.raw(query)
 
     series_data = defaultdict(dict)
@@ -410,7 +420,7 @@ def generate_age_counts(restrictions, geneIdentifier, title, xAxisLabel, yAxisLa
     if len(key_format) > 0:
         key_format = " - ".join(key_format)
     else:
-        key_format = "{gene} - {tissue} - {pfu}"
+        key_format = "{gene_name} - {tissue} - {pfu}"
     
     series = defaultdict(list)
     for serie_key, age_items in series_data.items():
