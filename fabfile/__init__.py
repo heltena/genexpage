@@ -21,6 +21,7 @@ def deploy():
             sudo("/var/www/virtualenvs/genexpage/bin/pip install -r requirements.txt")
         with cd("/var/www/genexpage/webapp"):
             sudo("/var/www/virtualenvs/genexpage/bin/python manage.py migrate --fake")
+            sudo("rm /var/www/genexpage/webapp/assets/bundles/*")
             sudo("npm run webpack")
             sudo("/var/www/virtualenvs/genexpage/bin/python manage.py collectstatic")
         with cd("/var/www/genexpage"):        
