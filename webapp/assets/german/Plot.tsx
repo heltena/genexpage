@@ -68,7 +68,7 @@ export class Plot extends React.Component<PlotProps, PlotState> {
             series: "gene",
             selectedGenes: [],
             geneMatchSlice: [],
-            pfu: [],
+            pfu: [ "0" ],
             tissue: [],
             
             title: "",
