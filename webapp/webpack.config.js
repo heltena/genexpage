@@ -5,10 +5,11 @@ var BundleTracker = require("webpack-bundle-tracker")
 module.exports = {
     context: __dirname,
     entry: {
-        index: path.resolve(__dirname, "assets", "index.tsx"),
         first: path.resolve(__dirname, "assets", "first.tsx"),
         debug: path.resolve(__dirname, "assets", "debug.tsx"),
-        simple: path.resolve(__dirname, "assets", "simple.tsx")
+        simple: path.resolve(__dirname, "assets", "simple.tsx"),
+        german: path.resolve(__dirname, "assets", "german.tsx"),
+        fenix: path.resolve(__dirname, "assets", "fenix.tsx"),
     },
     output: {
         filename: "bundle-[name]-[hash].js",

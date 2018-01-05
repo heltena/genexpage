@@ -7,24 +7,24 @@ import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowCol
 import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 
-export interface GeneSelectorData {
+export interface GeneSelectorOldData {
     geneIdentifier: string;
     slideValues: string[][];
     slideSelectedGenes: string[][];
     selectedGenes: string[][];
 }
 
-export interface GeneSelectorProps {
+export interface GeneSelectorOldProps {
     style: any;
-    data: GeneSelectorData;
-    changed(data: GeneSelectorData): void;
+    data: GeneSelectorOldData;
+    changed(data: GeneSelectorOldData): void;
     rowSelected(selectedRows: number[]): void;
 }
 
-export interface GeneSelectorState {
+export interface GeneSelectorOldState {
 }
 
-export class GeneSelector extends React.Component<GeneSelectorProps, GeneSelectorState> {
+export class GeneSelectorOld extends React.Component<GeneSelectorOldProps, GeneSelectorOldState> {
 
     geneIdentifierValues = [
         "GENE_SYMBOL",
@@ -32,7 +32,7 @@ export class GeneSelector extends React.Component<GeneSelectorProps, GeneSelecto
         "ENSEMBL_GENE_ID",
     ];
 
-    constructor(props: GeneSelectorProps, state: GeneSelectorState) {
+    constructor(props: GeneSelectorOldProps, state: GeneSelectorOldState) {
         super(props, state);
     }
     

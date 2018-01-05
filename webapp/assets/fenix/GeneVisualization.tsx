@@ -16,33 +16,15 @@ import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowCol
 import TextField from 'material-ui/TextField';
 import { lchmod } from 'fs';
 
-import { WelcomePage } from './WelcomePage';
-import { Plot } from './Plot';
-
-import { GeneSelectorHeaderData } from './GeneSelectorHeader';
-import { GeneSelectorOldData } from './GeneSelectorOld';
-
-export interface GeneVisualizationData {
-    xaxis: string;
-    series: string;
-
-    geneSelectorHeader: GeneSelectorHeaderData;
-    geneSelector: GeneSelectorOldData;
-
-    title: string;
-    xAxisLabel: string;
-    yAxisLabel: string;
-    geneIdentifier: string;      
-}
-
-export interface GeneVisualizationProps {
-}
+import { Welcome } from './Welcome';
+import { Viewer } from './Viewer';
 
 enum PageType {
     Welcome = 0,
-    Plot = 1
+    Viewer = 1
 }
 
+export interface GeneVisualizationProps { }
 export interface GeneVisualizationState {
     pageIndex: PageType;
 }
@@ -64,7 +46,7 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
     }
 
     handleStart() {
-        this.setState({ pageIndex: PageType.Plot });
+        this.setState({ pageIndex: PageType.Viewer });
     }
 
     render() {
@@ -81,8 +63,7 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
                 height: "71px",
                 textAlign: "center",
                 display: 'flex',
-                'justify-content': 'center',
-                'align-items': 'center'
+                'justify-content': 'center'
             }
         }
 
@@ -95,12 +76,12 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
             case PageType.Welcome:
                 return [
                     header,
-                    <WelcomePage start={this.handleStart} /> 
+                    <Welcome start={this.handleStart} /> 
                 ];
-            case PageType.Plot:
+            case PageType.Viewer:
                 return [
                     header,
-                    <Plot />,
+                    <Viewer />,
                     <br />
                 ];
         }

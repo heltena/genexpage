@@ -14,5 +14,8 @@ def first(request):
 def simple(request):
     return render(request, 'simple.html')
 
-def index(request):
-    return render(request, 'index.html')
+def german(request):
+    return render(request, 'german.html')
+
+def fenix(request):
+    return render(request, 'fenix.html')

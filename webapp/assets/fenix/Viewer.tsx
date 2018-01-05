@@ -11,78 +11,83 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton'
 import SelectField from 'material-ui/SelectField';
 import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
-import { GeneVisualizationPlotData, GeneVisualizationPlot } from './GeneVisualizationPlot';
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
-import { GeneSelectorOldData, GeneSelectorOld } from './GeneSelectorOld';
-import { GeneSelectorHeaderData, GeneSelectorHeader } from './GeneSelectorHeader';
+import { Gene } from './Data';
+import { GeneSelection } from './GeneSelection';
+import { Plot } from './Plot';
 
-export interface PlotProps { }
+export interface ViewerProps { }
 
-export interface PlotState {
+export interface ViewerState {
     showHelpDialog: boolean;
-    selectDrawerOpen: boolean;
+    showGeneSelectionDialog: boolean;
 
-    geneSelectorHeader: GeneSelectorHeaderData;
-    geneSelector: GeneSelectorOldData;
-
+    geneIdentifier: string;
     xaxis: string;
     series: string;
-    selectedGenes: string[][];
-    geneMatchSlice: string[][];
+    selectedGenes: Gene[];
+    searchResultGenes: Gene[];
     pfu: string[];
     tissue: string[];
 
+    error: boolean;
+    plotValid: boolean;
+    plotType: string;
     title: string;
     xAxisLabel: string;
     yAxisLabel: string;
-    
-    plot?: GeneVisualizationPlotData;
-    error: boolean
+    xvalues: any[];
+    serieValues: any[];
 }
 
-export class Plot extends React.Component<PlotProps, PlotState> {
+export class Viewer extends React.Component<ViewerProps, ViewerState> {
 
+    geneValues: Gene[] = [];
     tissueNames: string[] = [];
     pfuNames: string[] = [];
 
-    constructor(props: PlotProps, state: PlotState) {
+    constructor(props: ViewerProps, state: ViewerState) {
         super(props, state);
         this.state = {
             showHelpDialog: true,
-            selectDrawerOpen: false,
+            showGeneSelectionDialog: false,
 
-            geneSelectorHeader: {
-                searchText: "",
-                hasSelectedGenes: false,
-                geneIdentifier: "GENE_SYMBOL"
-            },
-
-            geneSelector: {
-                geneIdentifier: "GENE_SYMBOL",
-                slideValues: [],
-                slideSelectedGenes: [],
-                selectedGenes: []
-            },
-
+            geneIdentifier: "GENE_SYMBOL",
             xaxis: "age",
             series: "gene",
             selectedGenes: [],
-            geneMatchSlice: [],
-            pfu: [ "0" ],
+            searchResultGenes: [],
+            pfu: ["0"],
             tissue: [],
             
+            error: false,
+            plotValid: false,
+            plotType: "",
             title: "",
             xAxisLabel: "Age (months)",
             yAxisLabel: "Counts",
-
-            plot: null,
-            error: false
+            xvalues: [],
+            serieValues: []
         };
         this.handleTissueChanged = this.handleTissueChanged.bind(this);
         this.handlePfuChanged = this.handlePfuChanged.bind(this);
-        this.handleGeneMatchUpdated = this.handleGeneMatchUpdated.bind(this);
-        this.handleSelect = this.handleSelect.bind(this);
+        this.handleGeneSelectionSearch = this.handleGeneSelectionSearch.bind(this);
+        this.handleGeneSelectionGeneIdentifierChanged = this.handleGeneSelectionGeneIdentifierChanged.bind(this);
+        this.handleGeneSelectionClearSelection = this.handleGeneSelectionClearSelection.bind(this);
+        this.handleGeneSelectionSelectionChanged = this.handleGeneSelectionSelectionChanged.bind(this);
         this.handleUpdatePlot = this.handleUpdatePlot.bind(this);
+
+        axios.get(
+            "/api/gene/list"
+        ).then(response => {
+            const values = (response.data as any[]);
+            this.geneValues = values.map(row => row as string[]).map(row => ({symbol: row[1], entrez: row[2], ensembl: row[0]} as Gene));
+            console.log("GENES: ", this.geneValues);
+            this.forceUpdate();
+        }).catch(error => {
+            this.geneValues = [];
+        });
 
         axios.get(
             "/api/tissue/list"
@@ -123,165 +128,42 @@ export class Plot extends React.Component<PlotProps, PlotState> {
         });
     }
 
-    handleGeneMatchUpdated(text: string) {
-        axios.get(
-            "/api/gene/search/" + text
-        ).then(response => {
-            const values = (response.data["values"] as any[])
-                .map(row => row as string[]);
-            this.setState({
-                geneMatchSlice: values
-            });
-            console.log("Coming new ", values);
-        }).catch(error => {
-            console.log("Error: ");
-            console.log(error);
-            this.setState({
-                geneMatchSlice: []
-            });
-        });
-    }
-
-    geneSelectorHeaderClearSelection() {
-        var geneSelectorHeader: GeneSelectorHeaderData = {
-            searchText: this.state.geneSelectorHeader.searchText,
-            hasSelectedGenes: false,
-            geneIdentifier: this.state.geneSelectorHeader.geneIdentifier
-        };
-        var geneSelector: GeneSelectorOldData = {
-            geneIdentifier: this.state.geneSelectorHeader.geneIdentifier,
-            slideValues: this.state.geneSelector.slideValues,
-            slideSelectedGenes: [],
-            selectedGenes: [],
-        };
+    handleGeneSelectionSearch(value: string) {
+        console.log("Searching for ", value);
+        const regexp = new RegExp(value);
+        const result = this.geneValues.filter(gene => regexp.test(gene.ensembl) || regexp.test(gene.entrez) || regexp.test(gene.symbol)).slice(0, 20);
         this.setState({
-            geneSelectorHeader: geneSelectorHeader,
-            geneSelector: geneSelector
+            searchResultGenes: result
         });
+        console.log("Search result: ", result);
     }
 
-    geneSelectorHeaderGeneIdentifierChanged(value: string) {
-        var geneSelectorHeader: GeneSelectorHeaderData = {
-            searchText: this.state.geneSelectorHeader.searchText,
-            hasSelectedGenes: this.state.geneSelectorHeader.hasSelectedGenes,
+    handleGeneSelectionGeneIdentifierChanged(value: string) {
+        this.setState({
             geneIdentifier: value
-        };
-        var geneSelector: GeneSelectorOldData = {
-            geneIdentifier: value,
-            slideValues: this.state.geneSelector.slideValues,
-            slideSelectedGenes: this.state.geneSelector.slideSelectedGenes,
-            selectedGenes: this.state.geneSelector.selectedGenes
-        };
-        this.setState({
-            selectDrawerOpen: true,
-            geneSelectorHeader: geneSelectorHeader,
-            geneSelector: geneSelector
         });
     }
 
-    geneSelectorHeaderClose() {
+    handleGeneSelectionClearSelection() {
         this.setState({
-            selectDrawerOpen: false
+            selectedGenes: []
         });
     }
 
-    geneSelectorChanged(data: GeneSelectorOldData) {
+    handleGeneSelectionSelectionChanged(select: Gene[], deselect: Gene[]) {
+        const deselectEnsembl = deselect.map(gene => gene.ensembl);
+        const newSelectedGenes = this.state.selectedGenes.concat(select).filter(gene => deselectEnsembl.indexOf(gene.ensembl) == -1);
         this.setState({
-            geneSelector: data
-        });
-    }
-    
-    geneSelectorHeaderSearch(searchText: string) {
-        console.log("Trying to search for " + searchText);
-        if (searchText.trim().length == 0) {
-            return
-        }
-        axios.get(
-            "/api/gene/search/" + searchText
-        ).then(response => {
-            console.log(response.data);
-            const values = (response.data["values"] as any[]).map(row => row as string[]);
-            const slideSelectedGenes = values.filter(row => this.state.geneSelector.selectedGenes.map(x => x[2]).indexOf(row[2]) !== -1);
-
-            var geneSelector: GeneSelectorOldData = {
-                geneIdentifier: this.state.geneSelectorHeader.geneIdentifier,
-                slideValues: values,
-                slideSelectedGenes: slideSelectedGenes,
-                selectedGenes: this.state.geneSelector.selectedGenes
-            };       
-
-            this.setState({
-                geneSelector: geneSelector
-            });
-        }).catch(error => {
-            console.log("Error: ");
-            console.log(error);
-            var geneSelector: GeneSelectorOldData = {
-                geneIdentifier: this.state.geneSelectorHeader.geneIdentifier,
-                slideValues: [],
-                slideSelectedGenes: [],
-                selectedGenes: this.state.geneSelector.selectedGenes
-            };
-
-            this.setState({
-                geneSelector: geneSelector
-            });
-        });
-    
-    }
-
-    geneSelectorRowSelected(selectedRows: number[]) {
-        const newSlideSelectedGenes = selectedRows.map((index) => this.state.geneSelector.slideValues[index]);
-        const toAdd = newSlideSelectedGenes.filter(row => this.state.geneSelector.slideSelectedGenes.map(x => x[2]).indexOf(row[2]) == -1);
-        const toRemove = this.state.geneSelector.slideSelectedGenes.filter(row => newSlideSelectedGenes.map(x => x[2]).indexOf(row[2]) == -1);
-
-        const selectedGenes = this.state.geneSelector.selectedGenes.filter(row => toRemove.map(x => x[2]).indexOf(row[2]) == -1);
-        selectedGenes.push(...toAdd);
-
-        const selectedValues = this.state.geneSelector.selectedGenes.filter(row => toRemove.map(x => x[2]).indexOf(row[2]) == -1);
-        selectedValues.push(...toAdd);
-
-        var geneSelectorHeader: GeneSelectorHeaderData = {
-            searchText: this.state.geneSelectorHeader.searchText,
-            hasSelectedGenes: selectedGenes.length > 0,
-            geneIdentifier: this.state.geneSelectorHeader.geneIdentifier
-        };
-
-        var geneSelector: GeneSelectorOldData = {
-            geneIdentifier: this.state.geneSelectorHeader.geneIdentifier,
-            slideValues: this.state.geneSelector.slideValues,
-            slideSelectedGenes: newSlideSelectedGenes,
-            selectedGenes: selectedGenes
-        }
-        this.setState({
-            geneSelectorHeader: geneSelectorHeader,
-            geneSelector: geneSelector
-        });
-    }
-
-    handleSelect() {
-        this.setState({
-            selectDrawerOpen: true
+            selectedGenes: newSelectedGenes
         });
     }
 
     handleUpdatePlot() {
-        this.setState({
-            selectedGenes: this.state.geneSelector.selectedGenes,
-            selectDrawerOpen: false
-        }, () => this.updateFigure());
-    }
-
-    plotGetData(): GeneVisualizationPlotData {
-        return this.state.plot;
-    }
-
-    updateFigure() {
         var restrictions: any[] = [];
 
         var titleComponents: string[] = [];
         if (this.state.selectedGenes && this.state.selectedGenes.length > 0) {
-            restrictions.push(["gene", "in", this.state.selectedGenes.map(row => row[2])]);
+            restrictions.push(["gene", "in", this.state.selectedGenes.map(row => row.ensembl)]);
             titleComponents.push("{gene_names}");
         } else {
             restrictions.push(["gene", "in", []]);
@@ -305,7 +187,7 @@ export class Plot extends React.Component<PlotProps, PlotState> {
                 "xaxis": this.state.xaxis,
                 "series": this.state.series,
                 "restrictions": restrictions,
-                "geneIdentifier": this.state.geneSelectorHeader.geneIdentifier,
+                "geneIdentifier": this.state.geneIdentifier,
                 "title": title,
                 "xAxisLabel": this.state.xAxisLabel,
                 "yAxisLabel": this.state.yAxisLabel
@@ -314,45 +196,45 @@ export class Plot extends React.Component<PlotProps, PlotState> {
             console.log("Response ok: ");
             console.log(response.data);
 
-            const newPlot: GeneVisualizationPlotData = {
-                valid: true,
+            this.setState({
+                error: false,
+                plotValid: true,
                 plotType: response.data["plotType"],
                 title: response.data["title"],
                 xAxisLabel: response.data["xAxisLabel"],
                 yAxisLabel: response.data["yAxisLabel"],
                 xvalues: response.data["xvalues"],
-                series: response.data["series"]
-            };
-
-            this.setState({
-                plot: newPlot,
-                error: false
+                serieValues: response.data["series"]
             });
         }).catch(error => {
             console.log("Error: ");
             console.log(error);
             this.setState({
-                plot: null,
+                plotValid: false,
                 error: true
             });
         });
     }
 
     render() {
-        const style = {
+        const styles = {
             div: {
                 width: '100%',
-                textAlign: 'center'
+                textAlign: 'center',
+                display: 'flex'
+            },
+            card: {
+                width: '100%',
+                padding: 20
             },
             dialog: {
                 maxWidth: "90%",
-                // maxWidth: "none"
             },
             header: {
                 width: "90%",
                 display: 'flex',
             },
-            geneSelection: {
+            headerButton: {
                 margin: "12px",
                 flex: 1
             },
@@ -381,16 +263,15 @@ export class Plot extends React.Component<PlotProps, PlotState> {
             updatePlot: {
                 margin: "12px"
             },
-            helpClose: {
+            dialogClose: {
                 flex: 2,
                 position: 'absolute' as 'absolute',
                 right: 0,
                 top: 0
             },
-
         };
 
-        var selectedGenes = this.state.geneSelector.selectedGenes;
+        var selectedGenes = this.state.selectedGenes;
         var canUpdatePlot = 
             (selectedGenes && selectedGenes.length > 0) && 
             (this.state.tissue && this.state.tissue.length > 0) &&
@@ -399,10 +280,15 @@ export class Plot extends React.Component<PlotProps, PlotState> {
         var plot: any;
         if (this.state.error) {
             plot = <div>There is an error on the selection.</div>
-        } else if (this.state.plot == null) {
-            plot = <div></div>
         } else {
-            plot = <GeneVisualizationPlot plotGetData={this.plotGetData.bind(this)} />
+            plot = <Plot 
+                       valid={this.state.plotValid}
+                       plotType={this.state.plotType}
+                       title={this.state.title}
+                       xAxisLabel={this.state.xAxisLabel}
+                       yAxisLabel={this.state.yAxisLabel}
+                       xvalues={this.state.xvalues}
+                       series={this.state.serieValues} />      
         }
 
         var tissueItems = this.tissueNames.map((name) => (
@@ -423,8 +309,17 @@ export class Plot extends React.Component<PlotProps, PlotState> {
                 primaryText={name} />
         ));
 
+        // const rows = this.geneNames.map((row) => (
+        //     <TableRow selected={this.state.selectedGenes.map(x => x[2]).indexOf(row[2]) !== -1}>
+        //         <TableRowColumn>{row[0]}</TableRowColumn>
+        //         <TableRowColumn>{row[1]}</TableRowColumn>
+        //         <TableRowColumn>{row[2]}</TableRowColumn>
+        //     </TableRow>
+        // ));
+
         return (
-            <div style={style.div}>
+            <div style={styles.div}>
+                <div style={styles.card}>
                 <Dialog
                     title="HELP"
                     modal={false}
@@ -435,7 +330,7 @@ export class Plot extends React.Component<PlotProps, PlotState> {
                             label="CLOSE"
                             labelPosition="before"
                             secondary={true}
-                            style={style.helpClose}
+                            style={styles.dialogClose}
                             onClick={() => this.setState({showHelpDialog: false})} />
                         This is the GENE AGING VIEWER tool.
                         Please, select the genes you want to study using the "SELECT GENE" button.
@@ -448,29 +343,33 @@ export class Plot extends React.Component<PlotProps, PlotState> {
                             title="GENES SELECTION"
                             modal={true}
                             autoScrollBodyContent={true}
-                            contentStyle={style.dialog}
-                            open={this.state.selectDrawerOpen}
-                            onRequestClose={() => this.setState({selectDrawerOpen: false})}>
-                                <GeneSelectorHeader
-                                    data={this.state.geneSelectorHeader}
-                                    search={this.geneSelectorHeaderSearch.bind(this)}
-                                    clearSelection={this.geneSelectorHeaderClearSelection.bind(this)} 
-                                    geneIdentifierChanged={this.geneSelectorHeaderGeneIdentifierChanged.bind(this)}
-                                    close={this.geneSelectorHeaderClose.bind(this)} />
-                                <GeneSelectorOld
-                                    style={style.geneSelector}
-                                    data={this.state.geneSelector}
-                                    changed={this.geneSelectorChanged.bind(this)}
-                                    rowSelected={this.geneSelectorRowSelected.bind(this)} />
+                            contentStyle={styles.dialog}
+                            open={this.state.showGeneSelectionDialog}
+                            onRequestClose={() => this.setState({showGeneSelectionDialog: false})}>
+                                <RaisedButton
+                                    label="CLOSE"
+                                    style={styles.dialogClose}
+                                    secondary={true}
+                                    onClick={() => this.setState({showGeneSelectionDialog: false})} />
+                                <GeneSelection 
+                                    geneIdentifier={this.state.geneIdentifier}
+                                    geneValues={this.geneValues}
+                                    selectedGenes={this.state.selectedGenes}
+                                    searchResultGenes={this.state.searchResultGenes}
+                                    hasSelectedGenes={this.state.selectedGenes && this.state.selectedGenes.length > 0}
+                                    search={this.handleGeneSelectionSearch}
+                                    geneIdentifierChanged={this.handleGeneSelectionGeneIdentifierChanged}
+                                    clearSelection={this.handleGeneSelectionClearSelection}
+                                    selectionChanged={this.handleGeneSelectionSelectionChanged} />
                         </Dialog>
-                        <div style={style.header}>
-                            <div style={style.geneSelection}>
+                        <div style={styles.header}>
+                            <div style={styles.headerButton}>
                                 <RaisedButton 
-                                    style={style.geneSelection}
+                                    style={styles.headerButton}
                                     label="SELECT GENES" 
                                     labelPosition="before" 
                                     primary={true} 
-                                    onClick={this.handleSelect} />
+                                    onClick={() => this.setState({showGeneSelectionDialog: true})} />
                             </div>
                             <SelectField
                                 multiple={true}
@@ -480,7 +379,7 @@ export class Plot extends React.Component<PlotProps, PlotState> {
                                 floatingLabelText="Tissues"
                                 value={this.state.tissue}
                                 onChange={this.handleTissueChanged}
-                                style={style.tissue}>
+                                style={styles.tissue}>
                                     {tissueItems}
                             </SelectField>
                             <SelectField
@@ -491,12 +390,12 @@ export class Plot extends React.Component<PlotProps, PlotState> {
                                 floatingLabelText="PFU"
                                 value={this.state.pfu}
                                 onChange={this.handlePfuChanged}
-                                style={style.pfu}>
+                                style={styles.pfu}>
                                     {pfuItems}
                             </SelectField>
-                            <div style={style.geneSelection}>
+                            <div style={styles.headerButton}>
                                 <RaisedButton
-                                    style={style.geneSelection}
+                                    style={styles.headerButton}
                                     label="HELP"
                                     labelPosition="before"
                                     primary={true}
@@ -505,7 +404,7 @@ export class Plot extends React.Component<PlotProps, PlotState> {
                         </div>
                         <Divider />
                         <RaisedButton 
-                            style={style.updatePlot}
+                            style={styles.updatePlot}
                             label="UPDATE PLOT" 
                             labelPosition="before" 
                             primary={true} 
@@ -515,6 +414,7 @@ export class Plot extends React.Component<PlotProps, PlotState> {
                         {plot}
                     </CardText>
                 </Card>
+                </div>
             </div>
         );
     }
