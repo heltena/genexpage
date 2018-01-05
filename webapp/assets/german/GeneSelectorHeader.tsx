@@ -140,11 +140,17 @@ export class GeneSelectorHeader extends React.Component<GeneSelectorHeaderProps,
 
         return (
             <div style={styles.header}>
-                <IconButton
+                {/* <IconButton
                     style={styles.close}
                     onClick={this.handleClose}>
                         <ContentClear />
-                </IconButton>
+                </IconButton> */}
+                <RaisedButton
+                    label="CLOSE"
+                    style={styles.close}
+                    secondary={true}
+                    onClick={this.handleClose} 
+                    />
                 <div style={styles.div}>
                     <TextField
                         style={styles.searchText}

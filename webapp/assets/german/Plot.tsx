@@ -19,6 +19,7 @@ import { GeneSelectorHeaderData, GeneSelectorHeader } from './GeneSelectorHeader
 export interface PlotProps { }
 
 export interface PlotState {
+    showHelpDialog: boolean;
     selectDrawerOpen: boolean;
 
     geneSelectorHeader: GeneSelectorHeaderData;
@@ -47,6 +48,7 @@ export class Plot extends React.Component<PlotProps, PlotState> {
     constructor(props: PlotProps, state: PlotState) {
         super(props, state);
         this.state = {
+            showHelpDialog: true,
             selectDrawerOpen: false,
 
             geneSelectorHeader: {
@@ -66,8 +68,8 @@ export class Plot extends React.Component<PlotProps, PlotState> {
             series: "gene",
             selectedGenes: [],
             geneMatchSlice: [],
-            pfu: [ "0" ],
-            tissue: ["AM"],
+            pfu: [],
+            tissue: [],
             
             title: "",
             xAxisLabel: "Age (months)",
@@ -378,11 +380,22 @@ export class Plot extends React.Component<PlotProps, PlotState> {
             },
             updatePlot: {
                 margin: "12px"
-            }
+            },
+            helpClose: {
+                flex: 2,
+                position: 'absolute' as 'absolute',
+                right: 0,
+                top: 0
+            },
+
         };
 
         var selectedGenes = this.state.geneSelector.selectedGenes;
-        var canUpdatePlot = selectedGenes && selectedGenes.length > 0;
+        var canUpdatePlot = 
+            (selectedGenes && selectedGenes.length > 0) && 
+            (this.state.tissue && this.state.tissue.length > 0) &&
+            (this.state.pfu && this.state.pfu.length > 0);
+
         var plot: any;
         if (this.state.error) {
             plot = <div>There is an error on the selection.</div>
@@ -412,11 +425,28 @@ export class Plot extends React.Component<PlotProps, PlotState> {
 
         return (
             <div style={style.div}>
+                <Dialog
+                    title="HELP"
+                    modal={false}
+                    autoScrollBodyContent={true}
+                    open={this.state.showHelpDialog}
+                    onRequestClose={() => this.setState({showHelpDialog: false})}>
+                        <RaisedButton
+                            label="CLOSE"
+                            labelPosition="before"
+                            secondary={true}
+                            style={style.helpClose}
+                            onClick={() => this.setState({showHelpDialog: false})} />
+                        This is the GENE AGING VIEWER tool.
+                        Please, select the genes you want to study using the "SELECT GENE" button.
+                        ....
+
+                </Dialog>
                 <Card>
                     <CardText>
                         <Dialog
                             title="GENES SELECTION"
-                            modal={false}
+                            modal={true}
                             autoScrollBodyContent={true}
                             contentStyle={style.dialog}
                             open={this.state.selectDrawerOpen}
@@ -464,6 +494,14 @@ export class Plot extends React.Component<PlotProps, PlotState> {
                                 style={style.pfu}>
                                     {pfuItems}
                             </SelectField>
+                            <div style={style.geneSelection}>
+                                <RaisedButton
+                                    style={style.geneSelection}
+                                    label="HELP"
+                                    labelPosition="before"
+                                    primary={true}
+                                    onClick={() => this.setState({showHelpDialog: true})} />
+                            </div>
                         </div>
                         <Divider />
                         <RaisedButton 

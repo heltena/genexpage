@@ -19,10 +19,6 @@ import { lchmod } from 'fs';
 import { WelcomePage } from './WelcomePage';
 import { Plot } from './Plot';
 
-// import { ConfigurationStep, ConfigurationStepData } from './ConfigurationStep';
-// import { PlotStep, PlotStepData } from './PlotStep';
-// import { GeneVisualizationPlotData } from './GeneVisualizationPlot';
-
 import { GeneSelectorHeaderData } from './GeneSelectorHeader';
 import { GeneSelectorData } from './GeneSelector';
 
@@ -73,18 +69,28 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
 
     render() {
         const styles = {
-            img: {
+            header: {
                 top: 0,
                 left: 0,
-                "background-image": "url('/static/chicago.png')",
-                "background-color": "#acd8f7",
-                "background-repeat": "no-repeat",
+                padding: 0,
+                margin: 0,
+                border: 0,
+                color: "white",
+                "background-color": "#472d82",
                 width: "100%",
-                height: "171px"
+                height: "71px",
+                textAlign: "center",
+                display: 'flex',
+                'justify-content': 'center',
+                'align-items': 'center'
             }
         }
 
-        const header = (<div style={styles.img} onClick={this.handleOnClick} />);
+        const header = (
+            <div style={styles.header} onClick={this.handleOnClick}>
+                GENE EXPRESSION VIEWER
+            </div>
+        );
         switch (this.state.pageIndex) {
             case PageType.Welcome:
                 return [
