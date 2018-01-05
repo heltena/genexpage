@@ -1,23 +1,28 @@
 import axios from 'axios';
 import * as React from "react";
 
-import { Gene } from './Data';
+import { Gene, Sort } from './Data';
 import FlatButton from 'material-ui/FlatButton';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import ContentRemove from 'material-ui/svg-icons/content/remove';
+import NavigationExpandLess from 'material-ui/svg-icons/navigation/expand-less';
+import NavigationExpandMore from 'material-ui/svg-icons/navigation/expand-more';
 
 export interface GeneSelectionProps {
     geneIdentifier: string;
     geneValues: Gene[];
     selectedGenes: Gene[];
     searchResultGenes: Gene[];
+    sort: Sort;
     hasSelectedGenes: boolean;
 
     search(value: string): void;
     geneIdentifierChanged(name: string): void;
     clearSelection(): void;
     selectionChanged(select: Gene[], deselect: Gene[]): void;
+    selectionSortChanged(field: string): void;
 }
 
 export interface GeneSelectionState {
@@ -131,6 +136,10 @@ export class GeneSelection extends React.Component<GeneSelectionProps, GeneSelec
                 style={styles.geneIdentifierButton} />
         ));
 
+        const symbolIcon = this.props.sort.field != "GENE_SYMBOL" ? <ContentRemove /> : this.props.sort.asc ? <NavigationExpandLess /> : <NavigationExpandMore />;
+        const entrezIcon = this.props.sort.field != "ENTREZ_GENE_ID" ? <ContentRemove /> : this.props.sort.asc ? <NavigationExpandLess /> : <NavigationExpandMore />;
+        const ensemblIcon = this.props.sort.field != "ENSEMBL_GENE_ID" ? <ContentRemove /> : this.props.sort.asc ? <NavigationExpandLess /> : <NavigationExpandMore />;
+
         return (
             <div>
                 <div style={styles.header}>
@@ -167,9 +176,30 @@ export class GeneSelection extends React.Component<GeneSelectionProps, GeneSelec
                         displaySelectAll={false}
                         enableSelectAll={false}>
                         <TableRow>
-                        <TableHeaderColumn>SYMBOL</TableHeaderColumn>
-                        <TableHeaderColumn>ENTREZ</TableHeaderColumn>
-                        <TableHeaderColumn>ENSEMBL</TableHeaderColumn>
+                        <TableHeaderColumn>
+                            <FlatButton
+                                label="SYMBOL" 
+                                primary={true}
+                                icon={symbolIcon}
+                                onClick={() => this.props.selectionSortChanged("GENE_SYMBOL")} 
+                                />
+                        </TableHeaderColumn>
+                        <TableHeaderColumn>
+                            <FlatButton
+                                label="ENTREZ" 
+                                primary={true}
+                                icon={entrezIcon} 
+                                onClick={() => this.props.selectionSortChanged("ENTREZ_GENE_ID")}
+                                />
+                        </TableHeaderColumn>
+                        <TableHeaderColumn>
+                            <FlatButton
+                                label="ENSEMBL" 
+                                primary={true}
+                                icon={ensemblIcon}
+                                onClick={() => this.props.selectionSortChanged("ENSEMBL_GENE_ID")} 
+                                />
+                            </TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
                     <TableBody

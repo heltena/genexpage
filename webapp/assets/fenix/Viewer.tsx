@@ -13,7 +13,7 @@ import SelectField from 'material-ui/SelectField';
 import { Step, Stepper, StepLabel } from 'material-ui/Stepper';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
-import { Gene } from './Data';
+import { Gene, Sort } from './Data';
 import { GeneSelection } from './GeneSelection';
 import { Plot } from './Plot';
 
@@ -28,6 +28,7 @@ export interface ViewerState {
     series: string;
     selectedGenes: Gene[];
     searchResultGenes: Gene[];
+    genesSort: Sort;
     pfu: string[];
     tissue: string[];
 
@@ -58,6 +59,10 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
             series: "gene",
             selectedGenes: [],
             searchResultGenes: [],
+            genesSort: {
+                field: "GENE_SYMBOL",
+                asc: true
+            },
             pfu: ["0"],
             tissue: [],
             
@@ -76,13 +81,19 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
         this.handleGeneSelectionGeneIdentifierChanged = this.handleGeneSelectionGeneIdentifierChanged.bind(this);
         this.handleGeneSelectionClearSelection = this.handleGeneSelectionClearSelection.bind(this);
         this.handleGeneSelectionSelectionChanged = this.handleGeneSelectionSelectionChanged.bind(this);
+        this.handleGeneSelectionSortChanged = this.handleGeneSelectionSortChanged.bind(this);
         this.handleUpdatePlot = this.handleUpdatePlot.bind(this);
 
         axios.get(
             "/api/gene/list"
         ).then(response => {
-            const values = (response.data as any[]);
-            this.geneValues = values.map(row => row as string[]).map(row => ({symbol: row[1], entrez: row[2], ensembl: row[0]} as Gene));
+            const values = response.data as any[][];
+            this.geneValues = values.map(row => ({
+                symbol: row[1] as string, 
+                entrez: row[2] as string, 
+                entrezNumber: row[2] as number,
+                ensembl: row[0] as string
+            } as Gene));
             console.log("GENES: ", this.geneValues);
             this.forceUpdate();
         }).catch(error => {
@@ -130,7 +141,7 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
 
     handleGeneSelectionSearch(value: string) {
         console.log("Searching for ", value);
-        const regexp = new RegExp(value);
+        const regexp = new RegExp(value, 'i');
         const result = this.geneValues.filter(gene => regexp.test(gene.ensembl) || regexp.test(gene.entrez) || regexp.test(gene.symbol)).slice(0, 20);
         this.setState({
             searchResultGenes: result
@@ -152,9 +163,58 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
 
     handleGeneSelectionSelectionChanged(select: Gene[], deselect: Gene[]) {
         const deselectEnsembl = deselect.map(gene => gene.ensembl);
-        const newSelectedGenes = this.state.selectedGenes.concat(select).filter(gene => deselectEnsembl.indexOf(gene.ensembl) == -1);
+        const newUnsortedSelectedGenes = this.state.selectedGenes.concat(select).filter(gene => deselectEnsembl.indexOf(gene.ensembl) == -1);
+        var newSelectedGenes: Gene[] = [];
+
+        switch(this.state.genesSort.field) {
+        case "GENE_SYMBOL":
+            newSelectedGenes = newUnsortedSelectedGenes.sort((left, right) => left.symbol.localeCompare(right.symbol));
+            break
+        case "ENTREZ_GENE_ID":
+            newSelectedGenes = newUnsortedSelectedGenes.sort((left, right) => left.entrezNumber - right.entrezNumber);
+            break
+        case "ENSEMBL_GENE_ID":
+            newSelectedGenes = newUnsortedSelectedGenes.sort((left, right) => left.ensembl.localeCompare(right.ensembl));
+            break
+        }
+        if (!this.state.genesSort.asc)
+            newSelectedGenes = newSelectedGenes.reverse()
         this.setState({
             selectedGenes: newSelectedGenes
+        });
+    }
+
+    handleGeneSelectionSortChanged(field: string) {
+        var newSearchResultGenes: Gene[] = [];
+        switch(field) {
+            case "GENE_SYMBOL":
+                newSearchResultGenes = this.state.searchResultGenes.sort((left, right) => left.symbol.localeCompare(right.symbol));
+                break
+            case "ENTREZ_GENE_ID":
+                newSearchResultGenes = this.state.searchResultGenes.sort((left, right) => left.entrezNumber - right.entrezNumber);
+                break
+            case "ENSEMBL_GENE_ID":
+                newSearchResultGenes = this.state.searchResultGenes.sort((left, right) => left.ensembl.localeCompare(right.ensembl));
+                break
+        }
+        
+        var newAsc: boolean;
+
+        if (this.state.genesSort.field == field) {
+            newAsc = !this.state.genesSort.asc;
+        } else {
+            newAsc = true;
+        }
+
+        if (!newAsc)
+            newSearchResultGenes = newSearchResultGenes.reverse()
+    
+        this.setState({
+            searchResultGenes: newSearchResultGenes,
+            genesSort: {
+                field: field,
+                asc: newAsc
+            }
         });
     }
 
@@ -309,14 +369,6 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
                 primaryText={name} />
         ));
 
-        // const rows = this.geneNames.map((row) => (
-        //     <TableRow selected={this.state.selectedGenes.map(x => x[2]).indexOf(row[2]) !== -1}>
-        //         <TableRowColumn>{row[0]}</TableRowColumn>
-        //         <TableRowColumn>{row[1]}</TableRowColumn>
-        //         <TableRowColumn>{row[2]}</TableRowColumn>
-        //     </TableRow>
-        // ));
-
         return (
             <div style={styles.div}>
                 <div style={styles.card}>
@@ -356,11 +408,13 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
                                     geneValues={this.geneValues}
                                     selectedGenes={this.state.selectedGenes}
                                     searchResultGenes={this.state.searchResultGenes}
+                                    sort={this.state.genesSort}
                                     hasSelectedGenes={this.state.selectedGenes && this.state.selectedGenes.length > 0}
                                     search={this.handleGeneSelectionSearch}
                                     geneIdentifierChanged={this.handleGeneSelectionGeneIdentifierChanged}
                                     clearSelection={this.handleGeneSelectionClearSelection}
-                                    selectionChanged={this.handleGeneSelectionSelectionChanged} />
+                                    selectionChanged={this.handleGeneSelectionSelectionChanged} 
+                                    selectionSortChanged={this.handleGeneSelectionSortChanged} />
                         </Dialog>
                         <div style={styles.header}>
                             <div style={styles.headerButton}>

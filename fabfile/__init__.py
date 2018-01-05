@@ -37,8 +37,9 @@ def tunneling():
 @task
 def gene_search(searchText):
     r = requests.get("{}/api/gene/search/{}".format(env.test_url, searchText))
+    d = r.json()
     print("Status: {}".format(r))
-    print("Result: {}".format(r.json()))
+    print("Result: {}".format(d))
 
 
 @task
@@ -47,7 +48,11 @@ def gene_all():
     r = requests.get("{}/api/gene/list".format(env.test_url))
     e = datetime.datetime.now()
     print(b, e, e - b)
+
+    d = r.json()
     print("Status: {}".format(r))
+    print("Length: {}".format(len(d)))
+    print("Slice: {}".format(d[0:10]))
 
 
 @task 
