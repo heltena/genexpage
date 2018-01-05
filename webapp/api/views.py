@@ -9,7 +9,7 @@ from collections import defaultdict
 import json
 import numpy as np
 from api.data_alg import generate_time_series, generate_age_counts
-from api.models import Age, Pfu, ExperimentalBatch, Tissue, Genes
+from api.models import Age, Pfu, ExperimentalBatch, Genes, Tissue
 
 
 class NumpyEncoder(DjangoJSONEncoder):
@@ -81,6 +81,14 @@ def pfu_list(request):
 def experimentalbatch_list(request):
     experimentalbatches = ExperimentalBatch.objects.all().order_by("name")
     result = [t.name for t in experimentalbatches]
+    return JsonResponse(result, safe=False)
+
+
+@csrf_exempt
+@method(allowed=['GET'])
+def gene_list(request):
+    genes = Genes.objects.all().order_by("gene_ensembl")
+    result = [[g.gene_ensembl, g.symbol_ncbi, g.gene_ncbi] for g in genes]
     return JsonResponse(result, safe=False)
 
 

@@ -1,6 +1,7 @@
 from fabric.api import cd, env, task, local, run, settings, sudo
 import json
 import requests
+import datetime
 
 env.hosts = ["localhost:8000"]
 env.environment = "localhost"
@@ -37,6 +38,15 @@ def gene_search(searchText):
     r = requests.get("{}/api/gene/search/{}".format(env.test_url, searchText))
     print("Status: {}".format(r))
     print("Result: {}".format(r.json()))
+
+
+@task
+def gene_all():
+    b = datetime.datetime.now()
+    r = requests.get("{}/api/gene/list".format(env.test_url))
+    e = datetime.datetime.now()
+    print(b, e, e - b)
+    print("Status: {}".format(r))
 
 
 @task 

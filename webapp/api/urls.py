@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^age/list', api.views.age_list, name="api_age_list"),
     url(r'^all/list', api.views.all_list, name="api_all_list"),
     url(r'^experimentalbatch/list', api.views.experimentalbatch_list, name="api_experimentalbatch_list"),
+    url(r'^gene/list', api.views.gene_list, name="api_gene_list"),
     url(r'^pfu/list', api.views.pfu_list, name="api_pfu_list"),
     url(r'^tissue/list', api.views.tissue_list, name="api_tissue_list"),
 
