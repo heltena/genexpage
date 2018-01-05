@@ -58,12 +58,13 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
                 margin: 0,
                 border: 0,
                 color: "white",
-                "background-color": "#472d82",
+                backgroundColor: "#472d82",
                 width: "100%",
                 height: "71px",
                 textAlign: "center",
                 display: 'flex',
-                'justify-content': 'center'
+                justifyContent: "center" as "center",
+                alignItems: "center" as "center"
             }
         }
 
@@ -74,16 +75,20 @@ export class GeneVisualization extends React.Component<GeneVisualizationProps, G
         );
         switch (this.state.pageIndex) {
             case PageType.Welcome:
-                return [
-                    header,
-                    <Welcome start={this.handleStart} /> 
-                ];
+                return (
+                    <div>
+                        {header}
+                        <Welcome start={this.handleStart} /> 
+                    </div>
+                );
             case PageType.Viewer:
-                return [
-                    header,
-                    <Viewer />,
-                    <br />
-                ];
+                return (
+                    <div>
+                        {header}
+                        <Viewer />
+                        <br />
+                    </div>
+                );
         }
     }
 
