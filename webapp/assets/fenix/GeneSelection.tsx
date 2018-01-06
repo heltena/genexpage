@@ -14,6 +14,7 @@ export interface GeneSelectionProps {
     geneIdentifier: string;
     geneValues: Gene[];
     selectedGenes: Gene[];
+    searchText: string;
     searchResultGenes: Gene[];
     sort: Sort;
     hasSelectedGenes: boolean;
@@ -40,10 +41,11 @@ export class GeneSelection extends React.Component<GeneSelectionProps, GeneSelec
     constructor(props: GeneSelectionProps, state: GeneSelectionState) {
         super(props, state);
         this.state = {
-            searchText: ""
+            searchText: props.searchText
         }
         this.handleSearch = this.handleSearch.bind(this);
         this.handleRowSelected = this.handleRowSelected.bind(this);
+        this.props.search(props.searchText);
     }
     
     handleSearch(value: string) {

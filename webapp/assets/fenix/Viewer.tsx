@@ -27,6 +27,7 @@ export interface ViewerState {
     xaxis: string;
     series: string;
     selectedGenes: Gene[];
+    searchText: string;
     searchResultGenes: Gene[];
     genesSort: Sort;
     pfu: string[];
@@ -58,6 +59,7 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
             xaxis: "age",
             series: "gene",
             selectedGenes: [],
+            searchText: "",
             searchResultGenes: [],
             genesSort: {
                 field: "GENE_SYMBOL",
@@ -140,13 +142,12 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
     }
 
     handleGeneSelectionSearch(value: string) {
-        console.log("Searching for ", value);
         const regexp = new RegExp(value, 'i');
         const result = this.geneValues.filter(gene => regexp.test(gene.ensembl) || regexp.test(gene.entrez) || regexp.test(gene.symbol)).slice(0, 20);
         this.setState({
+            searchText: value,
             searchResultGenes: result
         });
-        console.log("Search result: ", result);
     }
 
     handleGeneSelectionGeneIdentifierChanged(value: string) {
@@ -407,6 +408,7 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
                                     geneIdentifier={this.state.geneIdentifier}
                                     geneValues={this.geneValues}
                                     selectedGenes={this.state.selectedGenes}
+                                    searchText={this.state.searchText}
                                     searchResultGenes={this.state.searchResultGenes}
                                     sort={this.state.genesSort}
                                     hasSelectedGenes={this.state.selectedGenes && this.state.selectedGenes.length > 0}
