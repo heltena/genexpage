@@ -66,7 +66,7 @@ export class Plot extends React.Component<PlotProps, PlotState> {
             keys.push(key);
         }
         keys.sort();
-        keys.reverse();
+        // keys.reverse();
 
         var index = 0;
         for (let name of keys) {

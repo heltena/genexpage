@@ -299,6 +299,10 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
                 margin: "12px",
                 flex: 1
             },
+            geneSelection: {
+                textAlign: 'left',
+                margin: "12px",
+            },
             geneIdentifier: {
                 textAlign: 'left',
                 margin: "12px",
@@ -338,6 +342,25 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
             (this.state.tissue && this.state.tissue.length > 0) &&
             (this.state.pfu && this.state.pfu.length > 0);
 
+        var selection: any;
+        if (this.state.selectedGenes && this.state.selectedGenes.length > 0) {
+            const value = this.state.selectedGenes.map(row => {
+                switch (this.state.geneIdentifier) {
+                case "GENE_SYMBOL":
+                    return row.symbol
+                case "ENTREZ_GENE_ID":
+                    return row.entrez
+                case "ENSEMBL_GENE_ID":
+                    return row.ensembl
+                default:
+                    return row.symbol
+                }
+            }).sort().join(", ");
+            selection = <p><b>Current selection: </b>{value}.</p>
+        } else {
+            selection = <p><b>No genes selected.</b></p>
+        }
+    
         var plot: any;
         if (this.state.error) {
             plot = <div>There is an error on the selection.</div>
@@ -426,6 +449,7 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
                                     labelPosition="before" 
                                     primary={true} 
                                     onClick={() => this.setState({showGeneSelectionDialog: true})} />
+                                {selection}
                             </div>
                             <SelectField
                                 multiple={true}
