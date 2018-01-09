@@ -21,25 +21,71 @@ export interface PlotProps {
     yAxisLabel: string;
     xvalues: any[];
     series: any[];
+    serieNames: string[];
 }
 
 export interface PlotState { }
 
-export class Plot extends React.Component<PlotProps, PlotState> {
+interface ColorState {
+    value: string;
+    timestamp: Date;
+}
+
+class ColorManager {
 
     static colors = [
-        '#1f77b4',  // muted blue
-        '#ff7f0e',  // safety orange
-        '#2ca02c',  // cooked asparagus green
-        '#d62728',  // brick red
-        '#9467bd',  // muted purple
-        '#8c564b',  // chestnut brown
-        '#e377c2',  // raspberry yogurt pink
-        '#7f7f7f',  // middle gray
+        '#17becf',  // blue-teal
         '#bcbd22',  // curry yellow-green
-        '#17becf'   // blue-teal
+        '#7f7f7f',  // middle gray
+        '#e377c2',  // raspberry yogurt pink
+        '#8c564b',  // chestnut brown
+        '#9467bd',  // muted purple
+        '#d62728',  // brick red
+        '#2ca02c',  // cooked asparagus green
+        '#ff7f0e',  // safety orange
+        '#1f77b4',  // muted blue
     ];
 
+    colorPool: string[];
+    assignedColors: {[name: string]: ColorState; } = {};
+
+    constructor() {
+        this.colorPool = ColorManager.colors;
+    }
+
+    requestColor(name: string): string {
+        const state = this.assignedColors[name];
+        if (state != null) {
+            state.timestamp = new Date();
+            return state.value;
+        }
+
+        if (this.colorPool.length > 0) {
+            const newColor = this.colorPool.pop(); // For sure, there is a new color on list
+            this.assignedColors[name] = {value: newColor, timestamp: new Date()} as ColorState;
+            return newColor;
+        }
+
+        var olderColorKey = Object.keys(this.assignedColors)[0];
+        var olderColor = this.assignedColors[olderColorKey];
+        for (let key in this.assignedColors) {
+            var currentColor = this.assignedColors[key];
+            if (currentColor.timestamp < olderColor.timestamp) {
+                olderColorKey = key;
+                olderColor = currentColor;
+            }
+        }
+        const newColorValue = olderColor.value;
+        delete this.assignedColors[olderColorKey];
+
+        this.assignedColors[name] = {value: newColorValue, timestamp: new Date()} as ColorState;
+        return newColorValue;
+    }
+}
+
+export class Plot extends React.Component<PlotProps, PlotState> {
+
+    colorManager = new ColorManager();
 
     constructor(props: PlotProps, state: PlotState) {
         super(props, state);
@@ -66,17 +112,18 @@ export class Plot extends React.Component<PlotProps, PlotState> {
             keys.push(key);
         }
         keys.sort();
-        // keys.reverse();
 
         var index = 0;
         for (let name of keys) {
             const values = this.props.series[name];
+            const fullName = this.props.serieNames[name];
             var ymean: number[] = [];
             var ystd: number[] = [];
             var ymin: number[] = [];
             var ymax: number[] = [];
 
-            var color = Plot.colors[index % Plot.colors.length];
+            // var color = Plot.colors[index % Plot.colors.length];
+            var color = this.colorManager.requestColor(fullName);
 
             for (let value of values) {
                 let mean = value[0];

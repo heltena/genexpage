@@ -423,6 +423,7 @@ def generate_age_counts(restrictions, geneIdentifier, title, xAxisLabel, yAxisLa
         key_format = "{gene_name} - {tissue} - {pfu}"
     
     series = defaultdict(list)
+    serie_names = {}
     for serie_key, age_items in series_data.items():
         gene, gene_name, tissue, pfu = serie_key
         key = key_format.format(gene=gene, gene_name=gene_name, tissue=tissue, pfu=pfu)
@@ -434,6 +435,7 @@ def generate_age_counts(restrictions, geneIdentifier, title, xAxisLabel, yAxisLa
                 series[key].append((mean, std))
             else:
                 series[key].append((0.0, 0.0))
+        serie_names[key] = "{}-{}-{}".format(gene, tissue, pfu)
 
     gene_names = ", ".join([str(s) for s in sorted(list(gene_names))])
     pfu_names = ", ".join([str(s) for s in sorted(list(pfu_names))])
@@ -446,6 +448,7 @@ def generate_age_counts(restrictions, geneIdentifier, title, xAxisLabel, yAxisLa
         "xAxisLabel": xAxisLabel.format(gene_names=gene_names, pfu_names=pfu_names, tissue_names=tissue_names),
         "yAxisLabel": yAxisLabel.format(gene_names=gene_names, pfu_names=pfu_names, tissue_names=tissue_names),
         "xvalues": xvalues,
-        "series": series 
+        "series": series,
+        "serie_names": serie_names
     }
     return result
