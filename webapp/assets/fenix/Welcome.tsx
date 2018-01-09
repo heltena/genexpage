@@ -140,11 +140,11 @@ export class Welcome extends React.Component<WelcomeProps, WelcomeState> {
                     </div>
                 </div>
                 <div style={styles.logos}>
-                    <img style={styles.img_feinberg} src="/static/feinberg.png" />
-                    <img style={styles.img_northwestern} src="/static/northwestern.png" />
-                    <img style={styles.img_amaral_lab} src="/static/amaral-lab.png" />
+                    <a href="http://feinberg.northwestern.edu" target="_blank"><img style={styles.img_feinberg} src="/static/feinberg.png" /></a>
+                    <a href="http://www.northwestern.edu" target="_blank"><img style={styles.img_northwestern} src="/static/northwestern.png" /></a>
+                    <a href="http://amaral.northwestern.edu" target="_blank"><img style={styles.img_amaral_lab} src="/static/amaral-lab.png" /></a>
                     <br />
-                    <img style={styles.img_nih_nia} src="/static/nih-nia.png" />
+                    <a href="http://www.nia.nih.gov/" target="_blank"><img style={styles.img_nih_nia} src="/static/nih-nia.png" /></a>
                 </div>
             </div>
         );
