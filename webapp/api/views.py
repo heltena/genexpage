@@ -9,7 +9,7 @@ from collections import defaultdict
 import json
 import numpy as np
 from api.data_alg import generate_time_series, generate_age_counts
-from api.models import Age, Pfu, ExperimentalBatch, Genes, Tissue
+from api.models import Age, Pfu, ExperimentalBatch, Genes, Tissue, Version
 
 
 class NumpyEncoder(DjangoJSONEncoder):
@@ -135,7 +135,18 @@ def age_counts(request):
     xAxisLabel = body.get("xAxisLabel", "")
     yAxisLabel = body.get("yAxisLabel", "") 
 
-    print("CALL: ", body)
+    version = None
+    for current in Version.objects.all():
+        if version is None:
+            version = current
+        else:
+            print("E: More than one version")
+
     result = generate_age_counts(restrictions, geneIdentifier, title, xAxisLabel, yAxisLabel)
+    if version is not None:
+        result["version"] = [version.name, version.timestamp]
+    else:
+        result["version"] = ["no-version", "no-timestamp"]
+        print("E: There is no version!")
     return JsonResponse(result)
     

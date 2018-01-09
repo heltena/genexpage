@@ -22,6 +22,8 @@ export interface PlotProps {
     xvalues: any[];
     series: any[];
     serieNames: string[];
+    databaseVersion: string;
+    databaseTimestamp: string;
 }
 
 export interface PlotState { }
@@ -195,10 +197,13 @@ export class Plot extends React.Component<PlotProps, PlotState> {
         };
 
         return (
-            <PlotlyChart 
-                data={plots} 
-                layout={layout} 
-                config={config} />
+            <div>
+                <PlotlyChart 
+                    data={plots} 
+                    layout={layout} 
+                    config={config} />
+                <span><b>Database: </b>{this.props.databaseVersion} / {this.props.databaseTimestamp}</span>
+            </div>
         );
     }
 

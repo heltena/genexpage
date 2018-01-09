@@ -862,3 +862,7 @@ class ExperimentalBatch(models.Model):
 
 class Tissue(models.Model):
     name = models.CharField(max_length=22)
+
+class Version(models.Model):
+    name = models.CharField(max_length=50)
+    timestamp = models.DateTimeField()

@@ -42,6 +42,9 @@ export interface ViewerState {
     xvalues: any[];
     serieValues: any[];
     serieNames: string[];
+
+    databaseVersion: string;
+    databaseTimestamp: string;
 }
 
 export class Viewer extends React.Component<ViewerProps, ViewerState> {
@@ -77,7 +80,10 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
             yAxisLabel: "Counts",
             xvalues: [],
             serieValues: [],
-            serieNames: []
+            serieNames: [],
+
+            databaseVersion: "",
+            databaseTimestamp: "",
         };
         this.handleTissueChanged = this.handleTissueChanged.bind(this);
         this.handlePfuChanged = this.handlePfuChanged.bind(this);
@@ -268,7 +274,9 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
                 yAxisLabel: response.data["yAxisLabel"],
                 xvalues: response.data["xvalues"],
                 serieValues: response.data["series"],
-                serieNames: response.data["serie_names"]
+                serieNames: response.data["serie_names"],
+                databaseVersion: response.data["version"][0],
+                databaseTimestamp: response.data["version"][1]
             });
         }).catch(error => {
             console.log("Error: ");
@@ -376,7 +384,9 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
                        yAxisLabel={this.state.yAxisLabel}
                        xvalues={this.state.xvalues}
                        series={this.state.serieValues}
-                       serieNames={this.state.serieNames} />      
+                       serieNames={this.state.serieNames}
+                       databaseVersion={this.state.databaseVersion}
+                       databaseTimestamp={this.state.databaseTimestamp} />
         }
 
         var tissueItems = this.tissueNames.map((name) => (
