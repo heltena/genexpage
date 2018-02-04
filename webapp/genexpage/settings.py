@@ -31,7 +31,7 @@ if DEBUG:
     print("***  Running on Debug")
     print("*" * 80)
 
-ALLOWED_HOSTS = [ "localhost", "siurana.chem-eng.northwestern.edu" ]
+ALLOWED_HOSTS = [ "localhost", "siurana.chem-eng.northwestern.edu", "genexp.northwestern.edu" ]
 
 
 # Application definition

@@ -1,0 +1,12 @@
+[Unit]
+Description=GenExpAge gunicorn daemon
+After=network.target
+
+[Service]
+Type=simple
+User=htn551
+Group=wheel
+ExecStart=/home/htn551/genexpage/rhel7/gunicorn_start.sh
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,89 @@
+# RHEL7 INSTALLATION
+
+- Configure MariaDB repo:
+
+Create a file in /etc/yum.repos.d/MariaDB.repo:
+
+```
+[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.1/rhel7-amd64
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+```
+
+Install MariaDB server:
+$ sudo yum install MariaDB-server MariaDB-devel
+
+By default, the user 'root' has no password.
+
+Start the server:
+$ sudo service mariadb start
+
+Or:
+# sudo systemctl enable mariadb.service
+
+
+- Copy DB:
+
+Create a tunnel to 3307 as always and copy using GUI SQL apps.
+
+
+
+- Install the new repo:
+
+This install the EPEL repo into the /etc/yum.repos.d:
+$ sudo rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+- Then, update the repo and install python:
+$ sudo yum update
+$ sudo yum install python34-devel python34-pip python34-virtualenv
+
+
+
+- Install HTTP server:
+Create the file /etc/yum.repos.d/nginx.repo and write:
+
+```
+[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/rhel/7/$basearch/
+gpgcheck=0
+enabled=1
+```
+
+$ sudo yum update
+$ sudo yum install nginx
+
+
+
+- Install NPM
+
+$ yum install nodejs
+
+- Create VirtualEnv:
+
+$ virtualenv -p `which python3` venv
+
+
+- Packages needed to install requirements:
+
+$ sudo yum install openssl-devel
+
+NOTE: to install numpy:
+$ LC_ALL=C pip install numpy==1.13.3
+
+
+
+
+NGINX - GUNICORN files:
+sudo chmod o+rx htn551
+sudo chgrp nginx /home/htn551/genexpage/run
+sudo chmod g+w /home/htn551/genexpage/run
+
+/home/htn551/genexpage/gunicorn_start.sh
+/etc/nginx/conf.d/genexpage.conf   (move default.conf to default.conf.disabled)
+/usr/lib/systemd/system/gunicorn_genexpage.service
+
+
+

@@ -1,16 +1,31 @@
-from fabric.api import cd, env, task, local, run, settings, sudo
+from fabric.api import cd, env, task, local, run, settings, sudo, prefix, put
+from fabric.contrib.project import rsync_project
 import json
 import requests
 import datetime
+import os
 
 env.hosts = ["localhost:8000"]
 env.environment = "localhost"
 env.test_url = "http://localhost:8000"
 
 @task
+def amaral():
+    env.hosts = ["localhost"]
+    env.environment = "localhost"
+    env.test_url ="http://localhost:8000/genexpage"
+
+@task
 def siurana():
     env.hosts = ["siurana.chem-eng.northwestern.edu"]
     env.environment = "siurana"
+    env.test_url = "https://{}".format(env.hosts[0])
+
+@task
+def live():
+    env.hosts = ["genexp.northwestern.edu"]  # You should configure the ~/.ssh/config
+    env.user = "htn551"  # Be careful
+    env.environment = "genexp"
     env.test_url = "https://{}".format(env.hosts[0])
 
 @task
@@ -27,11 +42,57 @@ def deploy():
         with cd("/var/www/genexpage"):        
             sudo("chown -R heltena:www-data webapp")
         sudo("service apache2 restart")
+    
+    elif env.environment == "genexp":
+        with prefix("source /home/htn551/venv/bin/activate"):
+            with cd("/home/htn551/genexpage"):
+                run("git pull origin master")
+                run("pip install -r live_requirements.txt")
+
+
+@task
+def rsync():
+    if env.environment == "genexp":
+        if not os.getcwd().endswith("genexpage"):
+            print("E: Should run from the root ({})".format(os.getcwd()))
+            return
+        sudo("service gunicorn_genexpage stop || true")
+        sudo("service nginx stop || true")
+
+        run("mkdir -p /home/htn551/genexpage")
+        sudo("rm -rf /home/htn551/genexpage/webapp/static/")
+        rsync_project("/home/htn551", delete=True, 
+                local_dir=os.getcwd(),
+                exclude=["*.pyc", ".git", ".gitignore", 
+                         "data", "node_modules", ".DS_Store", ".vscode", "fabfile",
+                         "notebooks", "requirements.txt", "bundles"])
+        run("mkdir -p /home/htn551/genexpage/logs/")
+        sudo("rm /etc/nginx/conf.d/genexpage.conf")
+        sudo("rm /usr/lib/systemd/system/gunicorn_genexpage.service")
+        sudo("ln -s /home/htn551/genexpage/rhel7/genexpage.conf /etc/nginx/conf.d/genexpage.conf")
+        sudo("ln -s /home/htn551/genexpage/rhel7/gunicorn_genexpage.service /usr/lib/systemd/system/gunicorn_genexpage.service")
+        sudo("systemctl daemon-reload")
+
+        with prefix("source /home/htn551/venv/bin/activate"):
+            with cd("/home/htn551/genexpage"):
+                run("pip install -r live_requirements.txt")
+
+            with cd("/home/htn551/genexpage/webapp"):
+                sudo("python manage.py migrate --fake")
+                sudo("rm -rf /home/htn551/genexpage/webapp/assets/bundles/*")
+                sudo("mkdir /home/htn551/genexpage/webapp/static/")
+                sudo("cp common/static/*.png /home/htn551/genexpage/webapp/static/")
+                sudo("cp common/static/react*production.min.js /home/htn551/genexpage/webapp/static/")
+                put("webapp/assets/bundles/bundle-fenix*.js", 
+                    "/home/htn551/genexpage/webapp/static/bundle-release.js",
+                    use_sudo=True)
+        sudo("service nginx start")
+        sudo("service gunicorn_genexpage start")
 
 
 @task
 def tunneling():
-    local("ssh -L7777:localhost:3306 {}".format(env.host))
+    local("ssh -L7777:localhost:3306 -L8000:localhost:80 {}".format(env.host))
 
 
 @task
@@ -137,6 +198,6 @@ def agecounts2():
             ['tissue', 'in', ['Lung', 'AM']]
             ], 
         'title': ''}
-    r = requests.post("{}/api/agecounts".format(env.test_url), json=value)
+    r = requests.post("{}/agecounts".format(env.test_url), json=value)
     print("Status: {}".format(r))
     print("Result: {}".format(r.json()))

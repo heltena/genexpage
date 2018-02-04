@@ -104,7 +104,7 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
                 entrezNumber: row[2] as number,
                 ensembl: row[0] as string
             } as Gene));
-            console.log("GENES: ", this.geneValues);
+            // console.log("GENES: ", this.geneValues);
             this.forceUpdate();
         }).catch(error => {
             this.geneValues = [];
@@ -113,8 +113,8 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
         axios.get(
             "/api/tissue/list"
         ).then(response => {
-            console.log("Response ok: ");
-            console.log(response.data);
+            // console.log("Response ok: ");
+            // console.log(response.data);
             this.tissueNames = response.data;
             this.forceUpdate();
         }).catch(error => {
@@ -126,8 +126,8 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
         axios.get(
             "/api/pfu/list"
         ).then(response => {
-            console.log("Response ok: ");
-            console.log(response.data);
+            // console.log("Response ok: ");
+            // console.log(response.data);
             this.pfuNames = response.data;
             this.forceUpdate();
         }).catch(error => {
@@ -262,8 +262,8 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
                 "yAxisLabel": this.state.yAxisLabel
             }
         ).then(response => {
-            console.log("Response ok: ");
-            console.log(response.data);
+            // console.log("Response ok: ");
+            // console.log(response.data);
 
             this.setState({
                 error: false,

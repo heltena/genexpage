@@ -5,9 +5,9 @@ import api.views
 
 
 urlpatterns = [
-    url(r'^auth', obtain_jwt_token),
-    url(r'^refresh', refresh_jwt_token),
-    url(r'^verify', verify_jwt_token),
+    # url(r'^auth', obtain_jwt_token),
+    # url(r'^refresh', refresh_jwt_token),
+    # url(r'^verify', verify_jwt_token),
 
     url(r'^gene/search/(?P<text>[\w ]*)', api.views.gene_search, name="api_gene_search"),
 
