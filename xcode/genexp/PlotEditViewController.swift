@@ -13,6 +13,34 @@ class PlotEditViewController: UITableViewController, UISearchResultsUpdating {
     let searchController = UISearchController(searchResultsController: nil)
     var filteredGenes: [Gene] = []
 
+    private func sortFilteredGenes() {
+        let geneSelection = DataManager.main.geneSelection
+        filteredGenes.sort {
+            let left = $0.representation(for: geneSelection).uppercased()
+            if left == "-" || left.count == 0 {
+                return false
+            }
+            
+            let right = $1.representation(for: geneSelection).uppercased()
+            if right == "-" || right.count == 0 {
+                return true
+            }
+
+            let leftFirst = left.unicodeScalars.first!
+            let rightFirst = right.unicodeScalars.first!
+            let leftStartsByNumber = CharacterSet.decimalDigits.contains(leftFirst)
+            let rightStartsByNumber = CharacterSet.decimalDigits.contains(rightFirst)
+            switch (leftStartsByNumber, rightStartsByNumber) {
+            case (true, true), (false, false):
+                return left.compare(right, options: [.numeric], range: nil, locale: nil) == .orderedAscending
+            case (true, false):
+                return false
+            case (false, true):
+                return true
+            }
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         searchController.searchResultsUpdater = self
@@ -30,6 +58,7 @@ class PlotEditViewController: UITableViewController, UISearchResultsUpdating {
             }
         }
         filteredGenes = DataManager.main.mostUsedGeneList
+        sortFilteredGenes()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -52,24 +81,29 @@ class PlotEditViewController: UITableViewController, UISearchResultsUpdating {
         }
     }
     
+    private func updateFilteredGenes() {
+        let geneSelection = DataManager.main.geneSelection
+        if !searchController.isActive {
+            filteredGenes = DataManager.main.mostUsedGeneList
+            sortFilteredGenes()
+        } else if let text = searchController.searchBar.text, text.count > 0 {
+            filteredGenes = DataManager.main.geneListBy[geneSelection]!.filter { $0.match(withText: text) }
+        } else {
+            filteredGenes = DataManager.main.geneListBy[geneSelection]!
+        }
+        tableView.reloadData()
+    }
+    
     @IBAction func geneSelectionChanged(_ sender: UISegmentedControl) {
         if let geneSelection = GeneSelection.fromSegmentedIndex(sender.selectedSegmentIndex) {
             DataManager.main.geneSelection = geneSelection
-            tableView.reloadData()
+            updateFilteredGenes()
         }
     }
     
     //MARK: -UISearchResultsUpdating
     func updateSearchResults(for searchController: UISearchController) {
-        if !searchController.isActive {
-            filteredGenes = DataManager.main.mostUsedGeneList
-        } else if let text = searchController.searchBar.text, text.count > 0 {
-            filteredGenes = DataManager.main.geneList.filter { $0.match(withText: text) }
-        } else {
-            filteredGenes = DataManager.main.geneList
-        }
-
-        tableView.reloadData()
+        updateFilteredGenes()
     }
     
     //MARK: -UITableViewDataSource
@@ -113,6 +147,7 @@ class PlotEditViewController: UITableViewController, UISearchResultsUpdating {
             } else if filteredGenes.count == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "gene", for: indexPath)
                 cell.textLabel?.text = "No gene selected. Find them using the search bar"
+                cell.textLabel?.numberOfLines = 0
                 cell.isSelected = false
                 cell.accessoryType = .none
                 return cell

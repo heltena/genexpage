@@ -14,6 +14,7 @@ class DataManager {
     
     var geneSelection: GeneSelection = .symbol
     private(set) var geneList: [Gene] = []
+    private(set) var geneListBy: [GeneSelection: [Gene]] = [:]
     private(set) var pfuList: [Pfu] = []
     private(set) var tissueList: [Tissue] = []
     private(set) var mostUsedGeneList: [Gene] = []
@@ -69,12 +70,44 @@ class DataManager {
         return "red"
     }
 
+    private func sorted(geneList: [Gene], by geneSelection: GeneSelection) -> [Gene] {
+        return geneList.sorted {
+            let left = $0.representation(for: geneSelection).uppercased()
+            if left == "-" || left.count == 0 {
+                return false
+            }
+            
+            let right = $1.representation(for: geneSelection).uppercased()
+            if right == "-" || right.count == 0 {
+                return true
+            }
+            
+            let leftFirst = left.unicodeScalars.first!
+            let rightFirst = right.unicodeScalars.first!
+            let leftStartsByNumber = CharacterSet.decimalDigits.contains(leftFirst)
+            let rightStartsByNumber = CharacterSet.decimalDigits.contains(rightFirst)
+            switch (leftStartsByNumber, rightStartsByNumber) {
+            case (true, true), (false, false):
+                return left.compare(right, options: [.numeric], range: nil, locale: nil) == .orderedAscending
+            case (true, false):
+                return false
+            case (false, true):
+                return true
+            }
+        }
+    }
+    
     func waitUntilLoaded(completion: @escaping () -> Void) {
         let group = DispatchGroup()
         if geneList.count == 0 {
             group.enter()
             Server.main.geneList { list in
                 self.geneList = list ?? []
+                self.geneListBy = [
+                    .symbol: self.sorted(geneList: self.geneList.filter { $0.symbol != nil }, by: .symbol),
+                    .entrez: self.sorted(geneList: self.geneList.filter { $0.gene != nil }, by: .entrez),
+                    .ensembl: self.sorted(geneList: self.geneList.filter { $0.ensembl != nil }, by: .ensembl)
+                ]
                 group.leave()
             }
         }
