@@ -10,26 +10,117 @@
 		782F5C642027CBD30087F92E /* Gene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782F5C632027CBD30087F92E /* Gene.swift */; };
 		782F5C662027CBE50087F92E /* Tissue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782F5C652027CBE50087F92E /* Tissue.swift */; };
 		782F5C682027CC9F0087F92E /* Pfu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782F5C672027CC9F0087F92E /* Pfu.swift */; };
+		783CF71F2029238400E50C5E /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783CF71E2029238400E50C5E /* DataManager.swift */; };
+		783CF721202925A400E50C5E /* PlotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783CF720202925A400E50C5E /* PlotViewController.swift */; };
+		783CF723202A34A400E50C5E /* PlotWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783CF722202A34A400E50C5E /* PlotWebView.swift */; };
+		783CF73D202A542500E50C5E /* Mustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 783CF732202A540C00E50C5E /* Mustache.framework */; };
+		783CF73E202A542500E50C5E /* Mustache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 783CF732202A540C00E50C5E /* Mustache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		783CF74F202A5DC400E50C5E /* BaseHTML in Resources */ = {isa = PBXBuildFile; fileRef = 783CF74E202A5DC400E50C5E /* BaseHTML */; };
+		783CF753202A614B00E50C5E /* AgeCountResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783CF752202A614B00E50C5E /* AgeCountResult.swift */; };
+		783CF755202B974800E50C5E /* PlotEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783CF754202B974800E50C5E /* PlotEditViewController.swift */; };
 		78D914B020276E8100836037 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D914AF20276E8100836037 /* AppDelegate.swift */; };
-		78D914B220276E8100836037 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D914B120276E8100836037 /* ViewController.swift */; };
+		78D914B220276E8100836037 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D914B120276E8100836037 /* LoadingViewController.swift */; };
 		78D914B520276E8100836037 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78D914B320276E8100836037 /* Main.storyboard */; };
 		78D914B720276E8100836037 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78D914B620276E8100836037 /* Assets.xcassets */; };
 		78D914BA20276E8100836037 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78D914B820276E8100836037 /* LaunchScreen.storyboard */; };
 		78D914C22027710500836037 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D914C12027710500836037 /* Server.swift */; };
+		78FF81C6202D0E0B00692064 /* GeneSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FF81C5202D0E0B00692064 /* GeneSelection.swift */; };
+		78FF81CD202D0ED300692064 /* GeneSelectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FF81CC202D0ED300692064 /* GeneSelectionTableViewCell.swift */; };
+		78FF81CF202D17F500692064 /* SelectedGenesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FF81CE202D17F500692064 /* SelectedGenesTableViewCell.swift */; };
+		78FF81D1202D257700692064 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FF81D0202D257700692064 /* HelpViewController.swift */; };
+		78FF81D3202D274100692064 /* GeneSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FF81D2202D274100692064 /* GeneSelectionViewController.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		783CF731202A540C00E50C5E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 783CF728202A540C00E50C5E /* Mustache.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 563AE19719FBE47A0028C6C1;
+			remoteInfo = MustacheiOS;
+		};
+		783CF733202A540C00E50C5E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 783CF728202A540C00E50C5E /* Mustache.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 563AE1A219FBE47A0028C6C1;
+			remoteInfo = MustacheiOSTests;
+		};
+		783CF735202A540C00E50C5E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 783CF728202A540C00E50C5E /* Mustache.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 561E725C1A8BDC2B004ED48B;
+			remoteInfo = MustacheOSX;
+		};
+		783CF737202A540C00E50C5E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 783CF728202A540C00E50C5E /* Mustache.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 561E72661A8BDC2B004ED48B;
+			remoteInfo = MustacheOSXTests;
+		};
+		783CF739202A540C00E50C5E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 783CF728202A540C00E50C5E /* Mustache.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 09A89DCE1BF58489003A695E;
+			remoteInfo = MustacheTVOS;
+		};
+		783CF73B202A540C00E50C5E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 783CF728202A540C00E50C5E /* Mustache.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 09A89DDA1BF584EE003A695E;
+			remoteInfo = MustacheTVOSTests;
+		};
+		783CF73F202A542500E50C5E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 783CF728202A540C00E50C5E /* Mustache.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 563AE19619FBE47A0028C6C1;
+			remoteInfo = MustacheiOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		783CF741202A542500E50C5E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				783CF73E202A542500E50C5E /* Mustache.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		782F5C632027CBD30087F92E /* Gene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gene.swift; sourceTree = "<group>"; };
 		782F5C652027CBE50087F92E /* Tissue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tissue.swift; sourceTree = "<group>"; };
 		782F5C672027CC9F0087F92E /* Pfu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pfu.swift; sourceTree = "<group>"; };
+		783CF71E2029238400E50C5E /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		783CF720202925A400E50C5E /* PlotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotViewController.swift; sourceTree = "<group>"; };
+		783CF722202A34A400E50C5E /* PlotWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotWebView.swift; sourceTree = "<group>"; };
+		783CF728202A540C00E50C5E /* Mustache.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Mustache.xcodeproj; path = "GRMustache.swift-master/Xcode/Mustache.xcodeproj"; sourceTree = "<group>"; };
+		783CF74E202A5DC400E50C5E /* BaseHTML */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BaseHTML; sourceTree = "<group>"; };
+		783CF752202A614B00E50C5E /* AgeCountResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeCountResult.swift; sourceTree = "<group>"; };
+		783CF754202B974800E50C5E /* PlotEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotEditViewController.swift; sourceTree = "<group>"; };
 		78D914AC20276E8100836037 /* genexp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = genexp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78D914AF20276E8100836037 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		78D914B120276E8100836037 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		78D914B120276E8100836037 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		78D914B420276E8100836037 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		78D914B620276E8100836037 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		78D914B920276E8100836037 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		78D914BB20276E8100836037 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78D914C12027710500836037 /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
+		78FF81C5202D0E0B00692064 /* GeneSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneSelection.swift; sourceTree = "<group>"; };
+		78FF81CC202D0ED300692064 /* GeneSelectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneSelectionTableViewCell.swift; sourceTree = "<group>"; };
+		78FF81CE202D17F500692064 /* SelectedGenesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedGenesTableViewCell.swift; sourceTree = "<group>"; };
+		78FF81D0202D257700692064 /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
+		78FF81D2202D274100692064 /* GeneSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneSelectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,17 +128,32 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				783CF73D202A542500E50C5E /* Mustache.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		783CF729202A540C00E50C5E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				783CF732202A540C00E50C5E /* Mustache.framework */,
+				783CF734202A540C00E50C5E /* MustacheiOSTests.xctest */,
+				783CF736202A540C00E50C5E /* Mustache.framework */,
+				783CF738202A540C00E50C5E /* MustacheOSXTests.xctest */,
+				783CF73A202A540C00E50C5E /* Mustache.framework */,
+				783CF73C202A540C00E50C5E /* MustacheTVOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		78D914A320276E8100836037 = {
 			isa = PBXGroup;
 			children = (
 				78D914AE20276E8100836037 /* genexp */,
 				78D914AD20276E8100836037 /* Products */,
+				783CF728202A540C00E50C5E /* Mustache.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,16 +168,27 @@
 		78D914AE20276E8100836037 /* genexp */ = {
 			isa = PBXGroup;
 			children = (
+				783CF74E202A5DC400E50C5E /* BaseHTML */,
+				783CF752202A614B00E50C5E /* AgeCountResult.swift */,
 				78D914AF20276E8100836037 /* AppDelegate.swift */,
+				783CF71E2029238400E50C5E /* DataManager.swift */,
 				782F5C632027CBD30087F92E /* Gene.swift */,
+				78FF81C5202D0E0B00692064 /* GeneSelection.swift */,
+				78FF81CC202D0ED300692064 /* GeneSelectionTableViewCell.swift */,
+				78FF81D2202D274100692064 /* GeneSelectionViewController.swift */,
+				78FF81D0202D257700692064 /* HelpViewController.swift */,
 				782F5C672027CC9F0087F92E /* Pfu.swift */,
+				78FF81CE202D17F500692064 /* SelectedGenesTableViewCell.swift */,
 				78D914C12027710500836037 /* Server.swift */,
 				782F5C652027CBE50087F92E /* Tissue.swift */,
-				78D914B120276E8100836037 /* ViewController.swift */,
+				78D914B120276E8100836037 /* LoadingViewController.swift */,
+				783CF754202B974800E50C5E /* PlotEditViewController.swift */,
+				783CF720202925A400E50C5E /* PlotViewController.swift */,
 				78D914B320276E8100836037 /* Main.storyboard */,
 				78D914B620276E8100836037 /* Assets.xcassets */,
 				78D914B820276E8100836037 /* LaunchScreen.storyboard */,
 				78D914BB20276E8100836037 /* Info.plist */,
+				783CF722202A34A400E50C5E /* PlotWebView.swift */,
 			);
 			path = genexp;
 			sourceTree = "<group>";
@@ -86,10 +203,12 @@
 				78D914A820276E8100836037 /* Sources */,
 				78D914A920276E8100836037 /* Frameworks */,
 				78D914AA20276E8100836037 /* Resources */,
+				783CF741202A542500E50C5E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				783CF740202A542500E50C5E /* PBXTargetDependency */,
 			);
 			name = genexp;
 			productName = genexp;
@@ -123,6 +242,12 @@
 			mainGroup = 78D914A320276E8100836037;
 			productRefGroup = 78D914AD20276E8100836037 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 783CF729202A540C00E50C5E /* Products */;
+					ProjectRef = 783CF728202A540C00E50C5E /* Mustache.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				78D914AB20276E8100836037 /* genexp */,
@@ -130,11 +255,57 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		783CF732202A540C00E50C5E /* Mustache.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Mustache.framework;
+			remoteRef = 783CF731202A540C00E50C5E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		783CF734202A540C00E50C5E /* MustacheiOSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MustacheiOSTests.xctest;
+			remoteRef = 783CF733202A540C00E50C5E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		783CF736202A540C00E50C5E /* Mustache.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Mustache.framework;
+			remoteRef = 783CF735202A540C00E50C5E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		783CF738202A540C00E50C5E /* MustacheOSXTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MustacheOSXTests.xctest;
+			remoteRef = 783CF737202A540C00E50C5E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		783CF73A202A540C00E50C5E /* Mustache.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Mustache.framework;
+			remoteRef = 783CF739202A540C00E50C5E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		783CF73C202A540C00E50C5E /* MustacheTVOSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = MustacheTVOSTests.xctest;
+			remoteRef = 783CF73B202A540C00E50C5E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		78D914AA20276E8100836037 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				783CF74F202A5DC400E50C5E /* BaseHTML in Resources */,
 				78D914BA20276E8100836037 /* LaunchScreen.storyboard in Resources */,
 				78D914B720276E8100836037 /* Assets.xcassets in Resources */,
 				78D914B520276E8100836037 /* Main.storyboard in Resources */,
@@ -148,16 +319,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78FF81D3202D274100692064 /* GeneSelectionViewController.swift in Sources */,
 				782F5C642027CBD30087F92E /* Gene.swift in Sources */,
-				78D914B220276E8100836037 /* ViewController.swift in Sources */,
+				783CF723202A34A400E50C5E /* PlotWebView.swift in Sources */,
+				78FF81CD202D0ED300692064 /* GeneSelectionTableViewCell.swift in Sources */,
+				783CF753202A614B00E50C5E /* AgeCountResult.swift in Sources */,
+				78FF81D1202D257700692064 /* HelpViewController.swift in Sources */,
+				783CF721202925A400E50C5E /* PlotViewController.swift in Sources */,
+				783CF755202B974800E50C5E /* PlotEditViewController.swift in Sources */,
+				78D914B220276E8100836037 /* LoadingViewController.swift in Sources */,
 				78D914C22027710500836037 /* Server.swift in Sources */,
+				783CF71F2029238400E50C5E /* DataManager.swift in Sources */,
 				782F5C682027CC9F0087F92E /* Pfu.swift in Sources */,
+				78FF81CF202D17F500692064 /* SelectedGenesTableViewCell.swift in Sources */,
 				782F5C662027CBE50087F92E /* Tissue.swift in Sources */,
 				78D914B020276E8100836037 /* AppDelegate.swift in Sources */,
+				78FF81C6202D0E0B00692064 /* GeneSelection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		783CF740202A542500E50C5E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MustacheiOS;
+			targetProxy = 783CF73F202A542500E50C5E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		78D914B320276E8100836037 /* Main.storyboard */ = {
@@ -289,6 +478,7 @@
 		78D914BF20276E8100836037 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8KTNSBRTNB;
@@ -304,6 +494,7 @@
 		78D914C020276E8100836037 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8KTNSBRTNB;

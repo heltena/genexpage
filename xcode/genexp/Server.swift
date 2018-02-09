@@ -104,6 +104,56 @@ class Server: NSObject, URLSessionDelegate {
         }
     }
 
+    func ageCount(completion: @escaping (AgeCountResult?) -> Void) {
+        var restrictions: [Any] = []
+        
+        let genes = DataManager.main.geneList.filter { $0.isSelected }.map { $0.ensembl }
+        let tissues = DataManager.main.tissueList.filter { $0.isSelected }.map { $0.value }
+        let pfus = DataManager.main.pfuList.filter { $0.isSelected }.map { $0.value }
+    
+        var titleComponents: [String] = []
+        
+        if genes.count == 0 {
+            completion(nil)
+            return
+        } else {
+            titleComponents.append("{gene_names}")
+            restrictions.append(["gene", "in", genes])
+        }
+        
+        if pfus.count > 0 {
+            titleComponents.append("pfus: {pfu_names}")
+            restrictions.append(["pfu", "in", pfus])
+        }
+
+        if tissues.count > 0 {
+            titleComponents.append("{tissue_names}")
+            restrictions.append(["tissue", "in", tissues])
+        }
+        
+        let title = titleComponents.joined(separator: ", ")
+        
+        let body: [String: Any] = [
+            "dataset": "mouse_aging",
+            "xaxis": "age",
+            "series": "gene",
+            "yAxisLabel": "Count",
+            "geneIdentifier": DataManager.main.geneSelection.asServerString,
+            "restrictions": restrictions,
+            "title": title
+        ]
+
+        restRequest(path: "/api/agecounts", body: body) { (result: [String: Any]?) in
+            guard
+                let result = result,
+                let ageCountResult = AgeCountResult(from: result)
+                else {
+                    completion(nil)
+                    return
+            }
+            completion(ageCountResult)
+        }
+    }
     
     //MARK: - URLSessionDelegate
     func urlSession(_ session: URLSession, didBecomeInvalidWithError error: Error?) {

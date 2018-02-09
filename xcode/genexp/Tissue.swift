@@ -10,8 +10,10 @@ import Foundation
 
 class Tissue {
     let value: String
+    var isSelected: Bool
     
     init(from value: String) {
         self.value = value
+        self.isSelected = false
     }
 }
