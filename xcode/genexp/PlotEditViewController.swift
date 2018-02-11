@@ -13,34 +13,6 @@ class PlotEditViewController: UITableViewController, UISearchResultsUpdating {
     let searchController = UISearchController(searchResultsController: nil)
     var filteredGenes: [Gene] = []
 
-    private func sortFilteredGenes() {
-        let geneSelection = DataManager.main.geneSelection
-        filteredGenes.sort {
-            let left = $0.representation(for: geneSelection).uppercased()
-            if left == "-" || left.count == 0 {
-                return false
-            }
-            
-            let right = $1.representation(for: geneSelection).uppercased()
-            if right == "-" || right.count == 0 {
-                return true
-            }
-
-            let leftFirst = left.unicodeScalars.first!
-            let rightFirst = right.unicodeScalars.first!
-            let leftStartsByNumber = CharacterSet.decimalDigits.contains(leftFirst)
-            let rightStartsByNumber = CharacterSet.decimalDigits.contains(rightFirst)
-            switch (leftStartsByNumber, rightStartsByNumber) {
-            case (true, true), (false, false):
-                return left.compare(right, options: [.numeric], range: nil, locale: nil) == .orderedAscending
-            case (true, false):
-                return false
-            case (false, true):
-                return true
-            }
-        }
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         searchController.searchResultsUpdater = self
@@ -57,8 +29,7 @@ class PlotEditViewController: UITableViewController, UISearchResultsUpdating {
                 DataManager.main.maskAsUsed(gene: gene)
             }
         }
-        filteredGenes = DataManager.main.mostUsedGeneList
-        sortFilteredGenes()
+        filteredGenes = DataManager.sorted(geneList: DataManager.main.mostUsedGeneList, by: DataManager.main.geneSelection)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -84,8 +55,7 @@ class PlotEditViewController: UITableViewController, UISearchResultsUpdating {
     private func updateFilteredGenes() {
         let geneSelection = DataManager.main.geneSelection
         if !searchController.isActive {
-            filteredGenes = DataManager.main.mostUsedGeneList
-            sortFilteredGenes()
+            filteredGenes = DataManager.sorted(geneList: DataManager.main.mostUsedGeneList, by: DataManager.main.geneSelection)
         } else if let text = searchController.searchBar.text, text.count > 0 {
             filteredGenes = DataManager.main.geneListBy[geneSelection]!.filter { $0.match(withText: text) }
         } else {

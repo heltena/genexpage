@@ -70,29 +70,59 @@ class DataManager {
         return "red"
     }
 
-    private func sorted(geneList: [Gene], by geneSelection: GeneSelection) -> [Gene] {
-        return geneList.sorted {
-            let left = $0.representation(for: geneSelection).uppercased()
-            if left == "-" || left.count == 0 {
-                return false
+    public static func sorted(geneList: [Gene], by geneSelection: GeneSelection) -> [Gene] {
+        switch geneSelection {
+        case .symbol:
+            return geneList.sorted {
+                guard let left = $0.symbol?.uppercased(), left.count > 0 else {
+                    return false
+                }
+                guard let right = $1.symbol?.uppercased(), right.count > 0 else {
+                    return true
+                }
+                let leftFirst = left.unicodeScalars.first!
+                let rightFirst = right.unicodeScalars.first!
+                let leftStartsByNumber = CharacterSet.decimalDigits.contains(leftFirst)
+                let rightStartsByNumber = CharacterSet.decimalDigits.contains(rightFirst)
+                switch (leftStartsByNumber, rightStartsByNumber) {
+                case (true, true), (false, false):
+                    return left.compare(right, options: [.numeric], range: nil, locale: nil) == .orderedAscending
+                case (true, false):
+                    return false
+                case (false, true):
+                    return true
+                }
             }
-            
-            let right = $1.representation(for: geneSelection).uppercased()
-            if right == "-" || right.count == 0 {
-                return true
+        case .entrez:
+            return geneList.sorted {
+                guard let left = $0.gene else {
+                    return false
+                }
+                guard let right = $1.gene else {
+                    return true
+                }
+                return left < right
             }
-            
-            let leftFirst = left.unicodeScalars.first!
-            let rightFirst = right.unicodeScalars.first!
-            let leftStartsByNumber = CharacterSet.decimalDigits.contains(leftFirst)
-            let rightStartsByNumber = CharacterSet.decimalDigits.contains(rightFirst)
-            switch (leftStartsByNumber, rightStartsByNumber) {
-            case (true, true), (false, false):
-                return left.compare(right, options: [.numeric], range: nil, locale: nil) == .orderedAscending
-            case (true, false):
-                return false
-            case (false, true):
-                return true
+        case .ensembl:
+            return geneList.sorted {
+                guard let left = $0.ensembl?.uppercased(), left.count > 0 else {
+                    return false
+                }
+                guard let right = $1.ensembl?.uppercased(), right.count > 0 else {
+                    return true
+                }
+                let leftFirst = left.unicodeScalars.first!
+                let rightFirst = right.unicodeScalars.first!
+                let leftStartsByNumber = CharacterSet.decimalDigits.contains(leftFirst)
+                let rightStartsByNumber = CharacterSet.decimalDigits.contains(rightFirst)
+                switch (leftStartsByNumber, rightStartsByNumber) {
+                case (true, true), (false, false):
+                    return left.compare(right, options: [.numeric], range: nil, locale: nil) == .orderedAscending
+                case (true, false):
+                    return false
+                case (false, true):
+                    return true
+                }
             }
         }
     }
@@ -102,12 +132,18 @@ class DataManager {
         if geneList.count == 0 {
             group.enter()
             Server.main.geneList { list in
+                let begin = Date()
+                print("Begin: \(begin)")
                 self.geneList = list ?? []
                 self.geneListBy = [
-                    .symbol: self.sorted(geneList: self.geneList.filter { $0.symbol != nil }, by: .symbol),
-                    .entrez: self.sorted(geneList: self.geneList.filter { $0.gene != nil }, by: .entrez),
-                    .ensembl: self.sorted(geneList: self.geneList.filter { $0.ensembl != nil }, by: .ensembl)
+                    .symbol: DataManager.sorted(geneList: self.geneList.filter { $0.symbol != nil }, by: .symbol),
+                    .entrez: DataManager.sorted(geneList: self.geneList.filter { $0.gene != nil }, by: .entrez),
+                    .ensembl: DataManager.sorted(geneList: self.geneList.filter { $0.ensembl != nil }, by: .ensembl)
                 ]
+                let end = Date()
+                print("End: \(end)")
+                let diff = end.timeIntervalSince(begin)
+                print("Diff: \(diff)")
                 group.leave()
             }
         }
