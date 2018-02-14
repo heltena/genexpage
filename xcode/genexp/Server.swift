@@ -12,9 +12,9 @@ class Server: NSObject, URLSessionDelegate {
     
     private var baseUrl: URL? {
         var baseComponents = URLComponents()
-        baseComponents.scheme = NSURLProtectionSpaceHTTP
+        baseComponents.scheme = NSURLProtectionSpaceHTTPS
         baseComponents.host = "genexp.northwestern.edu"
-        baseComponents.port = 80
+        baseComponents.port = 443
         return baseComponents.url
     }
     private let timeoutInterval: TimeInterval = 5.0
