@@ -18,6 +18,9 @@
 		783CF74F202A5DC400E50C5E /* BaseHTML in Resources */ = {isa = PBXBuildFile; fileRef = 783CF74E202A5DC400E50C5E /* BaseHTML */; };
 		783CF753202A614B00E50C5E /* AgeCountResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783CF752202A614B00E50C5E /* AgeCountResult.swift */; };
 		783CF755202B974800E50C5E /* PlotEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783CF754202B974800E50C5E /* PlotEditViewController.swift */; };
+		786C03D3206C4C7E00B5F979 /* DatasetCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786C03D2206C4C7E00B5F979 /* DatasetCache.swift */; };
+		78C116522037AD0B00420E4E /* TissueSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C116512037AD0B00420E4E /* TissueSelectionViewController.swift */; };
+		78C116592037ADB700420E4E /* PfuSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C116582037ADB700420E4E /* PfuSelectionViewController.swift */; };
 		78D914B020276E8100836037 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D914AF20276E8100836037 /* AppDelegate.swift */; };
 		78D914B220276E8100836037 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D914B120276E8100836037 /* LoadingViewController.swift */; };
 		78D914B520276E8100836037 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78D914B320276E8100836037 /* Main.storyboard */; };
@@ -108,6 +111,9 @@
 		783CF74E202A5DC400E50C5E /* BaseHTML */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BaseHTML; sourceTree = "<group>"; };
 		783CF752202A614B00E50C5E /* AgeCountResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeCountResult.swift; sourceTree = "<group>"; };
 		783CF754202B974800E50C5E /* PlotEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotEditViewController.swift; sourceTree = "<group>"; };
+		786C03D2206C4C7E00B5F979 /* DatasetCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatasetCache.swift; sourceTree = "<group>"; };
+		78C116512037AD0B00420E4E /* TissueSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TissueSelectionViewController.swift; sourceTree = "<group>"; };
+		78C116582037ADB700420E4E /* PfuSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PfuSelectionViewController.swift; sourceTree = "<group>"; };
 		78D914AC20276E8100836037 /* genexp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = genexp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78D914AF20276E8100836037 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		78D914B120276E8100836037 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
@@ -172,6 +178,7 @@
 				783CF752202A614B00E50C5E /* AgeCountResult.swift */,
 				78D914AF20276E8100836037 /* AppDelegate.swift */,
 				783CF71E2029238400E50C5E /* DataManager.swift */,
+				786C03D2206C4C7E00B5F979 /* DatasetCache.swift */,
 				782F5C632027CBD30087F92E /* Gene.swift */,
 				78FF81C5202D0E0B00692064 /* GeneSelection.swift */,
 				78FF81CC202D0ED300692064 /* GeneSelectionTableViewCell.swift */,
@@ -189,6 +196,8 @@
 				78D914B820276E8100836037 /* LaunchScreen.storyboard */,
 				78D914BB20276E8100836037 /* Info.plist */,
 				783CF722202A34A400E50C5E /* PlotWebView.swift */,
+				78C116512037AD0B00420E4E /* TissueSelectionViewController.swift */,
+				78C116582037ADB700420E4E /* PfuSelectionViewController.swift */,
 			);
 			path = genexp;
 			sourceTree = "<group>";
@@ -328,11 +337,14 @@
 				783CF721202925A400E50C5E /* PlotViewController.swift in Sources */,
 				783CF755202B974800E50C5E /* PlotEditViewController.swift in Sources */,
 				78D914B220276E8100836037 /* LoadingViewController.swift in Sources */,
+				786C03D3206C4C7E00B5F979 /* DatasetCache.swift in Sources */,
 				78D914C22027710500836037 /* Server.swift in Sources */,
+				78C116592037ADB700420E4E /* PfuSelectionViewController.swift in Sources */,
 				783CF71F2029238400E50C5E /* DataManager.swift in Sources */,
 				782F5C682027CC9F0087F92E /* Pfu.swift in Sources */,
 				78FF81CF202D17F500692064 /* SelectedGenesTableViewCell.swift in Sources */,
 				782F5C662027CBE50087F92E /* Tissue.swift in Sources */,
+				78C116522037AD0B00420E4E /* TissueSelectionViewController.swift in Sources */,
 				78D914B020276E8100836037 /* AppDelegate.swift in Sources */,
 				78FF81C6202D0E0B00692064 /* GeneSelection.swift in Sources */,
 			);

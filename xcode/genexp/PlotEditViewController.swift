@@ -25,7 +25,7 @@ class PlotEditViewController: UITableViewController, UISearchResultsUpdating {
         self.tableView.tableHeaderView = searchController.searchBar
         self.definesPresentationContext = true
         for gene in DataManager.main.geneList {
-            if gene.isSelected {
+            if DataManager.main.isSelected(gene: gene) {
                 DataManager.main.maskAsUsed(gene: gene)
             }
         }
@@ -40,13 +40,13 @@ class PlotEditViewController: UITableViewController, UISearchResultsUpdating {
         }
     
         for (index, tissue) in DataManager.main.tissueList.enumerated() {
-            if tissue.isSelected {
+            if DataManager.main.isSelected(tissue: tissue) {
                 tableView.selectRow(at: IndexPath(item: index, section: 1), animated: false, scrollPosition: .none)
             }
         }
         
         for (index, pfu) in DataManager.main.pfuList.enumerated() {
-            if pfu.isSelected {
+            if DataManager.main.isSelected(pfu: pfu) {
                 tableView.selectRow(at: IndexPath(item: index, section: 2), animated: false, scrollPosition: .none)
             }
         }
@@ -125,23 +125,38 @@ class PlotEditViewController: UITableViewController, UISearchResultsUpdating {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "gene", for: indexPath)
                 let gene = filteredGenes[indexPath.item - 1]
                 cell.textLabel?.text = gene.representation(for: DataManager.main.geneSelection)
-                cell.isSelected = gene.isSelected
-                cell.accessoryType = gene.isSelected ? .checkmark : .none
+                if DataManager.main.isSelected(gene: gene) {
+                    cell.isSelected = true
+                    cell.accessoryType = .checkmark
+                } else {
+                    cell.isSelected = false
+                    cell.accessoryType = .none
+                }
                 return cell
             }
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "tissue", for: indexPath)
             let tissue = DataManager.main.tissueList[indexPath.item]
             cell.textLabel?.text = tissue.value
-            cell.isSelected = tissue.isSelected
-            cell.accessoryType = tissue.isSelected ? .checkmark : .none
+            if DataManager.main.isSelected(tissue: tissue) {
+                cell.isSelected = true
+                cell.accessoryType = .checkmark
+            } else {
+                cell.isSelected = false
+                cell.accessoryType = .none
+            }
             return cell
         case 2:
             let cell = tableView.dequeueReusableCell(withIdentifier: "pfu", for: indexPath)
             let pfu = DataManager.main.pfuList[indexPath.item]
             cell.textLabel?.text = pfu.value
-            cell.isSelected = pfu.isSelected
-            cell.accessoryType = pfu.isSelected ? .checkmark : .none
+            if DataManager.main.isSelected(pfu: pfu) {
+                cell.isSelected = true
+                cell.accessoryType = .checkmark
+            } else {
+                cell.isSelected = false
+                cell.accessoryType = .none
+            }
             return cell
         default:
             fatalError("no cell at \(indexPath)")
@@ -154,14 +169,16 @@ class PlotEditViewController: UITableViewController, UISearchResultsUpdating {
             if indexPath.item > 0 && filteredGenes.count > 0 {
                 let gene = filteredGenes[indexPath.item - 1] // For the geneSelection
                 DataManager.main.maskAsUsed(gene: gene)
-                gene.isSelected = true
+                DataManager.main.select(gene: gene)
                 tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
             }
         case 1:
-            DataManager.main.tissueList[indexPath.item].isSelected = true
+            let tissue = DataManager.main.tissueList[indexPath.item]
+            DataManager.main.select(tissue: tissue)
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         case 2:
-            DataManager.main.pfuList[indexPath.item].isSelected = true
+            let pfu = DataManager.main.pfuList[indexPath.item]
+            DataManager.main.select(pfu: pfu)
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
         default:
             break
@@ -174,14 +191,16 @@ class PlotEditViewController: UITableViewController, UISearchResultsUpdating {
             if indexPath.item > 0 && filteredGenes.count > 0 {
                 let gene = filteredGenes[indexPath.item - 1] // For the geneSelection
                 DataManager.main.maskAsUsed(gene: gene)
-                gene.isSelected = false
+                DataManager.main.unselect(gene: gene)
                 tableView.cellForRow(at: indexPath)?.accessoryType = .none
             }
         case 1:
-            DataManager.main.tissueList[indexPath.item].isSelected = false
+            let tissue = DataManager.main.tissueList[indexPath.item]
+            DataManager.main.unselect(tissue: tissue)
             tableView.cellForRow(at: indexPath)?.accessoryType = .none
         case 2:
-            DataManager.main.pfuList[indexPath.item].isSelected = false
+            let pfu = DataManager.main.pfuList[indexPath.item]
+            DataManager.main.unselect(pfu: pfu)
             tableView.cellForRow(at: indexPath)?.accessoryType = .none
         default:
             break

@@ -18,6 +18,9 @@ class DataManager {
     private(set) var pfuList: [Pfu] = []
     private(set) var tissueList: [Tissue] = []
     private(set) var mostUsedGeneList: [Gene] = []
+    private var genesSelected: Set<String> = Set<String>()
+    private var pfusSelected: Set<String> = Set<String>()
+    private var tissuesSelected: Set<String> = Set<String>()
     
     private func hash(for array: [Int]) -> Int {
         return array.reduce(5381) { ($0 << 5) &+ $0 &+ Int($1) }
@@ -25,9 +28,9 @@ class DataManager {
     
     var currentPlotHash: Int {
         let hashValues = [
-            hash(for: geneList.filter { $0.isSelected }.map { $0.representation(for: geneSelection).hashValue }.sorted()),
-            hash(for: pfuList.filter { $0.isSelected }.map { $0.value.hashValue }.sorted()),
-            hash(for: tissueList.filter { $0.isSelected }.map { $0.value.hashValue }.sorted())
+            hash(for: geneList.filter { self.isSelected(gene: $0) }.map { $0.representation(for: geneSelection).hashValue }.sorted()),
+            hash(for: pfuList.filter { self.isSelected(pfu: $0) }.map { $0.value.hashValue }.sorted()),
+            hash(for: tissueList.filter { self.isSelected(tissue: $0) }.map { $0.value.hashValue }.sorted())
             ]
         return hash(for: hashValues)
     }
@@ -105,10 +108,12 @@ class DataManager {
             }
         case .ensembl:
             return geneList.sorted {
-                guard let left = $0.ensembl?.uppercased(), left.count > 0 else {
+                let left = $0.ensembl.uppercased()
+                if left.count == 0 {
                     return false
                 }
-                guard let right = $1.ensembl?.uppercased(), right.count > 0 else {
+                let right = $1.ensembl.uppercased()
+                if right.count == 0 {
                     return true
                 }
                 let leftFirst = left.unicodeScalars.first!
@@ -128,66 +133,52 @@ class DataManager {
     }
     
     func waitUntilLoaded(completion: @escaping () -> Void) {
-        let group = DispatchGroup()
-        if geneList.count == 0 {
-            group.enter()
-            Server.main.geneList { list in
-                let begin = Date()
-                print("Begin: \(begin)")
-                self.geneList = list ?? []
-                self.geneListBy = [
-                    .symbol: DataManager.sorted(geneList: self.geneList.filter { $0.symbol != nil }, by: .symbol),
-                    .entrez: DataManager.sorted(geneList: self.geneList.filter { $0.gene != nil }, by: .entrez),
-                    .ensembl: DataManager.sorted(geneList: self.geneList.filter { $0.ensembl != nil }, by: .ensembl)
-                ]
-                let end = Date()
-                print("End: \(end)")
-                let diff = end.timeIntervalSince(begin)
-                print("Diff: \(diff)")
-                group.leave()
-            }
-        }
-        
-        if pfuList.count == 0 {
-            group.enter()
-            Server.main.pfuList { list in
-                self.pfuList = list ?? []
-                group.leave()
-            }
-        }
-        
-        if tissueList.count == 0 {
-            group.enter()
-            Server.main.tissueList { list in
-                self.tissueList = list ?? []
-                group.leave()
-            }
-        }
-
-        group.notify(queue: .main) {
+        let cache = DatasetCache()
+        cache.readData { dataset in
+            self.geneList = dataset?.geneList ?? []
+            self.geneListBy = dataset?.geneListBy ?? [:]
+            self.pfuList = dataset?.pfuList ?? []
+            self.tissueList = dataset?.tissueList ?? []
             completion()
         }
     }
 
-    func select(gene: String) {
-        if let gene = geneList.first(where: { $0.ensembl == gene }) {
-            maskAsUsed(gene: gene)
-            gene.isSelected = true
-        }
+    func isSelected(gene: Gene) -> Bool {
+        return genesSelected.contains(gene.ensembl)
     }
     
-    func select(tissue: String) {
-        if let tissue = tissueList.first(where: { $0.value == tissue }) {
-            tissue.isSelected = true
-        }
+    func isSelected(tissue: Tissue) -> Bool {
+        return tissuesSelected.contains(tissue.value)
     }
     
-    func select(pfu: String) {
-        if let pfu = pfuList.first(where: { $0.value == pfu}) {
-            pfu.isSelected = true
-        }
+    func isSelected(pfu: Pfu) -> Bool {
+        return pfusSelected.contains(pfu.value)
+    }
+    
+    func select(gene: Gene) {
+        genesSelected.insert(gene.ensembl)
+    }
+    
+    func select(tissue: Tissue) {
+        tissuesSelected.insert(tissue.value)
+    }
+    
+    func select(pfu: Pfu) {
+        pfusSelected.insert(pfu.value)
     }
 
+    func unselect(gene: Gene) {
+        genesSelected.remove(gene.ensembl)
+    }
+    
+    func unselect(tissue: Tissue) {
+        tissuesSelected.remove(tissue.value)
+    }
+    
+    func unselect(pfu: Pfu) {
+        pfusSelected.remove(pfu.value)
+    }
+    
     func maskAsUsed(gene: Gene) {
         if !mostUsedGeneList.contains(gene) {
             mostUsedGeneList.append(gene)

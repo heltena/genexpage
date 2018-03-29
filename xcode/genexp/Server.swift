@@ -71,6 +71,19 @@ class Server: NSObject, URLSessionDelegate {
         task.resume()
     }
     
+    func datasetVersion(completion: @escaping (DatasetVersion?) -> Void) {
+        restRequest(path: "/api/dataset/version") { (result: [String: Any?]?) in
+            guard
+                let result = result,
+                let versionData = result["version"] as? [String], versionData.count == 2
+                else {
+                    completion(nil)
+                    return
+            }
+            completion(DatasetVersion(number: versionData[0], timestamp: versionData[1]))
+        }
+    }
+
     private func loadJSON<T>(from data: Data?, response: URLResponse?, error: Error?) -> T? {
         guard
             error == nil,
@@ -107,9 +120,9 @@ class Server: NSObject, URLSessionDelegate {
     func ageCount(completion: @escaping (AgeCountResult?) -> Void) {
         var restrictions: [Any] = []
         
-        let genes = DataManager.main.geneList.filter { $0.isSelected }.map { $0.ensembl }
-        let tissues = DataManager.main.tissueList.filter { $0.isSelected }.map { $0.value }
-        let pfus = DataManager.main.pfuList.filter { $0.isSelected }.map { $0.value }
+        let genes = DataManager.main.geneList.filter { DataManager.main.isSelected(gene: $0) }.map { $0.ensembl }
+        let tissues = DataManager.main.tissueList.filter { DataManager.main.isSelected(tissue: $0) }.map { $0.value }
+        let pfus = DataManager.main.pfuList.filter { DataManager.main.isSelected(pfu: $0) }.map { $0.value }
     
         var titleComponents: [String] = []
         

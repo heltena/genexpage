@@ -37,8 +37,8 @@ class PlotViewController: UIViewController {
             messageLabel.isHidden = false
             self.renderEmptyPage()
             
-            let genes = DataManager.main.geneList.filter { $0.isSelected }
-            let tissues = DataManager.main.tissueList.filter { $0.isSelected }
+            let genes = DataManager.main.geneList.filter { DataManager.main.isSelected(gene: $0) }
+            let tissues = DataManager.main.tissueList.filter { DataManager.main.isSelected(tissue: $0) }
             if genes.count == 0 && tissues.count == 0 {
                 self.messageLabel.text = "Select at least one gene and one tissue an try again"
                 return

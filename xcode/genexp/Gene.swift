@@ -9,15 +9,29 @@
 import Foundation
 
 class Gene: Equatable, Hashable {
-    let ensembl: String?
+    let ensembl: String
     let symbol: String?
     let gene: Int?
-    var isSelected: Bool
-    
+
     var hashValue: Int {
         return [representation(for: .symbol), representation(for: .entrez), representation(for: .ensembl)].joined(separator: "").hashValue
     }
+    
+    init?(from array: [Any?]) {
+        guard
+            array.count == 3
+            else {
+                return nil
+        }
+        self.ensembl = array[0] as! String
+        self.symbol = array[1] as? String
+        self.gene = array[2] as? Int
+    }
 
+    var json: [Any?] {
+        return [self.ensembl, self.symbol, self.gene]
+    }
+    
     public static func ==(lhs: Gene, rhs: Gene) -> Bool {
         return lhs.ensembl == rhs.ensembl && lhs.symbol == rhs.symbol && lhs.gene == rhs.gene
     }
@@ -33,7 +47,7 @@ class Gene: Equatable, Hashable {
                 return "-"
             }
         case .ensembl:
-            return ensembl ?? "-"
+            return ensembl
         }
     }
     
@@ -44,7 +58,7 @@ class Gene: Equatable, Hashable {
                 return true
         }
         
-        if ensembl?.contains(text) ?? false {
+        if ensembl.contains(text) {
             return true
         }
         
@@ -57,18 +71,6 @@ class Gene: Equatable, Hashable {
         }
 
         return false
-    }
-    
-    init?(from array: [Any?]) {
-        guard
-            array.count == 3
-            else {
-                return nil
-        }
-        self.ensembl = array[0] as? String
-        self.symbol = array[1] as? String
-        self.gene = array[2] as? Int
-        self.isSelected = false
     }
 
 }

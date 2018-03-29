@@ -94,6 +94,26 @@ def gene_list(request):
 
 @csrf_exempt
 @method(allowed=['GET'])
+def dataset_version(request):
+    version = None
+    for current in Version.objects.all():
+        if version is None:
+            version = current
+        else:
+            print("E: More than one version")
+
+    result = {}
+    if version is not None:
+        result["version"] = [version.name, version.timestamp]
+    else:
+        result["version"] = ["no-version", "no-timestamp"]
+        print("E: There is no version!")
+    return JsonResponse(result)
+
+
+
+@csrf_exempt
+@method(allowed=['GET'])
 def tissue_list(request):
     tissues = Tissue.objects.all().order_by("name")
     result = [t.name for t in tissues]

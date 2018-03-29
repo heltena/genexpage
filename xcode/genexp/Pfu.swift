@@ -10,11 +10,13 @@ import Foundation
 
 class Pfu {
     let value: String
-    var isSelected: Bool
     
     init(from value: String) {
         self.value = value
-        self.isSelected = false
+    }
+    
+    var json: String {
+        return self.value
     }
 
 }

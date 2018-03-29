@@ -105,7 +105,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="nHh-Kd-maZ">
                             <connections>
-                                <segue destination="Z0K-Wb-5ng" kind="show" id="4z3-Lh-5B2"/>
+                                <segue destination="hKA-jE-dyr" kind="show" id="ajz-AD-cNZ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -391,6 +391,35 @@ Cg
             </objects>
             <point key="canvasLocation" x="2942" y="903"/>
         </scene>
+        <!--PFU-->
+        <scene sceneID="Mjm-nl-dfl">
+            <objects>
+                <tableViewController id="vOz-dR-lpv" customClass="PfuSelectionViewController" customModule="genexp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="HO9-he-aUc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="pfu" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="pfu" id="lt8-3c-qfz">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lt8-3c-qfz" id="vQf-TK-glT">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="vOz-dR-lpv" id="Ed3-Cg-c5R"/>
+                            <outlet property="delegate" destination="vOz-dR-lpv" id="MOt-r6-S5U"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="PFU" id="8Qw-Vg-aVe"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6AP-mc-Jai" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4974" y="720"/>
+        </scene>
         <!--Edit Plot-->
         <scene sceneID="GVv-l7-PdQ">
             <objects>
@@ -433,45 +462,8 @@ Cg
                                     <outlet property="segmentedControl" destination="C5y-ze-x1b" id="D3p-it-qRh"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="selectedGenes" id="rWY-hI-jMQ" customClass="SelectedGenesTableViewCell" customModule="genexp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="105.5" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rWY-hI-jMQ" id="EtF-x8-6dW">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G3Y-hl-gia">
-                                            <rect key="frame" x="22" y="11" width="277" height="22"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qwz-vq-oUK">
-                                            <rect key="frame" x="305" y="7" width="50" height="30"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="50" id="7yO-Or-dv0"/>
-                                            </constraints>
-                                            <state key="normal" title="Edit"/>
-                                            <connections>
-                                                <segue destination="sRZ-NH-8FC" kind="show" id="D8B-aZ-WSG"/>
-                                            </connections>
-                                        </button>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="qwz-vq-oUK" firstAttribute="leading" secondItem="G3Y-hl-gia" secondAttribute="trailing" constant="6" id="1Xi-Or-KOa"/>
-                                        <constraint firstItem="qwz-vq-oUK" firstAttribute="centerY" secondItem="EtF-x8-6dW" secondAttribute="centerY" id="IVL-Fr-DMZ"/>
-                                        <constraint firstItem="G3Y-hl-gia" firstAttribute="leading" secondItem="EtF-x8-6dW" secondAttribute="leadingMargin" constant="6" id="Q1v-3I-eI5"/>
-                                        <constraint firstAttribute="trailing" secondItem="qwz-vq-oUK" secondAttribute="trailing" constant="20" symbolic="YES" id="Xzu-NL-aD1"/>
-                                        <constraint firstItem="G3Y-hl-gia" firstAttribute="top" secondItem="EtF-x8-6dW" secondAttribute="topMargin" id="h05-gf-Tba"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="G3Y-hl-gia" secondAttribute="bottom" id="x2w-US-yKr"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="genesLabel" destination="G3Y-hl-gia" id="SJC-IZ-Bgf"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="gene" id="OKP-kl-F41">
-                                <rect key="frame" x="0.0" y="149.5" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="105.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OKP-kl-F41" id="3wi-yh-oj7">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -479,7 +471,7 @@ Cg
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="tissue" id="1sp-1r-2CH">
-                                <rect key="frame" x="0.0" y="193.5" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="149.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1sp-1r-2CH" id="jE2-Y3-EEX">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -487,7 +479,7 @@ Cg
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="pfu" id="U5X-6T-t9w">
-                                <rect key="frame" x="0.0" y="237.5" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="193.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="U5X-6T-t9w" id="4DM-2q-f1e">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -504,114 +496,145 @@ Cg
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r8B-Cg-LtF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2941.5999999999999" y="132.68365817091455"/>
+            <point key="canvasLocation" x="2921" y="-607"/>
         </scene>
-        <!--Gene Selection-->
-        <scene sceneID="ypI-TS-Klz">
+        <!--Tab Bar Controller-->
+        <scene sceneID="JfR-Xg-9l8">
             <objects>
-                <tableViewController title="Gene Selection" id="sRZ-NH-8FC" customClass="GeneSelectionViewController" customModule="genexp" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="lbR-6M-3Xw">
+                <tabBarController id="hKA-jE-dyr" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Pj6-rj-0oN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="phV-Tg-iTf" kind="relationship" relationship="viewControllers" id="WTP-Za-45G"/>
+                        <segue destination="IS1-6N-UGw" kind="relationship" relationship="viewControllers" id="b9J-lU-Z0p"/>
+                        <segue destination="vOz-dR-lpv" kind="relationship" relationship="viewControllers" id="K2k-jC-QPE"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eVr-Kq-XUB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3834" y="139"/>
+        </scene>
+        <!--Tissues-->
+        <scene sceneID="z2R-K7-lXS">
+            <objects>
+                <tableViewController id="IS1-6N-UGw" customClass="TissueSelectionViewController" customModule="genexp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="54e-6U-tCr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="minimal" id="Sku-bz-TJS">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <textInputTraits key="textInputTraits"/>
-                            <connections>
-                                <outlet property="delegate" destination="sRZ-NH-8FC" id="4IY-ig-NrL"/>
-                            </connections>
-                        </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="gene" rowHeight="50" id="JO8-H7-USB" customClass="GeneTableViewCell" customModule="genexp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="375" height="50"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="tissue" id="6OD-42-tmf">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JO8-H7-USB" id="Ssq-cU-9f2">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="PxY-gK-Bkp">
-                                            <rect key="frame" x="16" y="11" width="343" height="29"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="28" id="Mbd-EE-S7W"/>
-                                            </constraints>
-                                            <segments>
-                                                <segment title="SYMBOL"/>
-                                                <segment title="ENTREZ"/>
-                                                <segment title="ENSEMBL"/>
-                                            </segments>
-                                            <connections>
-                                                <action selector="geneSelectionChanged:" destination="Z0K-Wb-5ng" eventType="valueChanged" id="0Ne-6o-WqE"/>
-                                            </connections>
-                                        </segmentedControl>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="PxY-gK-Bkp" firstAttribute="top" secondItem="Ssq-cU-9f2" secondAttribute="topMargin" id="2B3-rd-tVc"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="PxY-gK-Bkp" secondAttribute="bottom" id="64O-46-2Fz"/>
-                                        <constraint firstItem="PxY-gK-Bkp" firstAttribute="leading" secondItem="Ssq-cU-9f2" secondAttribute="leadingMargin" id="gep-29-5YR"/>
-                                        <constraint firstItem="PxY-gK-Bkp" firstAttribute="trailing" secondItem="Ssq-cU-9f2" secondAttribute="trailingMargin" id="qME-my-17q"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="segmentedControl" destination="PxY-gK-Bkp" id="53z-gn-Lgn"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="selectedGenes" id="evh-aV-zGL" customClass="SelectedGenesTableViewCell" customModule="genexp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="122" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="evh-aV-zGL" id="W7G-uQ-3du">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6OD-42-tmf" id="BNY-Di-DSr">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f3g-SQ-wLQ">
-                                            <rect key="frame" x="22" y="11" width="277" height="22"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mcw-ei-gmo">
-                                            <rect key="frame" x="305" y="7" width="50" height="30"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="50" id="gOz-6Z-5jC"/>
-                                            </constraints>
-                                            <state key="normal" title="Edit"/>
-                                        </button>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="Mcw-ei-gmo" firstAttribute="centerY" secondItem="W7G-uQ-3du" secondAttribute="centerY" id="LW3-N0-5qq"/>
-                                        <constraint firstAttribute="trailing" secondItem="Mcw-ei-gmo" secondAttribute="trailing" constant="20" symbolic="YES" id="Rq8-S4-UAG"/>
-                                        <constraint firstItem="Mcw-ei-gmo" firstAttribute="leading" secondItem="f3g-SQ-wLQ" secondAttribute="trailing" constant="6" id="s7j-BD-14i"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="f3g-SQ-wLQ" secondAttribute="bottom" id="sOn-Hq-iya"/>
-                                        <constraint firstItem="f3g-SQ-wLQ" firstAttribute="top" secondItem="W7G-uQ-3du" secondAttribute="topMargin" id="wXn-bc-NkA"/>
-                                        <constraint firstItem="f3g-SQ-wLQ" firstAttribute="leading" secondItem="W7G-uQ-3du" secondAttribute="leadingMargin" constant="6" id="xOB-pT-jPn"/>
-                                    </constraints>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="genesLabel" destination="f3g-SQ-wLQ" id="deg-fg-PsI"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="sRZ-NH-8FC" id="3sc-0z-IgA"/>
-                            <outlet property="delegate" destination="sRZ-NH-8FC" id="opH-Op-CK1"/>
+                            <outlet property="dataSource" destination="IS1-6N-UGw" id="1Iq-we-esb"/>
+                            <outlet property="delegate" destination="IS1-6N-UGw" id="oES-fJ-gsw"/>
                         </connections>
                     </tableView>
-                    <connections>
-                        <outlet property="searchDisplayController" destination="A1v-fO-JdN" id="Wm5-M0-4HU"/>
-                    </connections>
+                    <tabBarItem key="tabBarItem" title="Tissues" id="HE8-0e-wFp"/>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Nb8-w2-Nd8" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="A1v-fO-JdN">
-                    <connections>
-                        <outlet property="delegate" destination="sRZ-NH-8FC" id="jYw-af-Ysv"/>
-                        <outlet property="searchBar" destination="Sku-bz-TJS" id="eSV-8D-SH1"/>
-                        <outlet property="searchContentsController" destination="sRZ-NH-8FC" id="C7t-FQ-Igt"/>
-                        <outlet property="searchResultsDataSource" destination="sRZ-NH-8FC" id="qjc-y9-O1s"/>
-                        <outlet property="searchResultsDelegate" destination="sRZ-NH-8FC" id="4y0-tL-MrX"/>
-                    </connections>
-                </searchDisplayController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tn4-co-ycT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3783" y="133"/>
+            <point key="canvasLocation" x="4974" y="48"/>
+        </scene>
+        <!--Genes-->
+        <scene sceneID="9wY-6o-bss">
+            <objects>
+                <viewController id="phV-Tg-iTf" customClass="GeneSelectionViewController" customModule="genexp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DDQ-xB-SeR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="ikD-QR-GHO">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="gene" id="XPI-ur-hUr">
+                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XPI-ur-hUr" id="MJJ-ho-y9p">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="phV-Tg-iTf" id="x0W-FU-RdQ"/>
+                                    <outlet property="delegate" destination="phV-Tg-iTf" id="oU3-Eb-IdU"/>
+                                </connections>
+                            </tableView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z1M-a0-PPC">
+                                <rect key="frame" x="0.0" y="558" width="375" height="60"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="FFQ-Bu-soe">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="70K-V5-IOE">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="fCo-GY-n3F">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            </view>
+                                            <vibrancyEffect>
+                                                <blurEffect style="light"/>
+                                            </vibrancyEffect>
+                                        </visualEffectView>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="ulJ-NT-1FA"/>
+                                </constraints>
+                                <blurEffect style="prominent"/>
+                            </visualEffectView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="L7b-Lq-uGw">
+                                <rect key="frame" x="16" y="574" width="343" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="28" id="51S-cU-4vk"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="SYMBOL"/>
+                                    <segment title="ENTREZ"/>
+                                    <segment title="ENSEMBL"/>
+                                </segments>
+                                <connections>
+                                    <action selector="geneSelectionChanged:" destination="Z0K-Wb-5ng" eventType="valueChanged" id="Bua-9s-ebQ"/>
+                                    <action selector="geneSelectionChanged:" destination="phV-Tg-iTf" eventType="valueChanged" id="Qbf-3R-Sno"/>
+                                </connections>
+                            </segmentedControl>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="z1M-a0-PPC" firstAttribute="bottom" secondItem="7Ru-ZI-3Uo" secondAttribute="bottom" id="2rm-PL-bM8"/>
+                            <constraint firstItem="z1M-a0-PPC" firstAttribute="trailing" secondItem="7Ru-ZI-3Uo" secondAttribute="trailing" id="BcY-kI-mSL"/>
+                            <constraint firstItem="L7b-Lq-uGw" firstAttribute="leading" secondItem="7Ru-ZI-3Uo" secondAttribute="leading" constant="16" id="Ndq-oM-IEy"/>
+                            <constraint firstItem="7Ru-ZI-3Uo" firstAttribute="trailing" secondItem="L7b-Lq-uGw" secondAttribute="trailing" constant="16" id="T4M-u1-O26"/>
+                            <constraint firstItem="ikD-QR-GHO" firstAttribute="leading" secondItem="7Ru-ZI-3Uo" secondAttribute="leading" id="TsQ-CQ-kaw"/>
+                            <constraint firstItem="7Ru-ZI-3Uo" firstAttribute="bottom" secondItem="ikD-QR-GHO" secondAttribute="bottom" id="hue-bK-5J7"/>
+                            <constraint firstItem="z1M-a0-PPC" firstAttribute="leading" secondItem="7Ru-ZI-3Uo" secondAttribute="leading" id="jdj-FP-w0c"/>
+                            <constraint firstItem="ikD-QR-GHO" firstAttribute="top" secondItem="7Ru-ZI-3Uo" secondAttribute="top" id="moo-51-Eli"/>
+                            <constraint firstItem="7Ru-ZI-3Uo" firstAttribute="bottom" secondItem="L7b-Lq-uGw" secondAttribute="bottom" constant="16" id="xoz-YL-h34"/>
+                            <constraint firstItem="7Ru-ZI-3Uo" firstAttribute="trailing" secondItem="ikD-QR-GHO" secondAttribute="trailing" id="yNH-Xf-YOf"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="7Ru-ZI-3Uo"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Genes" id="ops-8y-TX1"/>
+                    <connections>
+                        <outlet property="tableView" destination="ikD-QR-GHO" id="9B8-Xq-f76"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3WS-IA-ivr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4974" y="-619"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6CE-NS-uXg">
