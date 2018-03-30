@@ -99,20 +99,20 @@ class Server: NSObject, URLSessionDelegate {
     
     func tissueList(completion: @escaping ([Tissue]?) -> Void) {
         restRequest(path: "/api/tissue/list") { (result: [String]?) in
-            let values = result?.flatMap { Tissue(from: $0) }
+            let values = result?.compactMap { Tissue(from: $0) }
             completion(values)
         }
     }
     
     func pfuList(completion: @escaping ([Pfu]?) -> Void) {
         restRequest(path: "/api/pfu/list") { (result: [String]?) in
-            let values = result?.flatMap { Pfu(from: $0) }
+            let values = result?.compactMap { Pfu(from: $0) }
             completion(values)
         }
     }
     func geneList(completion: @escaping ([Gene]?) -> Void) {
         restRequest(path: "/api/gene/list") { (result: [[Any?]]?) in
-            let values = result?.flatMap { Gene(from: $0) }
+            let values = result?.compactMap { Gene(from: $0) }
             completion(values)
         }
     }

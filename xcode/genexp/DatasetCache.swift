@@ -92,16 +92,16 @@ class DatasetCache {
             let tissueListJson = result["tissues"] as? [String],
             let pfuListJson = result["pfus"] as? [String]
         {
-            let geneList = geneListJson.flatMap { Gene(from: $0) }
-            let genesBySymbol = genesBySymbolJson.flatMap { Gene(from: $0) }
-            let genesByEntrez = genesByEntrezJson.flatMap { Gene(from: $0) }
-            let genesByEnsembl = genesByEnsemblJson.flatMap { Gene(from: $0) }
+            let geneList = geneListJson.compactMap { Gene(from: $0) }
+            let genesBySymbol = genesBySymbolJson.compactMap { Gene(from: $0) }
+            let genesByEntrez = genesByEntrezJson.compactMap { Gene(from: $0) }
+            let genesByEnsembl = genesByEnsemblJson.compactMap { Gene(from: $0) }
             let geneListBy: [GeneSelection: [Gene]] = [
                 .symbol: genesBySymbol,
                 .entrez: genesByEntrez,
                 .ensembl: genesByEnsembl]
-            let tissueList = tissueListJson.flatMap { Tissue(from: $0) }
-            let pfuList = pfuListJson.flatMap { Pfu(from: $0) }
+            let tissueList = tissueListJson.compactMap { Tissue(from: $0) }
+            let pfuList = pfuListJson.compactMap { Pfu(from: $0) }
             
             cacheVersion = DatasetVersion(number: version[0], timestamp: version[1])
             dataset = Dataset(geneList: geneList, geneListBy: geneListBy, pfuList: pfuList, tissueList: tissueList)

@@ -9,10 +9,10 @@
 import Foundation
 
 class PointValue {
-    let mean: Float
-    let std: Float
+    let mean: Double
+    let std: Double
     
-    var json: [Float] {
+    var json: [Double] {
         get {
             return [mean, std]
         }
@@ -20,12 +20,12 @@ class PointValue {
 
     init?(from array: [Any]) {
         guard
-            let array = array as? [Float], array.count == 2
+            let array2 = array as? [Double], array2.count == 2
             else {
                 return nil
         }
-        self.mean = array[0]
-        self.std = array[1]
+        self.mean = array2[0]
+        self.std = array2[1]
     }
 }
 
@@ -33,9 +33,9 @@ class SerieValues {
     let key: String
     let serieName: String
     let values: [PointValue]
-    let meanValues: [Float]
-    let meanAddStdValues: [Float]
-    let meanSubStdValues: [Float]
+    let meanValues: [Double]
+    let meanAddStdValues: [Double]
+    let meanSubStdValues: [Double]
     
     var json: [String: Any] {
         get {
