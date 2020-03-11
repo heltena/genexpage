@@ -70,14 +70,6 @@ def all_list(request):
 
 @csrf_exempt
 @method(allowed=['GET'])
-def pfu_list(request):
-    pfus = Pfu.objects.all().order_by("name")
-    result = [t.name for t in pfus]
-    return JsonResponse(result, safe=False)
-
-
-@csrf_exempt
-@method(allowed=['GET'])
 def experimentalbatch_list(request):
     experimentalbatches = ExperimentalBatch.objects.all().order_by("name")
     result = [t.name for t in experimentalbatches]

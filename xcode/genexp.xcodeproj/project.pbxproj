@@ -3,368 +3,310 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		782F5C642027CBD30087F92E /* Gene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782F5C632027CBD30087F92E /* Gene.swift */; };
-		782F5C662027CBE50087F92E /* Tissue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782F5C652027CBE50087F92E /* Tissue.swift */; };
-		782F5C682027CC9F0087F92E /* Pfu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782F5C672027CC9F0087F92E /* Pfu.swift */; };
-		783CF71F2029238400E50C5E /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783CF71E2029238400E50C5E /* DataManager.swift */; };
-		783CF721202925A400E50C5E /* PlotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783CF720202925A400E50C5E /* PlotViewController.swift */; };
-		783CF723202A34A400E50C5E /* PlotWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783CF722202A34A400E50C5E /* PlotWebView.swift */; };
-		783CF73D202A542500E50C5E /* Mustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 783CF732202A540C00E50C5E /* Mustache.framework */; };
-		783CF73E202A542500E50C5E /* Mustache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 783CF732202A540C00E50C5E /* Mustache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		783CF74F202A5DC400E50C5E /* BaseHTML in Resources */ = {isa = PBXBuildFile; fileRef = 783CF74E202A5DC400E50C5E /* BaseHTML */; };
-		783CF753202A614B00E50C5E /* AgeCountResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783CF752202A614B00E50C5E /* AgeCountResult.swift */; };
-		783CF755202B974800E50C5E /* PlotEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783CF754202B974800E50C5E /* PlotEditViewController.swift */; };
-		786C03D3206C4C7E00B5F979 /* DatasetCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786C03D2206C4C7E00B5F979 /* DatasetCache.swift */; };
-		78C116522037AD0B00420E4E /* TissueSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C116512037AD0B00420E4E /* TissueSelectionController.swift */; };
-		78C116592037ADB700420E4E /* PfuSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C116582037ADB700420E4E /* PfuSelectionController.swift */; };
-		78D914B020276E8100836037 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D914AF20276E8100836037 /* AppDelegate.swift */; };
-		78D914B220276E8100836037 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D914B120276E8100836037 /* LoadingViewController.swift */; };
-		78D914B520276E8100836037 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78D914B320276E8100836037 /* Main.storyboard */; };
-		78D914B720276E8100836037 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78D914B620276E8100836037 /* Assets.xcassets */; };
-		78D914BA20276E8100836037 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78D914B820276E8100836037 /* LaunchScreen.storyboard */; };
-		78D914C22027710500836037 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D914C12027710500836037 /* Server.swift */; };
-		78FF81C6202D0E0B00692064 /* GeneSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FF81C5202D0E0B00692064 /* GeneSelection.swift */; };
-		78FF81D1202D257700692064 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FF81D0202D257700692064 /* HelpViewController.swift */; };
-		78FF81D3202D274100692064 /* GeneSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FF81D2202D274100692064 /* GeneSelectionViewController.swift */; };
+		780EF55723FDF46000195F62 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780EF55623FDF46000195F62 /* AppDelegate.swift */; };
+		780EF55923FDF46000195F62 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 780EF55823FDF46000195F62 /* SceneDelegate.swift */; };
+		780EF55D23FDF46200195F62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 780EF55C23FDF46200195F62 /* Assets.xcassets */; };
+		780EF56023FDF46200195F62 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 780EF55F23FDF46200195F62 /* Preview Assets.xcassets */; };
+		780EF56323FDF46200195F62 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 780EF56123FDF46200195F62 /* LaunchScreen.storyboard */; };
+		7825278724003E6400861481 /* Color+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7825278624003E6400861481 /* Color+extensions.swift */; };
+		7825278A24006B0C00861481 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7825278924006B0C00861481 /* LoadingView.swift */; };
+		7825279024006B8C00861481 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7825278F24006B8C00861481 /* MainView.swift */; };
+		7825279324006C5F00861481 /* AgeCountResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7825279224006C5F00861481 /* AgeCountResult.swift */; };
+		7825279724006C8200861481 /* Tissue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7825279624006C8200861481 /* Tissue.swift */; };
+		7825279B24006FDA00861481 /* Image+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7825279A24006FDA00861481 /* Image+extensions.swift */; };
+		7825279D2400706500861481 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7825279C2400706500861481 /* ActivityIndicator.swift */; };
+		782EB2E8240092C700EE96DE /* Mustache in Frameworks */ = {isa = PBXBuildFile; productRef = 782EB2E7240092C700EE96DE /* Mustache */; };
+		78586D94240861EB0015868C /* PlotRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78586D93240861EB0015868C /* PlotRenderer.swift */; };
+		78586D98240873B30015868C /* Gene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78586D97240873B30015868C /* Gene.swift */; };
+		7861346D241172E600D9857E /* BaseHTML in Resources */ = {isa = PBXBuildFile; fileRef = 7861346C241172E600D9857E /* BaseHTML */; };
+		7861346F2411740100D9857E /* ColorCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7861346E2411740100D9857E /* ColorCache.swift */; };
+		78613471241175CC00D9857E /* MustacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78613470241175CC00D9857E /* MustacheService.swift */; };
+		786134732411798800D9857E /* OptionalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786134722411798800D9857E /* OptionalView.swift */; };
+		786134752411AFC900D9857E /* ShareImagePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786134742411AFC900D9857E /* ShareImagePanel.swift */; };
+		78629482241054F100349BA8 /* PlotService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78629481241054F100349BA8 /* PlotService.swift */; };
+		78CBEB19240EE24600708E7D /* GeneSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CBEB18240EE24600708E7D /* GeneSelectionView.swift */; };
+		78CBEB1B240EE4AB00708E7D /* GeneSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CBEB1A240EE4AB00708E7D /* GeneSelection.swift */; };
+		78CBEB1D240EEFB700708E7D /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CBEB1C240EEFB700708E7D /* SearchService.swift */; };
+		78D04E3C2405B9210065FED5 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D04E3B2405B9210065FED5 /* DataService.swift */; };
+		78D04E3F2405BFE10065FED5 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D04E3E2405BFE10065FED5 /* InfoView.swift */; };
+		78D04E412405C9640065FED5 /* BackgroundLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D04E402405C9640065FED5 /* BackgroundLogoView.swift */; };
+		78D04E452405DABA0065FED5 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D04E442405DABA0065FED5 /* SearchBar.swift */; };
+		78D04E472405DB660065FED5 /* TissueSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D04E462405DB660065FED5 /* TissueSelectionView.swift */; };
+		78D20A4A24169B0500994B3F /* PlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D20A4924169B0500994B3F /* PlotView.swift */; };
+		78EEF4C02416DE8700E61D58 /* EnvironmentValues+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78EEF4BF2416DE8700E61D58 /* EnvironmentValues+extension.swift */; };
+		78FF3D47241983F000E8E50F /* thomas in Resources */ = {isa = PBXBuildFile; fileRef = 78FF3D46241983F000E8E50F /* thomas */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		783CF731202A540C00E50C5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 783CF728202A540C00E50C5E /* Mustache.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 563AE19719FBE47A0028C6C1;
-			remoteInfo = MustacheiOS;
-		};
-		783CF733202A540C00E50C5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 783CF728202A540C00E50C5E /* Mustache.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 563AE1A219FBE47A0028C6C1;
-			remoteInfo = MustacheiOSTests;
-		};
-		783CF735202A540C00E50C5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 783CF728202A540C00E50C5E /* Mustache.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 561E725C1A8BDC2B004ED48B;
-			remoteInfo = MustacheOSX;
-		};
-		783CF737202A540C00E50C5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 783CF728202A540C00E50C5E /* Mustache.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 561E72661A8BDC2B004ED48B;
-			remoteInfo = MustacheOSXTests;
-		};
-		783CF739202A540C00E50C5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 783CF728202A540C00E50C5E /* Mustache.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 09A89DCE1BF58489003A695E;
-			remoteInfo = MustacheTVOS;
-		};
-		783CF73B202A540C00E50C5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 783CF728202A540C00E50C5E /* Mustache.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 09A89DDA1BF584EE003A695E;
-			remoteInfo = MustacheTVOSTests;
-		};
-		783CF73F202A542500E50C5E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 783CF728202A540C00E50C5E /* Mustache.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 563AE19619FBE47A0028C6C1;
-			remoteInfo = MustacheiOS;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		783CF741202A542500E50C5E /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				783CF73E202A542500E50C5E /* Mustache.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		782F5C632027CBD30087F92E /* Gene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gene.swift; sourceTree = "<group>"; };
-		782F5C652027CBE50087F92E /* Tissue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tissue.swift; sourceTree = "<group>"; };
-		782F5C672027CC9F0087F92E /* Pfu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pfu.swift; sourceTree = "<group>"; };
-		783CF71E2029238400E50C5E /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
-		783CF720202925A400E50C5E /* PlotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotViewController.swift; sourceTree = "<group>"; };
-		783CF722202A34A400E50C5E /* PlotWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotWebView.swift; sourceTree = "<group>"; };
-		783CF728202A540C00E50C5E /* Mustache.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Mustache.xcodeproj; path = "GRMustache.swift-master/Xcode/Mustache.xcodeproj"; sourceTree = "<group>"; };
-		783CF74E202A5DC400E50C5E /* BaseHTML */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BaseHTML; sourceTree = "<group>"; };
-		783CF752202A614B00E50C5E /* AgeCountResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeCountResult.swift; sourceTree = "<group>"; };
-		783CF754202B974800E50C5E /* PlotEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotEditViewController.swift; sourceTree = "<group>"; };
-		786C03D2206C4C7E00B5F979 /* DatasetCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatasetCache.swift; sourceTree = "<group>"; };
-		78C116512037AD0B00420E4E /* TissueSelectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TissueSelectionController.swift; sourceTree = "<group>"; };
-		78C116582037ADB700420E4E /* PfuSelectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PfuSelectionController.swift; sourceTree = "<group>"; };
-		78D914AC20276E8100836037 /* genexp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = genexp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		78D914AF20276E8100836037 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		78D914B120276E8100836037 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
-		78D914B420276E8100836037 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		78D914B620276E8100836037 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		78D914B920276E8100836037 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		78D914BB20276E8100836037 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		78D914C12027710500836037 /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
-		78FF81C5202D0E0B00692064 /* GeneSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneSelection.swift; sourceTree = "<group>"; };
-		78FF81D0202D257700692064 /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
-		78FF81D2202D274100692064 /* GeneSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneSelectionViewController.swift; sourceTree = "<group>"; };
+		780EF55323FDF46000195F62 /* genexp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = genexp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		780EF55623FDF46000195F62 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		780EF55823FDF46000195F62 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		780EF55C23FDF46200195F62 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		780EF55F23FDF46200195F62 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		780EF56223FDF46200195F62 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		780EF56423FDF46200195F62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7825278624003E6400861481 /* Color+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+extensions.swift"; sourceTree = "<group>"; };
+		7825278924006B0C00861481 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		7825278F24006B8C00861481 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		7825279224006C5F00861481 /* AgeCountResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeCountResult.swift; sourceTree = "<group>"; };
+		7825279624006C8200861481 /* Tissue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tissue.swift; sourceTree = "<group>"; };
+		7825279A24006FDA00861481 /* Image+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+extensions.swift"; sourceTree = "<group>"; };
+		7825279C2400706500861481 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		78586D93240861EB0015868C /* PlotRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotRenderer.swift; sourceTree = "<group>"; };
+		78586D97240873B30015868C /* Gene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gene.swift; sourceTree = "<group>"; };
+		7861346C241172E600D9857E /* BaseHTML */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BaseHTML; sourceTree = "<group>"; };
+		7861346E2411740100D9857E /* ColorCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCache.swift; sourceTree = "<group>"; };
+		78613470241175CC00D9857E /* MustacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MustacheService.swift; sourceTree = "<group>"; };
+		786134722411798800D9857E /* OptionalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalView.swift; sourceTree = "<group>"; };
+		786134742411AFC900D9857E /* ShareImagePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareImagePanel.swift; sourceTree = "<group>"; };
+		78629481241054F100349BA8 /* PlotService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotService.swift; sourceTree = "<group>"; };
+		78CBEB18240EE24600708E7D /* GeneSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneSelectionView.swift; sourceTree = "<group>"; };
+		78CBEB1A240EE4AB00708E7D /* GeneSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneSelection.swift; sourceTree = "<group>"; };
+		78CBEB1C240EEFB700708E7D /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
+		78D04E3B2405B9210065FED5 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		78D04E3E2405BFE10065FED5 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		78D04E402405C9640065FED5 /* BackgroundLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundLogoView.swift; sourceTree = "<group>"; };
+		78D04E442405DABA0065FED5 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		78D04E462405DB660065FED5 /* TissueSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TissueSelectionView.swift; sourceTree = "<group>"; };
+		78D20A4924169B0500994B3F /* PlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotView.swift; sourceTree = "<group>"; };
+		78EEF4BF2416DE8700E61D58 /* EnvironmentValues+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+extension.swift"; sourceTree = "<group>"; };
+		78FF3D46241983F000E8E50F /* thomas */ = {isa = PBXFileReference; lastKnownFileType = text; path = thomas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		78D914A920276E8100836037 /* Frameworks */ = {
+		780EF55023FDF46000195F62 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				783CF73D202A542500E50C5E /* Mustache.framework in Frameworks */,
+				782EB2E8240092C700EE96DE /* Mustache in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		783CF729202A540C00E50C5E /* Products */ = {
+		780EF54A23FDF46000195F62 = {
 			isa = PBXGroup;
 			children = (
-				783CF732202A540C00E50C5E /* Mustache.framework */,
-				783CF734202A540C00E50C5E /* MustacheiOSTests.xctest */,
-				783CF736202A540C00E50C5E /* Mustache.framework */,
-				783CF738202A540C00E50C5E /* MustacheOSXTests.xctest */,
-				783CF73A202A540C00E50C5E /* Mustache.framework */,
-				783CF73C202A540C00E50C5E /* MustacheTVOSTests.xctest */,
+				780EF55523FDF46000195F62 /* genexp */,
+				780EF55423FDF46000195F62 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		780EF55423FDF46000195F62 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				780EF55323FDF46000195F62 /* genexp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		78D914A320276E8100836037 = {
+		780EF55523FDF46000195F62 /* genexp */ = {
 			isa = PBXGroup;
 			children = (
-				78D914AE20276E8100836037 /* genexp */,
-				78D914AD20276E8100836037 /* Products */,
-				783CF728202A540C00E50C5E /* Mustache.xcodeproj */,
-			);
-			sourceTree = "<group>";
-		};
-		78D914AD20276E8100836037 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				78D914AC20276E8100836037 /* genexp.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		78D914AE20276E8100836037 /* genexp */ = {
-			isa = PBXGroup;
-			children = (
-				783CF74E202A5DC400E50C5E /* BaseHTML */,
-				783CF752202A614B00E50C5E /* AgeCountResult.swift */,
-				78D914AF20276E8100836037 /* AppDelegate.swift */,
-				783CF71E2029238400E50C5E /* DataManager.swift */,
-				786C03D2206C4C7E00B5F979 /* DatasetCache.swift */,
-				782F5C632027CBD30087F92E /* Gene.swift */,
-				78FF81C5202D0E0B00692064 /* GeneSelection.swift */,
-				78FF81D0202D257700692064 /* HelpViewController.swift */,
-				782F5C672027CC9F0087F92E /* Pfu.swift */,
-				78D914C12027710500836037 /* Server.swift */,
-				782F5C652027CBE50087F92E /* Tissue.swift */,
-				78D914B120276E8100836037 /* LoadingViewController.swift */,
-				783CF754202B974800E50C5E /* PlotEditViewController.swift */,
-				783CF720202925A400E50C5E /* PlotViewController.swift */,
-				78D914B320276E8100836037 /* Main.storyboard */,
-				78D914B620276E8100836037 /* Assets.xcassets */,
-				78D914B820276E8100836037 /* LaunchScreen.storyboard */,
-				78D914BB20276E8100836037 /* Info.plist */,
-				783CF722202A34A400E50C5E /* PlotWebView.swift */,
-				78FF81D2202D274100692064 /* GeneSelectionViewController.swift */,
-				78C116512037AD0B00420E4E /* TissueSelectionController.swift */,
-				78C116582037ADB700420E4E /* PfuSelectionController.swift */,
+				7861346C241172E600D9857E /* BaseHTML */,
+				7825279124006C5400861481 /* Data */,
+				7825278E24006B3900861481 /* Delegates */,
+				7825278C24006B1F00861481 /* Services */,
+				7825278D24006B2C00861481 /* Utils */,
+				7825278B24006B1100861481 /* Views */,
+				780EF55C23FDF46200195F62 /* Assets.xcassets */,
+				78FF3D46241983F000E8E50F /* thomas */,
+				780EF56123FDF46200195F62 /* LaunchScreen.storyboard */,
+				780EF56423FDF46200195F62 /* Info.plist */,
+				780EF55E23FDF46200195F62 /* Preview Content */,
 			);
 			path = genexp;
+			sourceTree = "<group>";
+		};
+		780EF55E23FDF46200195F62 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				780EF55F23FDF46200195F62 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		7825278B24006B1100861481 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				78D04E402405C9640065FED5 /* BackgroundLogoView.swift */,
+				7825278F24006B8C00861481 /* MainView.swift */,
+				7825278924006B0C00861481 /* LoadingView.swift */,
+				78D04E3E2405BFE10065FED5 /* InfoView.swift */,
+				78CBEB18240EE24600708E7D /* GeneSelectionView.swift */,
+				78D04E462405DB660065FED5 /* TissueSelectionView.swift */,
+				78586D93240861EB0015868C /* PlotRenderer.swift */,
+				786134742411AFC900D9857E /* ShareImagePanel.swift */,
+				78D20A4924169B0500994B3F /* PlotView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7825278C24006B1F00861481 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				7861346E2411740100D9857E /* ColorCache.swift */,
+				78D04E3B2405B9210065FED5 /* DataService.swift */,
+				78629481241054F100349BA8 /* PlotService.swift */,
+				78CBEB1C240EEFB700708E7D /* SearchService.swift */,
+				78613470241175CC00D9857E /* MustacheService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		7825278D24006B2C00861481 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				7825279C2400706500861481 /* ActivityIndicator.swift */,
+				7825278624003E6400861481 /* Color+extensions.swift */,
+				7825279A24006FDA00861481 /* Image+extensions.swift */,
+				78D04E442405DABA0065FED5 /* SearchBar.swift */,
+				786134722411798800D9857E /* OptionalView.swift */,
+				78EEF4BF2416DE8700E61D58 /* EnvironmentValues+extension.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		7825278E24006B3900861481 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				780EF55623FDF46000195F62 /* AppDelegate.swift */,
+				780EF55823FDF46000195F62 /* SceneDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		7825279124006C5400861481 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				7825279224006C5F00861481 /* AgeCountResult.swift */,
+				7825279624006C8200861481 /* Tissue.swift */,
+				78586D97240873B30015868C /* Gene.swift */,
+				78CBEB1A240EE4AB00708E7D /* GeneSelection.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		78D914AB20276E8100836037 /* genexp */ = {
+		780EF55223FDF46000195F62 /* genexp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 78D914BE20276E8100836037 /* Build configuration list for PBXNativeTarget "genexp" */;
+			buildConfigurationList = 780EF56723FDF46200195F62 /* Build configuration list for PBXNativeTarget "genexp" */;
 			buildPhases = (
-				78D914A820276E8100836037 /* Sources */,
-				78D914A920276E8100836037 /* Frameworks */,
-				78D914AA20276E8100836037 /* Resources */,
-				783CF741202A542500E50C5E /* Embed Frameworks */,
+				780EF54F23FDF46000195F62 /* Sources */,
+				780EF55023FDF46000195F62 /* Frameworks */,
+				780EF55123FDF46000195F62 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				783CF740202A542500E50C5E /* PBXTargetDependency */,
 			);
 			name = genexp;
+			packageProductDependencies = (
+				782EB2E7240092C700EE96DE /* Mustache */,
+			);
 			productName = genexp;
-			productReference = 78D914AC20276E8100836037 /* genexp.app */;
+			productReference = 780EF55323FDF46000195F62 /* genexp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		78D914A420276E8100836037 /* Project object */ = {
+		780EF54B23FDF46000195F62 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0920;
-				ORGANIZATIONNAME = "Helio Tejedor";
+				LastSwiftUpdateCheck = 1120;
+				LastUpgradeCheck = 1120;
+				ORGANIZATIONNAME = "Heliodoro Tejedor Navarro";
 				TargetAttributes = {
-					78D914AB20276E8100836037 = {
-						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
+					780EF55223FDF46000195F62 = {
+						CreatedOnToolsVersion = 11.2.1;
 					};
 				};
 			};
-			buildConfigurationList = 78D914A720276E8100836037 /* Build configuration list for PBXProject "genexp" */;
-			compatibilityVersion = "Xcode 8.0";
+			buildConfigurationList = 780EF54E23FDF46000195F62 /* Build configuration list for PBXProject "genexp" */;
+			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 78D914A320276E8100836037;
-			productRefGroup = 78D914AD20276E8100836037 /* Products */;
-			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 783CF729202A540C00E50C5E /* Products */;
-					ProjectRef = 783CF728202A540C00E50C5E /* Mustache.xcodeproj */;
-				},
+			mainGroup = 780EF54A23FDF46000195F62;
+			packageReferences = (
+				782EB2E6240092C700EE96DE /* XCRemoteSwiftPackageReference "GRMustache" */,
 			);
+			productRefGroup = 780EF55423FDF46000195F62 /* Products */;
+			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				78D914AB20276E8100836037 /* genexp */,
+				780EF55223FDF46000195F62 /* genexp */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXReferenceProxy section */
-		783CF732202A540C00E50C5E /* Mustache.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Mustache.framework;
-			remoteRef = 783CF731202A540C00E50C5E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		783CF734202A540C00E50C5E /* MustacheiOSTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = MustacheiOSTests.xctest;
-			remoteRef = 783CF733202A540C00E50C5E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		783CF736202A540C00E50C5E /* Mustache.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Mustache.framework;
-			remoteRef = 783CF735202A540C00E50C5E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		783CF738202A540C00E50C5E /* MustacheOSXTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = MustacheOSXTests.xctest;
-			remoteRef = 783CF737202A540C00E50C5E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		783CF73A202A540C00E50C5E /* Mustache.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Mustache.framework;
-			remoteRef = 783CF739202A540C00E50C5E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		783CF73C202A540C00E50C5E /* MustacheTVOSTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = MustacheTVOSTests.xctest;
-			remoteRef = 783CF73B202A540C00E50C5E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
-
 /* Begin PBXResourcesBuildPhase section */
-		78D914AA20276E8100836037 /* Resources */ = {
+		780EF55123FDF46000195F62 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				783CF74F202A5DC400E50C5E /* BaseHTML in Resources */,
-				78D914BA20276E8100836037 /* LaunchScreen.storyboard in Resources */,
-				78D914B720276E8100836037 /* Assets.xcassets in Resources */,
-				78D914B520276E8100836037 /* Main.storyboard in Resources */,
+				78FF3D47241983F000E8E50F /* thomas in Resources */,
+				7861346D241172E600D9857E /* BaseHTML in Resources */,
+				780EF56323FDF46200195F62 /* LaunchScreen.storyboard in Resources */,
+				780EF56023FDF46200195F62 /* Preview Assets.xcassets in Resources */,
+				780EF55D23FDF46200195F62 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		78D914A820276E8100836037 /* Sources */ = {
+		780EF54F23FDF46000195F62 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78FF81D3202D274100692064 /* GeneSelectionViewController.swift in Sources */,
-				782F5C642027CBD30087F92E /* Gene.swift in Sources */,
-				783CF723202A34A400E50C5E /* PlotWebView.swift in Sources */,
-				783CF753202A614B00E50C5E /* AgeCountResult.swift in Sources */,
-				78FF81D1202D257700692064 /* HelpViewController.swift in Sources */,
-				783CF721202925A400E50C5E /* PlotViewController.swift in Sources */,
-				783CF755202B974800E50C5E /* PlotEditViewController.swift in Sources */,
-				78D914B220276E8100836037 /* LoadingViewController.swift in Sources */,
-				786C03D3206C4C7E00B5F979 /* DatasetCache.swift in Sources */,
-				78D914C22027710500836037 /* Server.swift in Sources */,
-				78C116592037ADB700420E4E /* PfuSelectionController.swift in Sources */,
-				783CF71F2029238400E50C5E /* DataManager.swift in Sources */,
-				782F5C682027CC9F0087F92E /* Pfu.swift in Sources */,
-				782F5C662027CBE50087F92E /* Tissue.swift in Sources */,
-				78C116522037AD0B00420E4E /* TissueSelectionController.swift in Sources */,
-				78D914B020276E8100836037 /* AppDelegate.swift in Sources */,
-				78FF81C6202D0E0B00692064 /* GeneSelection.swift in Sources */,
+				780EF55723FDF46000195F62 /* AppDelegate.swift in Sources */,
+				7825279324006C5F00861481 /* AgeCountResult.swift in Sources */,
+				78586D94240861EB0015868C /* PlotRenderer.swift in Sources */,
+				7825279024006B8C00861481 /* MainView.swift in Sources */,
+				78D04E3F2405BFE10065FED5 /* InfoView.swift in Sources */,
+				7825279B24006FDA00861481 /* Image+extensions.swift in Sources */,
+				78EEF4C02416DE8700E61D58 /* EnvironmentValues+extension.swift in Sources */,
+				78D04E3C2405B9210065FED5 /* DataService.swift in Sources */,
+				78CBEB1D240EEFB700708E7D /* SearchService.swift in Sources */,
+				78CBEB1B240EE4AB00708E7D /* GeneSelection.swift in Sources */,
+				7825279D2400706500861481 /* ActivityIndicator.swift in Sources */,
+				78629482241054F100349BA8 /* PlotService.swift in Sources */,
+				786134732411798800D9857E /* OptionalView.swift in Sources */,
+				78D04E412405C9640065FED5 /* BackgroundLogoView.swift in Sources */,
+				78CBEB19240EE24600708E7D /* GeneSelectionView.swift in Sources */,
+				78586D98240873B30015868C /* Gene.swift in Sources */,
+				78613471241175CC00D9857E /* MustacheService.swift in Sources */,
+				780EF55923FDF46000195F62 /* SceneDelegate.swift in Sources */,
+				78D04E472405DB660065FED5 /* TissueSelectionView.swift in Sources */,
+				7825278724003E6400861481 /* Color+extensions.swift in Sources */,
+				7825279724006C8200861481 /* Tissue.swift in Sources */,
+				78D20A4A24169B0500994B3F /* PlotView.swift in Sources */,
+				78D04E452405DABA0065FED5 /* SearchBar.swift in Sources */,
+				7861346F2411740100D9857E /* ColorCache.swift in Sources */,
+				786134752411AFC900D9857E /* ShareImagePanel.swift in Sources */,
+				7825278A24006B0C00861481 /* LoadingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		783CF740202A542500E50C5E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MustacheiOS;
-			targetProxy = 783CF73F202A542500E50C5E /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
-		78D914B320276E8100836037 /* Main.storyboard */ = {
+		780EF56123FDF46200195F62 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				78D914B420276E8100836037 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		78D914B820276E8100836037 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				78D914B920276E8100836037 /* Base */,
+				780EF56223FDF46200195F62 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -372,7 +314,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		78D914BC20276E8100836037 /* Debug */ = {
+		780EF56523FDF46200195F62 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -382,10 +324,12 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -393,6 +337,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -401,7 +346,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -420,8 +364,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				MTL_ENABLE_DEBUG_INFO = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -429,7 +374,7 @@
 			};
 			name = Debug;
 		};
-		78D914BD20276E8100836037 /* Release */ = {
+		780EF56623FDF46200195F62 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -439,10 +384,12 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -450,6 +397,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -458,7 +406,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -471,42 +418,52 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		78D914BF20276E8100836037 /* Debug */ = {
+		780EF56823FDF46200195F62 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"genexp/Preview Content\"";
 				DEVELOPMENT_TEAM = 8KTNSBRTNB;
+				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = genexp/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.heltena.genexp;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.amaral.genexp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		78D914C020276E8100836037 /* Release */ = {
+		780EF56923FDF46200195F62 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"genexp/Preview Content\"";
 				DEVELOPMENT_TEAM = 8KTNSBRTNB;
+				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = genexp/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.heltena.genexp;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.amaral.genexp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -514,25 +471,44 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		78D914A720276E8100836037 /* Build configuration list for PBXProject "genexp" */ = {
+		780EF54E23FDF46000195F62 /* Build configuration list for PBXProject "genexp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				78D914BC20276E8100836037 /* Debug */,
-				78D914BD20276E8100836037 /* Release */,
+				780EF56523FDF46200195F62 /* Debug */,
+				780EF56623FDF46200195F62 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		78D914BE20276E8100836037 /* Build configuration list for PBXNativeTarget "genexp" */ = {
+		780EF56723FDF46200195F62 /* Build configuration list for PBXNativeTarget "genexp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				78D914BF20276E8100836037 /* Debug */,
-				78D914C020276E8100836037 /* Release */,
+				780EF56823FDF46200195F62 /* Debug */,
+				780EF56923FDF46200195F62 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		782EB2E6240092C700EE96DE /* XCRemoteSwiftPackageReference "GRMustache" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/groue/GRMustache.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		782EB2E7240092C700EE96DE /* Mustache */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 782EB2E6240092C700EE96DE /* XCRemoteSwiftPackageReference "GRMustache" */;
+			productName = Mustache;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = 78D914A420276E8100836037 /* Project object */;
+	rootObject = 780EF54B23FDF46000195F62 /* Project object */;
 }

@@ -12,12 +12,7 @@ def get_column_names(restrictions):
             continue
     
         elif dimension == "pfu":
-            if op == "eq":
-                meta_query = meta_query.filter(pfu=value)
-            elif op == "in":
-                meta_query = meta_query.filter(pfu__in=value)
-            else:
-                raise Exception("op {} not valid at dimension {}".format(op, dimension))
+            continue
 
         elif dimension == "age":
             if op == "eq":
@@ -416,11 +411,11 @@ def generate_age_counts(restrictions, geneIdentifier, title, xAxisLabel, yAxisLa
     if len(tissue_names) > 1:
         key_format.append("{tissue}")
     if len(pfu_names) > 1:
-        key_format.append("{pfu}")
+        key_format.append("PFU {pfu}")
     if len(key_format) > 0:
         key_format = " - ".join(key_format)
     else:
-        key_format = "{gene_name} - {tissue} - {pfu}"
+        key_format = "{gene_name} - {tissue} - PFU {pfu}"
     
     series = defaultdict(list)
     serie_names = {}

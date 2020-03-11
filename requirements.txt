@@ -8,4 +8,6 @@ SQLAlchemy==1.1.15
 requests==2.18.4
 django-webpack-loader==0.5.0
 djangorestframework-jwt==1.11.0
-gunicorn==19.7.1
+gunicorn==19.7.1pandas==1.0.1
+pystache==0.5.4
+matplotlib==3.2.0

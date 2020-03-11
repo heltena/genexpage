@@ -10,7 +10,6 @@ export interface WelcomeProps {
 }
 
 export interface WelcomeState {
-    expanded: boolean;
 }
 
 export class Welcome extends React.Component<WelcomeProps, WelcomeState> {
@@ -18,22 +17,7 @@ export class Welcome extends React.Component<WelcomeProps, WelcomeState> {
     constructor(props: WelcomeProps, state: WelcomeState) {
         super(props, state);
         this.state = {
-            expanded: false
         };
-        this.handleExpandChanged = this.handleExpandChanged.bind(this);
-        this.handleExpand = this.handleExpand.bind(this);
-    }
-
-    handleExpandChanged(expanded: boolean) {
-        this.setState({
-            expanded: expanded
-        });
-    }
-
-    handleExpand() {
-        this.setState({
-            expanded: true
-        });
     }
 
     render() {
@@ -80,43 +64,19 @@ export class Welcome extends React.Component<WelcomeProps, WelcomeState> {
             }
         }
 
-        const flatButton = this.state.expanded ?
-            null
-            :
-            <FlatButton
-                label="Read more"
-                labelPosition="before"
-                primary={true}
-                onClick={this.handleExpand} />
-            ;
-
         return (
             <div>
                 <div style={styles.div}>
                     <div style={styles.card}>
-                        <Card expanded={this.state.expanded} onExpandChange={this.handleExpandChanged}>
-                            <CardTitle title="About the project" showExpandableButton={true} actAsExpander={true} />
+                        <Card>
+                            <CardTitle title="About the project" />
                             <CardText>
                                 <p>The aging influenza map is a collaborative project supported by the 
-                                    &nbsp;<b>National Institute of Aging (P01AG049665)</b>.  We harvested tissues 
+                                    &nbsp;<b>National Institute of Aging (P01AG049665)</b>. We harvested tissues 
                                     from the indicated sites in the mouse over the lifespan and subjected 
-                                    them to RNA-Seq (Figure).  From the lung, we used flow cytometry cell 
-                                    sorting to sort alveolar macrophages and alveolar type II cells from 
-                                    single cell tissue suspensions in naïve mice.</p>
+                                    them to RNA-Seq (Figure).</p>
                                 <img style={styles.img} src="/static/mouse.png" />
                                 < br/>
-                                {flatButton}
-                            </CardText>
-                            <CardText expandable={true}>
-                                <p>An important clinical feature of aging is the increased susceptibility to 
-                                    stress.  For example, mortality attributable to influenza A pneumonia 
-                                    increases exponentially as a function of age in humans.  This age-related 
-                                    susceptibility to infection can be reproduced in mice infected with 
-                                    influenza A viruses.  Accordingly, we examined the response to influenza 
-                                    A infection in mice 4 days after a dose of influenza A that was lethal 
-                                    to old mice but not to young mice (10 pfu/animal, intratracheal), and a 
-                                    dose of influenza A that was lethal to all mice (150 pfu/animal 
-                                    intratracheal).</p>
 
                                 <p>Here we present our data in an interactive format. This tool allows 
                                     investigators to query individual genes within different tissues that 

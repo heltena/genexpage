@@ -30,7 +30,6 @@ export interface ViewerState {
     searchText: string;
     searchResultGenes: Gene[];
     genesSort: Sort;
-    pfu: string[];
     tissue: string[];
 
     error: boolean;
@@ -51,7 +50,6 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
 
     geneValues: Gene[] = [];
     tissueNames: string[] = [];
-    pfuNames: string[] = [];
 
     constructor(props: ViewerProps, state: ViewerState) {
         super(props, state);
@@ -69,7 +67,6 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
                 field: "GENE_SYMBOL",
                 asc: true
             },
-            pfu: ["0"],
             tissue: [],
             
             error: false,
@@ -86,7 +83,6 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
             databaseTimestamp: "",
         };
         this.handleTissueChanged = this.handleTissueChanged.bind(this);
-        this.handlePfuChanged = this.handlePfuChanged.bind(this);
         this.handleGeneSelectionSearch = this.handleGeneSelectionSearch.bind(this);
         this.handleGeneSelectionGeneIdentifierChanged = this.handleGeneSelectionGeneIdentifierChanged.bind(this);
         this.handleGeneSelectionClearSelection = this.handleGeneSelectionClearSelection.bind(this);
@@ -104,7 +100,6 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
                 entrezNumber: row[2] as number,
                 ensembl: row[0] as string
             } as Gene));
-            // console.log("GENES: ", this.geneValues);
             this.forceUpdate();
         }).catch(error => {
             this.geneValues = [];
@@ -113,8 +108,6 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
         axios.get(
             "/api/tissue/list"
         ).then(response => {
-            // console.log("Response ok: ");
-            // console.log(response.data);
             this.tissueNames = response.data;
             this.forceUpdate();
         }).catch(error => {
@@ -122,30 +115,11 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
             console.log(error);
             this.tissueNames = [];
         });
-
-        axios.get(
-            "/api/pfu/list"
-        ).then(response => {
-            // console.log("Response ok: ");
-            // console.log(response.data);
-            this.pfuNames = response.data;
-            this.forceUpdate();
-        }).catch(error => {
-            console.log("Error: ");
-            console.log(error);
-            this.pfuNames = [];
-        });
     }
 
     handleTissueChanged(event: any, index: number, values: string[]) {
         this.setState({
             tissue: values
-        });
-    }
-
-    handlePfuChanged(event: any, index: number, values: string[]) {
-        this.setState({
-            pfu: values
         });
     }
 
@@ -238,11 +212,6 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
             restrictions.push(["gene", "in", []]);
         }
 
-        if (this.state.pfu && this.state.pfu.length > 0) {
-            restrictions.push(["pfu", "in", this.state.pfu]);
-            titleComponents.push("pfu: {pfu_names}")
-        }
-
         if (this.state.tissue && this.state.tissue.length > 0) {
             restrictions.push(["tissue", "in", this.state.tissue]);
             titleComponents.push("{tissue_names}");
@@ -262,9 +231,6 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
                 "yAxisLabel": this.state.yAxisLabel
             }
         ).then(response => {
-            // console.log("Response ok: ");
-            // console.log(response.data);
-
             this.setState({
                 error: false,
                 plotValid: true,
@@ -324,11 +290,6 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
                 margin: "12px",
                 flex: 1
             },
-            pfu: {
-                textAlign: 'left',
-                margin: "12px",
-                flex: 1
-            },
             field: {
                 textAlign: 'left'
             },
@@ -350,8 +311,7 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
         var selectedGenes = this.state.selectedGenes;
         var canUpdatePlot = 
             (selectedGenes && selectedGenes.length > 0) && 
-            (this.state.tissue && this.state.tissue.length > 0) &&
-            (this.state.pfu && this.state.pfu.length > 0);
+            (this.state.tissue && this.state.tissue.length > 0);
 
         var selection: any;
         if (this.state.selectedGenes && this.state.selectedGenes.length > 0) {
@@ -394,15 +354,6 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
                 key={name}
                 insetChildren={true}
                 checked={this.state.tissue && this.state.tissue.indexOf(name) > -1}
-                value={name}
-                primaryText={name} />
-        ));
-
-        var pfuItems = this.pfuNames.map((name) => (
-            <MenuItem
-                key={name}
-                insetChildren={true}
-                checked={this.state.pfu && this.state.pfu.indexOf(name) > -1}
                 value={name}
                 primaryText={name} />
         ));
@@ -475,17 +426,6 @@ export class Viewer extends React.Component<ViewerProps, ViewerState> {
                                 onChange={this.handleTissueChanged}
                                 style={styles.tissue}>
                                     {tissueItems}
-                            </SelectField>
-                            <SelectField
-                                multiple={true}
-                                maxHeight={200}
-                                hintText="Select PFU"
-                                floatingLabelFixed={true}
-                                floatingLabelText="PFU"
-                                value={this.state.pfu}
-                                onChange={this.handlePfuChanged}
-                                style={styles.pfu}>
-                                    {pfuItems}
                             </SelectField>
                             <div style={styles.headerButton}>
                                 <RaisedButton

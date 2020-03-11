@@ -4,7 +4,24 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>GEA Debug</title>
+    <title>GEA Index</title>
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+        border: 0;        
+        font-family: "Akkurat Pro Regular", Arial, sans-serif;
+        font-size: 32px;
+        font-stretch: normal;
+        font-style: normal;
+        font-weight: normal;
+      }
+      div#react-app {
+        padding: 0;
+        margin: 0;
+        border: 0;
+      }
+    </style>
   </head>
   
   <body>
@@ -13,6 +30,6 @@
 		<script src="{% static 'react-dom.development.js' %}"></script>
 
     <div id="react-app"></div>
-    {% render_bundle 'debug' %}
+    {% render_bundle 'fenix' %}
   </body>
 </html>

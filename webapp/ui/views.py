@@ -17,8 +17,8 @@ from django.forms import formset_factory
 # def german(request):
 #     return render(request, 'german.html')
 
-def fenix(request):
-    return render(request, 'fenix.html')
+def debug(request):
+    return render(request, 'debug.html')
 
 def release(request):
     return render(request, 'release.html')

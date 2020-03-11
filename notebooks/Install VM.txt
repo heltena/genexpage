@@ -37,7 +37,7 @@ $ sudo rpm -ivh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noar
 
 - Then, update the repo and install python:
 $ sudo yum update
-$ sudo yum install python34-devel python34-pip python34-virtualenv
+$ sudo yum install python34-devel python34-pip python34-virtualenv python-virtualenv
 
 
 
@@ -75,9 +75,8 @@ $ LC_ALL=C pip install numpy==1.13.3
 
 
 
-
 NGINX - GUNICORN files:
-sudo chmod o+rx htn551
+sudo chmod o+rx /home/htn551
 sudo chgrp nginx /home/htn551/genexpage/run
 sudo chmod g+w /home/htn551/genexpage/run
 

@@ -1,0 +1,104 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=896,user-scalable=no,maximum-scale=10" />
+        <style>
+            * {
+                font-family: arial, sans-serif;
+                font-size: 10pt;
+                -webkit-user-select: none; /* Disable selection/copy in UIWebView */
+            }
+            body {
+                padding-left: 0px;
+                padding-right: 0px;
+                width: 896px;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div id="myDiv"></div>
+        <script src="jquery.min.js"></script>
+        <script src="plotly-1.33.1.min.js"></script>
+        <script>
+            var plots = [];
+            {{#data.series}}
+            plots.push({
+                legendgroup: '{{serieName}}',
+                mode: 'lines',
+                line: { shape: 'spline', color: '{{color}}', width: 0 },
+                showlegend: false,
+                x: [{{data.xValues}}],
+                y: [{{meanSubStdValues}}],
+                hoverinfo: 'none',
+                fill: null
+            });
+            plots.push({
+                legendgroup: '{{serieName}}',
+                mode: 'lines',
+                line: { shape: 'spline', color: '{{color}}', width: 0 },
+                showlegend: false,
+                x: [{{data.xValues}}],
+                y: [{{meanAddStdValues}}],
+                hoverinfo: 'none',
+                fill: 'tonexty',
+                opacity: 0.5
+            });
+            plots.push({
+                legendgroup: '{{serieName}}',
+                mode: 'lines+markers',
+                line: { shape: 'spline', color: '{{color}}' },
+                name: '{{key}}',
+                x: [{{data.xValues}}],
+                y: [{{meanValues}}]
+            });
+            {{/data.series}}
+            var layout = {
+                title: '{{data.title}}',
+                paper_bgcolor: 'rgba(0,0,0,0)',
+                plot_bgcolor: 'rgba(0,0,0,0)',
+                font: {
+                    color: 'white'
+                },
+                xaxis: {
+                    title: '{{data.xAxisLabel}}',
+                    color: 'white',
+                    rangemode: 'normal',
+                    tickvals: [{{data.xValues}}],
+                    fixedrange: true
+                },
+                yaxis: {
+                    title: '{{data.yAxisLabel}}',
+                    color: 'white',
+                    rangemode: 'tozero',
+                    fixedrange: true
+                },
+                showlegend: true,
+                legend: {
+                    orientation: 'h',
+                    x: 0,
+                    y: -0.11,
+                    traceorder: 'normal',
+                    font: {
+                        color: 'white'
+                    }
+                }
+            };
+
+            var config = {
+                displayModeBar: false,
+                displaylogo: false,
+                showTips: false,
+                modeBarButtonsToRemove: [
+                    'sendDataToCloud',
+                    'autoScale2d',
+                    'hoverClosestCartesian',
+                    'hoverCompareCartesian',
+                    'lasso2d',
+                    'select2d']
+            };
+
+            Plotly.newPlot('myDiv', plots, layout, config);
+        </script>
+    </body>
+</html>
+
