@@ -7,3 +7,4 @@ webapp/assets/bundles
 webapp/node_modules
 settings.json
 certs
+data/GeneExpressionAging_*.sql.zip
