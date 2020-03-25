@@ -71,8 +71,26 @@ struct MainView: View {
                             }
                         }
                         
-                        Spacer()
+                        if self.plotService.plotNeedsUpdate && self.plotService.state != .loading {
+                            Spacer()
+                            Button(action: {
+                                self.plotService.updatePlot()
+                            }) {
+                                VStack {
+                                    Image(systemName: "arrow.clockwise")
+                                    Text("Update plot")
+                                }
+                            }
+                        }
                         
+                        if self.plotService.state == .loading {
+                            Spacer()
+                            HStack {
+                                ActivityIndicator(isAnimating: true, style: .medium)
+                            }
+                        }
+                        
+                        Spacer()
                         Button(action: {
                             self.editingSheet = .editTissues
                         }) {

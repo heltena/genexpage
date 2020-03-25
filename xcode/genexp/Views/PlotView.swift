@@ -37,27 +37,11 @@ struct PlotView: View {
             
             VStack {
                 Spacer()
-                ZStack {
-                    if self.plotService.plotNeedsUpdate && self.plotService.state != .loading {
-                        HStack {
-                            Button("Update plot") {
-                                self.plotService.updatePlot()
-                            }
-                        }
-                    }
-
-                    if self.plotService.state == .loading {
-                        HStack {
-                            ActivityIndicator(isAnimating: true, style: .medium)
-                        }
-                    }
-
-                    if self.plotService.state == .loaded && self.interfaceOrientation.isLandscape {
-                        HStack {
-                            Spacer()
-                            Button("Share") {
-                                self.shareScreenshot = true
-                            }
+                if self.plotService.state == .loaded && self.interfaceOrientation.isLandscape {
+                    HStack {
+                        Spacer()
+                        Button("Share") {
+                            self.shareScreenshot = true
                         }
                     }
                 }

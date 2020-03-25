@@ -38,7 +38,6 @@
 		78D04E472405DB660065FED5 /* TissueSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D04E462405DB660065FED5 /* TissueSelectionView.swift */; };
 		78D20A4A24169B0500994B3F /* PlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D20A4924169B0500994B3F /* PlotView.swift */; };
 		78EEF4C02416DE8700E61D58 /* EnvironmentValues+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78EEF4BF2416DE8700E61D58 /* EnvironmentValues+extension.swift */; };
-		78FF3D47241983F000E8E50F /* thomas in Resources */ = {isa = PBXBuildFile; fileRef = 78FF3D46241983F000E8E50F /* thomas */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,7 +73,6 @@
 		78D04E462405DB660065FED5 /* TissueSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TissueSelectionView.swift; sourceTree = "<group>"; };
 		78D20A4924169B0500994B3F /* PlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotView.swift; sourceTree = "<group>"; };
 		78EEF4BF2416DE8700E61D58 /* EnvironmentValues+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+extension.swift"; sourceTree = "<group>"; };
-		78FF3D46241983F000E8E50F /* thomas */ = {isa = PBXFileReference; lastKnownFileType = text; path = thomas; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,7 +113,6 @@
 				7825278D24006B2C00861481 /* Utils */,
 				7825278B24006B1100861481 /* Views */,
 				780EF55C23FDF46200195F62 /* Assets.xcassets */,
-				78FF3D46241983F000E8E50F /* thomas */,
 				780EF56123FDF46200195F62 /* LaunchScreen.storyboard */,
 				780EF56423FDF46200195F62 /* Info.plist */,
 				780EF55E23FDF46200195F62 /* Preview Content */,
@@ -256,7 +253,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78FF3D47241983F000E8E50F /* thomas in Resources */,
 				7861346D241172E600D9857E /* BaseHTML in Resources */,
 				780EF56323FDF46200195F62 /* LaunchScreen.storyboard in Resources */,
 				780EF56023FDF46200195F62 /* Preview Assets.xcassets in Resources */,
