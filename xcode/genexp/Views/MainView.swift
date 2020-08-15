@@ -73,18 +73,22 @@ struct MainView: View {
                 }.padding(.bottom, interfaceOrientation.isPortrait ? 120 : 20)
             }
             
-            if self.plotService.state == .loaded && self.interfaceOrientation.isLandscape {
-                VStack {
+            // Trailing bar
+            HStack {
+                Spacer()
+                VStack(alignment: .trailing) {
+                    Button("Info") {
+                        self.showingSheet = .info
+                    }
                     Spacer()
-                    HStack {
-                        Spacer()
+                    if self.plotService.state == .loaded && self.interfaceOrientation.isLandscape {
                         Button("Share") {
                             self.shareScreenshot = true
                         }
                     }
-                }.padding([.leading, .bottom, .trailing])
-            }
-
+                }
+            }.padding()
+            
             // Tabs
             if interfaceOrientation.isPortrait {
                 VStack {
@@ -135,17 +139,6 @@ struct MainView: View {
                     }
                     .padding(.all)
                 }
-            }
-
-            // Top bar
-            VStack {
-                HStack {
-                    Spacer()
-                    Button("Info") {
-                        self.showingSheet = .info
-                    }
-                }.padding()
-                Spacer()
             }
         }
         .sheet(item: self.$showingSheet) { sheet in

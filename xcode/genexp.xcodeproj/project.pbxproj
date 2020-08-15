@@ -60,6 +60,7 @@
 		78613470241175CC00D9857E /* MustacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MustacheService.swift; sourceTree = "<group>"; };
 		786134742411AFC900D9857E /* ShareImagePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareImagePanel.swift; sourceTree = "<group>"; };
 		78629481241054F100349BA8 /* PlotService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotService.swift; sourceTree = "<group>"; };
+		7863666324E89DFF0063D81F /* Gen Exp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Gen Exp.entitlements"; sourceTree = "<group>"; };
 		78CBEB18240EE24600708E7D /* GeneSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneSelectionView.swift; sourceTree = "<group>"; };
 		78CBEB1A240EE4AB00708E7D /* GeneSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneSelection.swift; sourceTree = "<group>"; };
 		78CBEB1C240EEFB700708E7D /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
@@ -104,6 +105,7 @@
 		780EF55523FDF46000195F62 /* genexp */ = {
 			isa = PBXGroup;
 			children = (
+				7863666324E89DFF0063D81F /* Gen Exp.entitlements */,
 				7861346C241172E600D9857E /* BaseHTML */,
 				7825279124006C5400861481 /* Data */,
 				7825278E24006B3900861481 /* Delegates */,
@@ -424,6 +426,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "genexp/Gen Exp.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"genexp/Preview Content\"";
 				DEVELOPMENT_TEAM = 8KTNSBRTNB;
@@ -436,6 +439,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.amaral.genexp;
 				PRODUCT_NAME = "Gen Exp";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -445,6 +449,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "genexp/Gen Exp.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"genexp/Preview Content\"";
 				DEVELOPMENT_TEAM = 8KTNSBRTNB;
@@ -457,6 +462,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.amaral.genexp;
 				PRODUCT_NAME = "Gen Exp";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

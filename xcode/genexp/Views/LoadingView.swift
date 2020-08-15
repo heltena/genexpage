@@ -12,7 +12,8 @@ import KYCommonTools
 struct LoadingView: View {
        
     @EnvironmentObject var dataService: DataService
-
+    @EnvironmentObject var plotService: PlotService
+    
     var body: some View {
         Group {
             if dataService.state == .loaded {
