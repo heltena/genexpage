@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct TissueSelectionView: View {
-    @ObservedObject var searchService: SearchService
+    @EnvironmentObject var searchService: SearchService
     @Environment(\.presentationMode) var presentation
 
     var body: some View {
@@ -22,7 +22,7 @@ struct TissueSelectionView: View {
                         Spacer()
                         if self.searchService.isSelected(tissue: item) {
                             Image.checkmark
-                                .foregroundColor(.blue)
+                                .foregroundColor(.accentColor)
                         }
                     }
                     .contentShape(Rectangle()) // allows to tap on blank space
@@ -35,7 +35,7 @@ struct TissueSelectionView: View {
             .navigationBarItems(trailing: Button(action: {
                 self.presentation.wrappedValue.dismiss()
             }) {
-                Image(systemName: "xmark")
+                Image.xmark
             })
         }
         .navigationViewStyle(StackNavigationViewStyle())

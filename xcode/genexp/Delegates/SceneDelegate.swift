@@ -10,30 +10,28 @@ import UIKit
 import SwiftUI
 import Combine
 
-class InterfaceOrientation: ObservableObject {
-    @Published private(set) var value: UIInterfaceOrientation = .unknown
-    
-    var isPortrait: Bool { value.isPortrait }
-    var isLandscape: Bool { value.isLandscape }
-    
-    fileprivate func update(_ value: UIInterfaceOrientation) {
-        self.value = value
-    }
-}
-
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+
     let interfaceOrientation = InterfaceOrientation()
-    
+    let dataService = DataService()
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
+        let searchService = SearchService(dataService: dataService)
+        let plotService = PlotService(dataService: dataService, searchService: searchService)
+        
         // Create the SwiftUI view that provides the window contents.
         let loadingView = LoadingView()
+            .accentColor(Color.northwestern)
             .environmentObject(interfaceOrientation)
+            .environmentObject(dataService)
+            .environmentObject(searchService)
+            .environmentObject(plotService)
         
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
@@ -74,7 +72,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func windowScene(_ windowScene: UIWindowScene, didUpdate previousCoordinateSpace: UICoordinateSpace, interfaceOrientation previousInterfaceOrientation: UIInterfaceOrientation, traitCollection previousTraitCollection: UITraitCollection) {
         
-        interfaceOrientation.update(windowScene.interfaceOrientation)
+        interfaceOrientation.value = windowScene.interfaceOrientation
     }
 }
 

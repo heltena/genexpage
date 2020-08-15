@@ -7,14 +7,17 @@
 //
 
 import SwiftUI
+import KYCommonTools
 
 struct LoadingView: View {
-    
-    @ObservedObject var dataService = DataService()
-    
+       
+    @EnvironmentObject var dataService: DataService
+
     var body: some View {
         Group {
-            if [.clean, .loading, .error].contains(dataService.state) {
+            if dataService.state == .loaded {
+                MainView()
+            } else {
                 ZStack {
                     BackgroundLogoView()
                     VStack {
@@ -33,8 +36,6 @@ struct LoadingView: View {
                         }
                     }.padding(.bottom, 20)
                 }
-            } else {
-                MainView(dataService: dataService)
             }
         }
         .onAppear {

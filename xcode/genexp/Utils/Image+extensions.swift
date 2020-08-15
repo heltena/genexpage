@@ -17,12 +17,5 @@ extension Image {
     static let northwesternLogo = Image("NorthwesternLogo")
     
     static let checkmark = Image(systemName: "checkmark")
-    
-    static func number(_ value: Int) -> Image {
-        if (0...50).contains(value) {
-            return Image(systemName: "\(value).circle")
-        } else {
-            return Image(systemName: "plus.circle")
-        }
-    }
+    static let xmark = Image(systemName: "xmark")
 }

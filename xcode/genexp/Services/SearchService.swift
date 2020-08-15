@@ -48,27 +48,28 @@ class SearchService: ObservableObject {
             .assign(to: \.selectedHash, on: self)
             .store(in: &cancellableSet)
     
-        $tissueSearchText
-            .map { searchText in
+        Publishers.CombineLatest(dataService.$tissues, $tissueSearchText)
+            .map { tissues, searchText in
                 if searchText.count == 0 {
-                    return dataService.tissues
+                    return tissues
                 } else {
-                    return dataService.tissues.filter { $0.match(with: searchText) }
+                    return tissues.filter { $0.match(with: searchText) }
                 }
             }
             .assign(to: \.showingTissues, on: self)
             .store(in: &cancellableSet)
         
-        Publishers.CombineLatest($selectedGenes, $geneSelection)
-            .map { selectedGenes, geneSelection in
-                self.dataService.genesBy[geneSelection]!.filter { selectedGenes.contains($0) }
+        Publishers.CombineLatest3(dataService.$genesBy, $selectedGenes, $geneSelection)
+            .map { genesBy, selectedGenes, geneSelection in
+                let data = genesBy[geneSelection] ?? []
+                return data.filter { selectedGenes.contains($0) }
             }
             .assign(to: \.showingSelectedGenes, on: self)
             .store(in: &cancellableSet)
         
-        Publishers.CombineLatest($geneSearchText, $geneSelection)
-            .map { searchText, selection in
-                (searchText, self.dataService.genesBy[selection]!)
+        Publishers.CombineLatest3(dataService.$genesBy, $geneSearchText, $geneSelection)
+            .map { genesBy, searchText, selection in
+                (searchText, genesBy[selection] ?? [])
             }
             .map { (searchText: String, genes: [Gene]) -> [Gene] in
                 if searchText.count == 0 {

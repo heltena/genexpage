@@ -18,16 +18,15 @@
 		7825279324006C5F00861481 /* AgeCountResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7825279224006C5F00861481 /* AgeCountResult.swift */; };
 		7825279724006C8200861481 /* Tissue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7825279624006C8200861481 /* Tissue.swift */; };
 		7825279B24006FDA00861481 /* Image+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7825279A24006FDA00861481 /* Image+extensions.swift */; };
-		7825279D2400706500861481 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7825279C2400706500861481 /* ActivityIndicator.swift */; };
 		782EB2E8240092C700EE96DE /* Mustache in Frameworks */ = {isa = PBXBuildFile; productRef = 782EB2E7240092C700EE96DE /* Mustache */; };
 		78586D94240861EB0015868C /* PlotRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78586D93240861EB0015868C /* PlotRenderer.swift */; };
 		78586D98240873B30015868C /* Gene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78586D97240873B30015868C /* Gene.swift */; };
 		7861346D241172E600D9857E /* BaseHTML in Resources */ = {isa = PBXBuildFile; fileRef = 7861346C241172E600D9857E /* BaseHTML */; };
 		7861346F2411740100D9857E /* ColorCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7861346E2411740100D9857E /* ColorCache.swift */; };
 		78613471241175CC00D9857E /* MustacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78613470241175CC00D9857E /* MustacheService.swift */; };
-		786134732411798800D9857E /* OptionalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786134722411798800D9857E /* OptionalView.swift */; };
 		786134752411AFC900D9857E /* ShareImagePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786134742411AFC900D9857E /* ShareImagePanel.swift */; };
 		78629482241054F100349BA8 /* PlotService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78629481241054F100349BA8 /* PlotService.swift */; };
+		78774FF624E748B600E727CB /* KYCommonTools in Frameworks */ = {isa = PBXBuildFile; productRef = 78774FF524E748B600E727CB /* KYCommonTools */; };
 		78CBEB19240EE24600708E7D /* GeneSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CBEB18240EE24600708E7D /* GeneSelectionView.swift */; };
 		78CBEB1B240EE4AB00708E7D /* GeneSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CBEB1A240EE4AB00708E7D /* GeneSelection.swift */; };
 		78CBEB1D240EEFB700708E7D /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CBEB1C240EEFB700708E7D /* SearchService.swift */; };
@@ -36,12 +35,12 @@
 		78D04E412405C9640065FED5 /* BackgroundLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D04E402405C9640065FED5 /* BackgroundLogoView.swift */; };
 		78D04E452405DABA0065FED5 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D04E442405DABA0065FED5 /* SearchBar.swift */; };
 		78D04E472405DB660065FED5 /* TissueSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D04E462405DB660065FED5 /* TissueSelectionView.swift */; };
-		78D20A4A24169B0500994B3F /* PlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78D20A4924169B0500994B3F /* PlotView.swift */; };
-		78EEF4C02416DE8700E61D58 /* EnvironmentValues+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78EEF4BF2416DE8700E61D58 /* EnvironmentValues+extension.swift */; };
+		78FBDE8024E7555600EE3EF7 /* Text+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FBDE7F24E7555600EE3EF7 /* Text+extensions.swift */; };
+		78FBDE8224E75E5E00EE3EF7 /* InterfaceOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FBDE8124E75E5E00EE3EF7 /* InterfaceOrientation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		780EF55323FDF46000195F62 /* genexp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = genexp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		780EF55323FDF46000195F62 /* Gen Exp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gen Exp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		780EF55623FDF46000195F62 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		780EF55823FDF46000195F62 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		780EF55C23FDF46200195F62 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -54,13 +53,11 @@
 		7825279224006C5F00861481 /* AgeCountResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeCountResult.swift; sourceTree = "<group>"; };
 		7825279624006C8200861481 /* Tissue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tissue.swift; sourceTree = "<group>"; };
 		7825279A24006FDA00861481 /* Image+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+extensions.swift"; sourceTree = "<group>"; };
-		7825279C2400706500861481 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		78586D93240861EB0015868C /* PlotRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotRenderer.swift; sourceTree = "<group>"; };
 		78586D97240873B30015868C /* Gene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gene.swift; sourceTree = "<group>"; };
 		7861346C241172E600D9857E /* BaseHTML */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BaseHTML; sourceTree = "<group>"; };
 		7861346E2411740100D9857E /* ColorCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCache.swift; sourceTree = "<group>"; };
 		78613470241175CC00D9857E /* MustacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MustacheService.swift; sourceTree = "<group>"; };
-		786134722411798800D9857E /* OptionalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalView.swift; sourceTree = "<group>"; };
 		786134742411AFC900D9857E /* ShareImagePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareImagePanel.swift; sourceTree = "<group>"; };
 		78629481241054F100349BA8 /* PlotService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotService.swift; sourceTree = "<group>"; };
 		78CBEB18240EE24600708E7D /* GeneSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneSelectionView.swift; sourceTree = "<group>"; };
@@ -71,8 +68,8 @@
 		78D04E402405C9640065FED5 /* BackgroundLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundLogoView.swift; sourceTree = "<group>"; };
 		78D04E442405DABA0065FED5 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		78D04E462405DB660065FED5 /* TissueSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TissueSelectionView.swift; sourceTree = "<group>"; };
-		78D20A4924169B0500994B3F /* PlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlotView.swift; sourceTree = "<group>"; };
-		78EEF4BF2416DE8700E61D58 /* EnvironmentValues+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+extension.swift"; sourceTree = "<group>"; };
+		78FBDE7F24E7555600EE3EF7 /* Text+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+extensions.swift"; sourceTree = "<group>"; };
+		78FBDE8124E75E5E00EE3EF7 /* InterfaceOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceOrientation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +78,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				782EB2E8240092C700EE96DE /* Mustache in Frameworks */,
+				78774FF624E748B600E727CB /* KYCommonTools in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,7 +96,7 @@
 		780EF55423FDF46000195F62 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				780EF55323FDF46000195F62 /* genexp.app */,
+				780EF55323FDF46000195F62 /* Gen Exp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -139,7 +137,6 @@
 				78D04E462405DB660065FED5 /* TissueSelectionView.swift */,
 				78586D93240861EB0015868C /* PlotRenderer.swift */,
 				786134742411AFC900D9857E /* ShareImagePanel.swift */,
-				78D20A4924169B0500994B3F /* PlotView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -149,6 +146,7 @@
 			children = (
 				7861346E2411740100D9857E /* ColorCache.swift */,
 				78D04E3B2405B9210065FED5 /* DataService.swift */,
+				78FBDE8124E75E5E00EE3EF7 /* InterfaceOrientation.swift */,
 				78629481241054F100349BA8 /* PlotService.swift */,
 				78CBEB1C240EEFB700708E7D /* SearchService.swift */,
 				78613470241175CC00D9857E /* MustacheService.swift */,
@@ -159,12 +157,10 @@
 		7825278D24006B2C00861481 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				7825279C2400706500861481 /* ActivityIndicator.swift */,
 				7825278624003E6400861481 /* Color+extensions.swift */,
 				7825279A24006FDA00861481 /* Image+extensions.swift */,
+				78FBDE7F24E7555600EE3EF7 /* Text+extensions.swift */,
 				78D04E442405DABA0065FED5 /* SearchBar.swift */,
-				786134722411798800D9857E /* OptionalView.swift */,
-				78EEF4BF2416DE8700E61D58 /* EnvironmentValues+extension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -207,9 +203,10 @@
 			name = genexp;
 			packageProductDependencies = (
 				782EB2E7240092C700EE96DE /* Mustache */,
+				78774FF524E748B600E727CB /* KYCommonTools */,
 			);
 			productName = genexp;
-			productReference = 780EF55323FDF46000195F62 /* genexp.app */;
+			productReference = 780EF55323FDF46000195F62 /* Gen Exp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -238,6 +235,7 @@
 			mainGroup = 780EF54A23FDF46000195F62;
 			packageReferences = (
 				782EB2E6240092C700EE96DE /* XCRemoteSwiftPackageReference "GRMustache" */,
+				78774FF424E748B600E727CB /* XCRemoteSwiftPackageReference "KYCommonTools" */,
 			);
 			productRefGroup = 780EF55423FDF46000195F62 /* Products */;
 			projectDirPath = "";
@@ -269,17 +267,16 @@
 			files = (
 				780EF55723FDF46000195F62 /* AppDelegate.swift in Sources */,
 				7825279324006C5F00861481 /* AgeCountResult.swift in Sources */,
+				78FBDE8224E75E5E00EE3EF7 /* InterfaceOrientation.swift in Sources */,
+				78FBDE8024E7555600EE3EF7 /* Text+extensions.swift in Sources */,
 				78586D94240861EB0015868C /* PlotRenderer.swift in Sources */,
 				7825279024006B8C00861481 /* MainView.swift in Sources */,
 				78D04E3F2405BFE10065FED5 /* InfoView.swift in Sources */,
 				7825279B24006FDA00861481 /* Image+extensions.swift in Sources */,
-				78EEF4C02416DE8700E61D58 /* EnvironmentValues+extension.swift in Sources */,
 				78D04E3C2405B9210065FED5 /* DataService.swift in Sources */,
 				78CBEB1D240EEFB700708E7D /* SearchService.swift in Sources */,
 				78CBEB1B240EE4AB00708E7D /* GeneSelection.swift in Sources */,
-				7825279D2400706500861481 /* ActivityIndicator.swift in Sources */,
 				78629482241054F100349BA8 /* PlotService.swift in Sources */,
-				786134732411798800D9857E /* OptionalView.swift in Sources */,
 				78D04E412405C9640065FED5 /* BackgroundLogoView.swift in Sources */,
 				78CBEB19240EE24600708E7D /* GeneSelectionView.swift in Sources */,
 				78586D98240873B30015868C /* Gene.swift in Sources */,
@@ -288,7 +285,6 @@
 				78D04E472405DB660065FED5 /* TissueSelectionView.swift in Sources */,
 				7825278724003E6400861481 /* Color+extensions.swift in Sources */,
 				7825279724006C8200861481 /* Tissue.swift in Sources */,
-				78D20A4A24169B0500994B3F /* PlotView.swift in Sources */,
 				78D04E452405DABA0065FED5 /* SearchBar.swift in Sources */,
 				7861346F2411740100D9857E /* ColorCache.swift in Sources */,
 				786134752411AFC900D9857E /* ShareImagePanel.swift in Sources */,
@@ -433,12 +429,13 @@
 				DEVELOPMENT_TEAM = 8KTNSBRTNB;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = genexp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.amaral.genexp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Gen Exp";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -453,12 +450,13 @@
 				DEVELOPMENT_TEAM = 8KTNSBRTNB;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = genexp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.amaral.genexp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Gen Exp";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -496,6 +494,14 @@
 				minimumVersion = 4.0.1;
 			};
 		};
+		78774FF424E748B600E727CB /* XCRemoteSwiftPackageReference "KYCommonTools" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:heltena/KYCommonTools.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -503,6 +509,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 782EB2E6240092C700EE96DE /* XCRemoteSwiftPackageReference "GRMustache" */;
 			productName = Mustache;
+		};
+		78774FF524E748B600E727CB /* KYCommonTools */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78774FF424E748B600E727CB /* XCRemoteSwiftPackageReference "KYCommonTools" */;
+			productName = KYCommonTools;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -55,7 +55,7 @@ struct InfoView: View {
             .navigationBarItems(trailing: Button(action: {
                 self.presentation.wrappedValue.dismiss()
             }) {
-                Image(systemName: "xmark")
+                Image.xmark
             })
         }
         .navigationViewStyle(StackNavigationViewStyle())

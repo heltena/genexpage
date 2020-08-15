@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct GeneSelectionView: View {
-    @ObservedObject var searchService: SearchService
+    @EnvironmentObject var searchService: SearchService
     @Environment(\.presentationMode) var presentation
 
     var body: some View {
@@ -33,7 +33,7 @@ struct GeneSelectionView: View {
                                     Spacer()
                                     if self.searchService.selectedGenes.contains(item) {
                                         Image.checkmark
-                                            .foregroundColor(.blue)
+                                            .foregroundColor(.accentColor)
                                     }
                                 }
                                 .contentShape(Rectangle()) // allows to tap on blank space
@@ -51,7 +51,7 @@ struct GeneSelectionView: View {
                                 Spacer()
                                 if self.searchService.selectedGenes.contains(item) {
                                     Image.checkmark
-                                        .foregroundColor(.blue)
+                                        .foregroundColor(.accentColor)
                                 }
                             }
                             .contentShape(Rectangle()) // allows to tap on blank space
@@ -70,7 +70,7 @@ struct GeneSelectionView: View {
             .navigationBarItems(trailing: Button(action: {
                 self.presentation.wrappedValue.dismiss()
             }) {
-                Image(systemName: "xmark")
+                Image.xmark
             })
         }
         .navigationViewStyle(StackNavigationViewStyle())

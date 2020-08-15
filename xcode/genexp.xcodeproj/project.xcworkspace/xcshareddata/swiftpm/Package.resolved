@@ -9,6 +9,15 @@
           "revision": "671e2c5234e829c1f337c9d300bd6d9b21d1c42a",
           "version": "4.0.1"
         }
+      },
+      {
+        "package": "KYCommonTools",
+        "repositoryURL": "git@github.com:heltena/KYCommonTools.git",
+        "state": {
+          "branch": "master",
+          "revision": "a8d58ebebb67f7e2eafc137c8a15d880efacc9b9",
+          "version": null
+        }
       }
     ]
   },

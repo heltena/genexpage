@@ -9,26 +9,38 @@
 import SwiftUI
 
 struct BackgroundLogoView: View {
-
-    @EnvironmentObject var interfaceOrientation: InterfaceOrientation
-
-    func maxWidth(using size: CGSize) -> CGFloat {
-        interfaceOrientation.isPortrait ? size.width * 0.4 : size.width * 0.175
-    }
-    
     var body: some View {
-        GeometryReader { proxy in
-            Image.background
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(maxWidth: self.maxWidth(using: proxy.size))
-                .scaledToFit()
-        }
+        Image.background
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 192, height: 192)
+            .offset(y: -20)
+            .scaledToFit()
     }
 }
 
 struct BackgroundLogoView_Previews: PreviewProvider {
+    static var landscape: InterfaceOrientation {
+        let result = InterfaceOrientation()
+        result.value = .landscapeLeft
+        return result
+    }
+
+    static var portrait: InterfaceOrientation {
+        let result = InterfaceOrientation()
+        result.value = .portrait
+        return result
+    }
+    
     static var previews: some View {
-        BackgroundLogoView()
+        Group {
+            BackgroundLogoView()
+                .environmentObject(landscape)
+                .previewLayout(.fixed(width: 1024, height: 768))
+
+            BackgroundLogoView()
+                .environmentObject(portrait)
+                .previewLayout(.fixed(width: 768, height: 1024))
+        }
     }
 }
